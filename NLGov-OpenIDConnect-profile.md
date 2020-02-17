@@ -1,11 +1,82 @@
-# Intro
-* OAuth2 NL-Gov/iGov as basis
-* TBD: based upon OpenID Connect iGov?
-* Dutch Government & public domain
-## Requirements Notation and Conventions
-## Terminology
-## Conformance
+# Abstract
+The OpenID Connect protocol defines an identity federation system that allows
+a relying party to request and receive authentication and profile information
+about an end user.
 
+This specification profiles the OpenID Connect protocol to increase baseline
+security, provide greater interoperability, and structure deployments in a
+manner specifically applicable to (but not limited to) government and public
+service domains in The Netherlands.
+
+This profile builds on top of, and inherits all properties of, the NL GOV 
+Assurance profile for OAuth 2.0.
+
+# Introduction
+Government regulations for permitting users (citizens and non-citizens) online
+access to government resources vary greatly from region to region. There is a
+strong desire to leverage federated authentication and identity services for
+public access to government resources online to reduce 'password fatigue',
+increase overall account security, reduce cost, and provide reliable identity
+assurances from established and trusted sources when applicable.
+
+This specification aims to define an OpenID Connect profile that provides Dutch
+governments with a foundation for securing federated access to public services
+online.
+
+## Requirements Notation and Conventions
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are to be interpreted as described in 
+[RFC 2119](https://openid.net/specs/openid-igov-openid-connect-1_0.html#RFC2119).
+
+All uses of 
+[JSON Web Signature (JWS)](https://openid.net/specs/openid-igov-openid-connect-1_0.html#RFC7515) 
+and [JSON Web Encryption (JWE)](https://openid.net/specs/openid-igov-openid-connect-1_0.html#RFC7516) 
+data structures in this specification utilize the JWS Compact Serialization or 
+the JWE Compact Serialization; the JWS JSON Serialization and the JWE JSON
+Serialization are not used.
+
+## Terminology
+This specification uses the terms "Access Token", "Authorization Code", 
+"Authorization Endpoint", "Authorization Grant", "Authorization Server", 
+"Client", "Client Authentication", "Client Identifier", "Client Secret", 
+"Grant Type", "Protected Resource", "Redirection URI", "Refresh Token", 
+"Resource Owner", "Resource Server", "Response Type", and "Token Endpoint" 
+defined by OAuth 2.0, the terms "Claim Name", "Claim Value", and 
+"JSON Web Token (JWT)" defined by JSON Web Token (JWT), 
+and the terms defined by OpenID Connect Core 1.0.
+
+* TBD functional terminology such as representation, eIDAS, etc.
+
+## Conformance
+* TBD: based upon OpenID Connect iGov?
+
+This specification defines requirements for the following components:
+- OpenID Connect 1.0 relying parties (also known as OpenID Clients)
+- OpenID Connect 1.0 identity providers (also known as OpenID Providers)
+
+The specification also defines features for interaction between these components:
+- Relying party to identity provider
+
+When an iGov-NL-compliant component is interacting with other iGov-NL-compliant 
+components, in any valid combination, all components MUST fully conform to the 
+features and requirements of this specification. All interaction with 
+non-iGov-NL components is outside the scope of this specification.
+
+An iGov-NL-compliant OpenID Connect IdP MUST support all features as described 
+in this specification. A general-purpose IdP MAY support additional features 
+for use with non-iGov-NL clients.
+
+An iGov-NL-compliant OpenID Connect IdP MAY also provide iGov-NL-compliant 
+OAuth 2.0 authorization server functionality. In such cases, the authorization 
+server MUST fully implement the OAuth 2.0 iGov-NL profile. If an 
+iGov-NL-compliant OpenID Connect IdP does not provide iGov-NL-compliant 
+OAuth 2.0 authorization server services, all features related to interaction 
+between the authorization server and protected resource are therefore OPTIONAL.
+
+An iGov-NL-compliant OpenID Connect client MUST use all functions as described 
+in this specification. A general-purpose client library MAY support additional 
+features for use with non-iGov-NL IdPs.
 
 # Use case & context
 * Intra & inter organisation
