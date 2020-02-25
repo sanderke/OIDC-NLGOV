@@ -166,3 +166,6 @@ features for use with non-iGov-NL IdPs.
 ## Federations
 * jar, par & rar
 
+
+#  Appendix Notices
+* (C) copyright OIDF, ... TODO
