@@ -84,21 +84,24 @@ features for use with non-iGov-NL IdPs.
 ** B2B, C2B not excluded
 * IDs/attrs
 * representation
-** attrs representative
+** ids/attrs representative
 * Web, native
 ** native app as instance or through backend
-* Service Intermediation (!)
+* Service Intermediation
 * No active federation support
 * MUST NOT self-issued
 * E2E security
 
 # Flow
+* Authoriation code flow
+
 ## Access token as JWT Bearer
 * access token, ID token, UserInfo and introspecton response at discretion for flexiblity & max interop
 
 # Client / Relying Party profile
 ## Requests to the Authorization Endpoint (Authentication Request)
 * private_key_jwt authentication
+** mTLS optional alternative
 * intra-organisation PKIo
 ## Requests to the Token Endpoint
 * claims parameter
@@ -106,13 +109,13 @@ features for use with non-iGov-NL IdPs.
 ## Request Objects
 * prefered + signed
 ## Discovery
+* SHOULD for client
+## Registration
+* MAY/SHOULD for Client
 ## Act/may_act alike = ref RFC 8693
 * TBD: impersonisation+user or user+authorizations?
 ## Native/SPA, extra security measures
 * see security considerations
-## LoA =~ eIDAS
-* RBA part of LoA
-** Context based authentication = DV requested LoA
 
 # OpenID Provider profile
 ## ID Tokens
@@ -122,9 +125,14 @@ features for use with non-iGov-NL IdPs.
 ## Request Objects
 ## Vectors of Trust
 * Not to be used, eIDAS, LoA preferred
+## LoA =~ eIDAS
+* RBA part of LoA
+** Context based authentication = DV requested LoA
 ## Authentication Context
 ## Discovery
+* MUST support by OP
 ## Dynamic Registration
+* SHOULD (Strongly recommended!) support by OP
 
 
 # User Info
@@ -138,7 +146,7 @@ features for use with non-iGov-NL IdPs.
 # Relation with 3rd party (Resource Servers)
 ## Service Intermediation
 * RFC7800 cnf key/cert references
-* requires registration of resource servers
+* requires registration of resource servers, for introspection (to OAuth profile?)
 
 # Special usage
 ## offline
