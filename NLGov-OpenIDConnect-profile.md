@@ -79,6 +79,7 @@ in this specification. A general-purpose client library MAY support additional
 features for use with non-iGov-NL IdPs.
 
 # Use case & context
+* not in iGov, additional
 * Intra & inter organisation
 ** C2G, B2G
 ** B2B, C2B not excluded
@@ -93,29 +94,55 @@ features for use with non-iGov-NL IdPs.
 * E2E security
 
 # Flow
+* not in iGov, additional
 * Authoriation code flow
 
 ## Access token as JWT Bearer
+* not in iGov, additional
 * access token, ID token, UserInfo and introspecton response at discretion for flexiblity & max interop
 
 # Client / Relying Party profile
 ## Requests to the Authorization Endpoint (Authentication Request)
-* private_key_jwt authentication
-** mTLS optional alternative
-* intra-organisation PKIo
-## Requests to the Token Endpoint
+* iGov: usable; vtr not applicable (acr\_values for LoA preferred)
+* private\_key\_jwt authentication
+** mTLS (RFC-to-be-8705) optional alternative
+* intra-organisation PKIo, as in OAuth NL-Gov profile
 * claims parameter
+
+## Requests to the Token Endpoint
+* iGov: usable
+* mTLS (RFC-to-be-8705) as alternative client authentication method, influences parameters client\_assertion
+* relation to token Exchange (RFC8693); limiting scope, switching of audiences, service intermediation (dienstbemiddeling)
+
 ## ID Tokens
-## Request Objects
-* prefered + signed
-## Discovery
-* SHOULD for client
-## Registration
-* MAY/SHOULD for Client
-## Act/may_act alike = ref RFC 8693
+* algorithms for signing and encryption
+### Act/may\_act alike = ref RFC 8693
+* mandatory processing of "act" and "may\_act\_on\_behalf" like claims
 * TBD: impersonisation+user or user+authorizations?
+
+## Request Objects
+* iGov: usable
+* prefered + signed
+* algorithms for signing and encryption
+
+## Discovery
+* iGov: usable
+* SHOULD for client; reduce manual labour with risk of config mistakes
+* guidelines for caching duration and handling updates/changes
+* relation to acceptable methods and algorithms
+
+## Registration
+* not in iGov, additional
+* MAY/SHOULD for Client; reduce manual labour with risk of config mistakes
+* details of minimal registraton parameters?
+* relation to RFC7591 OAuth 2.0 Dynamic Client Registration
+* MAY support RFC7592 OAuth 2.0 Dynamic Client Registration Management Protocol 
+* relation to acceptable methods and algorithms
+
 ## Native/SPA, extra security measures
+* not in iGov, additional
 * see security considerations
+
 
 # OpenID Provider profile
 ## ID Tokens
