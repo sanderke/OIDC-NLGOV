@@ -129,6 +129,7 @@ features for use with non-iGov-NL IdPs.
 * iGov: usable
 * SHOULD for client; reduce manual labour with risk of config mistakes
 * guidelines for caching duration and handling updates/changes
+** include JWK_uri content updates
 * relation to acceptable methods and algorithms
 
 ## Registration
@@ -145,22 +146,46 @@ features for use with non-iGov-NL IdPs.
 
 
 # OpenID Provider profile
+* TBD: add section on access token? (on top of / in relation to OAuth2)
+
 ## ID Tokens
+* iGov: usable
+* algorithms for signing and encryption
+* vot and vtr not applicable (acr for LoA preferred)
+### Act/may\_act alike = ref RFC 8693
+* TBD: impersonisation+user or user+authorizations?
+
 ## Pairwise Identifiers
+* iGov: usable
 * sectoral/public types
+
 ## UserInfo Endpoint
+* iGov: usable
+* add PS256 as SHOULD
+
 ## Request Objects
+* iGov: usable
+
 ## Vectors of Trust
 * Not to be used, eIDAS, LoA preferred
-## LoA =~ eIDAS
-* RBA part of LoA
-** Context based authentication = DV requested LoA
+
 ## Authentication Context
+* iGov: somewhat usable
+* recommended: use eIDAS values when applicable
+* allow other forms where eIDAS not applicable
+* add note on RBA part of LoA; risk based authentication should be integral part of LoA framework
+** Context based authentication = DV requested LoA
+* avoid amr, use acr instead
+
 ## Discovery
 * MUST support by OP
+* guidelines for caching duration and handling updates/changes
+** include JWK_uri content updates
+* relation to acceptable methods and algorithms
+
 ## Dynamic Registration
 * SHOULD (Strongly recommended!) support by OP
-
+** mandatory when native instance is client
 
 # User Info
 ## Claims Supported
