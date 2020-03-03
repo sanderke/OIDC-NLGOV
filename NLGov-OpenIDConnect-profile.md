@@ -178,46 +178,94 @@ features for use with non-iGov-NL IdPs.
 * avoid amr, use acr instead
 
 ## Discovery
+* iGov: usable; (URL = discovery endpoint = identifier of issuer, mandatory?)
 * MUST support by OP
 * guidelines for caching duration and handling updates/changes
 ** include JWK_uri content updates
 * relation to acceptable methods and algorithms
 
 ## Dynamic Registration
+* iGov: usable
 * SHOULD (Strongly recommended!) support by OP
 ** mandatory when native instance is client
 
 # User Info
+* iGov: usable
+
 ## Claims Supported
+* iGov: usable
+* add syntax of attribute(names)
+* add default 'Dutch' attributes in relation to BRP
+
 ## Scope Profiles
+* iGov: usable
+** note that NL often _is_ able to provide a single identifier for all citizens based on an authoritative register of citizens
+** 'profile' profile is very wide, from privacy/data protection point of view
+** doc profile not well suited for NL
+
 ## Claims Request
+* iGov: usable
+* TBD: claims parameter has benefits functionally/security wise, support may be less widespread though
+
 ## Claims Response
+* iGov: mostly irrelevant, as doc profile less usefull in NL
+
 ## Claims Metadata
+* iGov: usable
+* add source/time of attribute for quality/reliability of attributes, fits well with aggregated/distributed claims, limited supported in tools though
 
 
 # Relation with 3rd party (Resource Servers)
 ## Service Intermediation
+* not part of iGov
 * RFC7800 cnf key/cert references
-* requires registration of resource servers, for introspection (to OAuth profile?)
+* requires registration of resource servers, for introspection (move up to OAuth profile?)
+
 
 # Special usage
 ## offline
+* not part of iGov
 * TBD: VWS, RvIG: input!
 
+
 # Privacy considerations
+* iGov: usable
 * Encrypt BSN
 * minimize scope, use RFC8693 token exchange to switch scopes
 
 # Security considerations
-## Source and quality/reliability attributes
-* TBD: use aggregated/distributed claims?
-* web-app security
-* native app security
+* iGov: usable
+** add NCSC TLS guidelines, SHOULD 'good', MAY 'sufficient', SHOULD NOT 'phase out'
+## web-app security
+* HSTS
+* CSP
+* CORS
+* SRI
+* Cookie security
+* other anti-XSS/CSRF techniques
+* short-lived sessions
+* utilize webcrypto API
+## native app / SPA / JS security
+* RFC8252
+** Strict in-app browser only!
+** HTTPS scheme URL handler only
+* HSTS
+* CSP
+* CORS
+* SRI
+* Cookie security
+* other anti-XSS/CSRF techniques
+* short-lived sessions
+** use refresh tokens
+
 
 # Future updates
+* not part of iGov
 ## Federations
-* jar, par & rar
+* Work in progress @ OIDF
+## Other features
+* jar, par & rar; work in progress @ IETF (OAuth2)
 
 
 #  Appendix Notices
-* (C) copyright OIDF, ... TODO
+* (C) copyright OIDF (!), ... TODO
