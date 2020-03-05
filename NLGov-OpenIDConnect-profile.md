@@ -46,7 +46,8 @@ defined by OAuth 2.0, the terms "Claim Name", "Claim Value", and
 "JSON Web Token (JWT)" defined by JSON Web Token (JWT), 
 and the terms defined by OpenID Connect Core 1.0.
 
-* TBD functional terminology such as representation, eIDAS, etc.
+* TODO functional terminology such as representation, eIDAS, etc.
+* TODO abbreviations
 
 ## Conformance
 * TBD: based upon OpenID Connect iGov?
@@ -115,13 +116,16 @@ features for use with non-iGov-NL IdPs.
 * relation to token Exchange (RFC8693); limiting scope, switching of audiences, service intermediation (dienstbemiddeling)
 
 ## ID Tokens
+* iGov: usable
+** acr required
+
 ### Act/may\_act alike = ref RFC 8693
 * mandatory processing of "act" and "may\_act\_on\_behalf" like claims
 * TBD: impersonisation+user or user+authorizations?
 
 ## Request Objects
 * iGov: usable
-* prefered + signed
+* preferred + signed
 
 ## Discovery
 * iGov: usable
@@ -133,7 +137,7 @@ features for use with non-iGov-NL IdPs.
 ## Registration
 * not in iGov, additional
 * MAY/SHOULD for Client; reduce manual labour with risk of config mistakes
-* details of minimal registraton parameters?
+* TBD: details of minimal registraton parameters?
 * relation to RFC7591 OAuth 2.0 Dynamic Client Registration
 * MAY support RFC7592 OAuth 2.0 Dynamic Client Registration Management Protocol 
 * relation to acceptable methods and algorithms
@@ -158,12 +162,12 @@ features for use with non-iGov-NL IdPs.
 
 ## UserInfo Endpoint
 * iGov: usable
-* add PS256 as SHOULD
 
 ## Request Objects
 * iGov: usable
 
 ## Vectors of Trust
+* iGov: not well suited
 * Not to be used, eIDAS, LoA preferred
 
 ## Authentication Context
@@ -193,6 +197,8 @@ features for use with non-iGov-NL IdPs.
 * iGov: usable
 * add syntax of attribute(names)
 * add default 'Dutch' attributes in relation to BRP
+** Reference to ISA<sup>2</sup> for common semantics
+* applicable (recursively) when dealing with representation (act / may\_act\_on\_behalf alike) as well
 
 ## Scope Profiles
 * iGov: usable
@@ -210,7 +216,7 @@ features for use with non-iGov-NL IdPs.
 ## Claims Metadata
 * iGov: usable
 * add source/time of attribute for quality/reliability of attributes, fits well with aggregated/distributed claims, limited supported in tools though
-
+* criteria for acceptance up to relying party, beyond scope of this profile
 
 # Relation with 3rd party (Resource Servers)
 ## Service Intermediation
@@ -227,8 +233,10 @@ features for use with non-iGov-NL IdPs.
 
 # Privacy considerations
 * iGov: usable
-* Encrypt BSN
+* Encrypt BSN and other identifiers
+** either full token, or using aggregated/distributed claims
 * minimize scope, use RFC8693 token exchange to switch scopes
+* minimize use of attributes, in general
 
 # Security considerations
 * iGov: usable
