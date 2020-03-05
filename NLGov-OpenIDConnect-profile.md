@@ -115,7 +115,6 @@ features for use with non-iGov-NL IdPs.
 * relation to token Exchange (RFC8693); limiting scope, switching of audiences, service intermediation (dienstbemiddeling)
 
 ## ID Tokens
-* algorithms for signing and encryption
 ### Act/may\_act alike = ref RFC 8693
 * mandatory processing of "act" and "may\_act\_on\_behalf" like claims
 * TBD: impersonisation+user or user+authorizations?
@@ -123,7 +122,6 @@ features for use with non-iGov-NL IdPs.
 ## Request Objects
 * iGov: usable
 * prefered + signed
-* algorithms for signing and encryption
 
 ## Discovery
 * iGov: usable
@@ -150,7 +148,6 @@ features for use with non-iGov-NL IdPs.
 
 ## ID Tokens
 * iGov: usable
-* algorithms for signing and encryption
 * vot and vtr not applicable (acr for LoA preferred)
 ### Act/may\_act alike = ref RFC 8693
 * TBD: impersonisation+user or user+authorizations?
@@ -236,6 +233,12 @@ features for use with non-iGov-NL IdPs.
 # Security considerations
 * iGov: usable
 ** add NCSC TLS guidelines, SHOULD 'good', MAY 'sufficient', SHOULD NOT 'phase out'
+## algorithms
+* Default and acceptable algorithms for signing and encryption
+** RS256 MUST, PS256 SHOULD (preferred)
+** A256GCM SHOULD (preferred)
+** TODO: others
+
 ## web-app security
 * HSTS
 * CSP
