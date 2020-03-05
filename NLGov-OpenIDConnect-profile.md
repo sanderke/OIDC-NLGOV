@@ -264,6 +264,7 @@ features for use with non-iGov-NL IdPs.
 ## Federations
 * Work in progress @ OIDF
 ## Other features
+* jwt for access token; work in progress @ IETF (OAuth2)
 * jar, par & rar; work in progress @ IETF (OAuth2)
 
 
