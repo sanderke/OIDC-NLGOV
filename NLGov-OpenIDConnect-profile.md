@@ -97,8 +97,15 @@ The Service Provider or Relying Party requests either an authenticated identifie
 ** ids/attrs representative
 
 ## Web and Native app
-* Web, native
-** native app as instance or through backend
+This profile supports both web as well as native applications.
+
+For web applications, the web server of the Relying Party is always considered the Client. As this is a centrally managed server, this server is assumed to have a private key at its disposal.
+
+For native applications two deployment modes are supported under this profile. Either the native application has a back-end system of the provider, where the back-end system is considered the Client. Or each individual installation is its own Client and registered as such. Native applications where the generic software package itself (in an _appstore_) is configured as a single Client, are explicitly prohibited under this profile.
+
+Finally, hybrid forms of web- and native application are appearing as well. These are to be treated as either a web-application with a back-end server, or as a native application with individual "installations" as Client. It depends on the architecture and implementation which is applicable in a specific scenario.
+
+This profile builds upon best practices for native applications, such as [RFC8252](https://tools.ietf.org/html/rfc8252), along with additional security and privacy considerations.
 
 ## Service Intermediation
 * TODO FdK
