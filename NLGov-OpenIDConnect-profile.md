@@ -280,8 +280,14 @@ This profile does not directly place any constraints on the placement of claims 
 ## Federations
 * Work in progress @ OIDF
 ## Other features
-* jwt for access token; work in progress @ IETF (OAuth2)
-* jar, par & rar; work in progress @ IETF (OAuth2)
+A RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF. Future updates to this profile are likely to seek interoperability with such RFC once finalized. See [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/).
+
+A RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the OAuth2 working group at IETF.
+Similarly, a RFC for pushing Authorization Requests to relieve Clients from hosting `request_uri` based requests is being drafted in the OAuth2 working group at IETF.
+Both practices are already part of the OpenID Connect Core specifications.
+Future updates to this profile are likely to seek interoperability with these RFCs once finalized.
+
+* rar; work in progress @ IETF (OAuth2)
 
 
 #  Appendix Notices
