@@ -80,19 +80,33 @@ in this specification. A general-purpose client library MAY support additional
 features for use with non-iGov-NL IdPs.
 
 # Use case & context
-* not in iGov, additional
-* Intra & inter organisation
-** C2G, B2G
-** B2B, C2B not excluded
-* IDs/attrs
+This profiles supports several use cases. Design choices within this profile have been made with these use cases under consideration.
+
+The generic use case is a User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
+
+Authentication is provided in a federated manner. In other words, a Client system is relying upon another system for authentication.
+Either a central IDP / OpenID Provider (OP) or a (distributed) network of OPs, a.k.a. a federation or scheme is being used. The ecosystem supported by the OP can either be a single organisation (intra organisational) or can be an interorganisational setting, through either bilateral or multilateral agreements.
+In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
+
+The Service is offered by a (semi)governmental or public Service Provider. The use case therefor explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in other contexts.
+
+The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OP. As target User audiences are diverse, multiple types of identifiers can be supported.
+
+## Representation
 * representation
 ** ids/attrs representative
+
+## Web and Native app
 * Web, native
 ** native app as instance or through backend
-* Service Intermediation
-* No active federation support
+
+## Service Intermediation
+* TODO FdK
+
+## Misc
 * MUST NOT self-issued
 * E2E security
+
 
 # Flow
 * not in iGov, additional
@@ -277,8 +291,11 @@ This profile does not directly place any constraints on the placement of claims 
 
 # Future updates
 * not part of iGov
+
 ## Federations
-* Work in progress @ OIDF
+This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain. However, no specific support or requirements for federations are included in this version of this profile.
+The OpenID Foundation is currently drafting a specification for explicit support of federations using OpenID Connect. Future updates to this profile are likely to adopt this specification once finalized. See [Federation at the OpenID Foundation](https://openid.net/tag/federation/).
+
 ## Other features
 A RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF. Future updates to this profile are likely to seek interoperability with such RFC once finalized. See [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/).
 
