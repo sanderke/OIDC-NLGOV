@@ -433,7 +433,21 @@ in the JSON Web Algorithms (JWA) specification.
 * TODO move algorithms to section on algorithms.
 
 ## Request Objects
-* iGov: usable
+OpenID Providers MUST accept requests containing a request object signed by
+the Client's private key. Servers MUST validate the signature on such requests
+against the Client's registered public key. OpenID Connect Providers MUST
+accept request objects encrypted with the server's public key.
+
+OpenID Providers SHOULD accept request objects by reference using the `request_uri`
+parameter.
+
+Both of these methods allow for clients to create a request that is protected
+from tampering through the browser, allowing for a higher security mode of
+operation for clients and applications that require it. Clients are not
+required to use request objects, but OpenID Providers are required to support
+requests using them.
+
+* TODO: contrary to OIDC core, use unique requests and no overrides in CGI parameters. That is in line with PAR (still under development).
 
 ## Vectors of Trust
 * iGov: not well suited
