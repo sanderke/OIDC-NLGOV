@@ -363,7 +363,68 @@ are similarly considered public sectoral identifiers.
 * TBD: include PP-pseudonyms as pairwise?
 
 ## UserInfo Endpoint
-* iGov: usable
+OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the sub
+(subject) claim. It is expected that the sub claim will remain pseudonymous in
+use cases where obtaining personal information is not needed.
+
+Support for a UserInfo Endpoint is important for maximum client implementation
+interoperability even if no additional user information is returned. Clients
+are not required to call the UserInfo Endpoint, but should not receive an
+error if they do.
+
+In an example transaction, the client sends a request to the UserInfo Endpoint
+like the following:
+
+
+
+    GET /userinfo HTTP/1.1
+    Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJleHAiOjE0MTg3MDI0MTIsIm
+      F1ZCI6WyJjMWJjODRlNC00N2VlLTRiNjQtYmI1Mi01Y2RhNmM4MWY3ODgiXSwiaXNzIjo
+      iaHR0cHM6XC9cL2lkcC1wLmV4YW1wbGUuY29tXC8iLCJqdGkiOiJkM2Y3YjQ4Zi1iYzgx
+      LTQwZWMtYTE0MC05NzRhZjc0YzRkZTMiLCJpYXQiOjE0MTg2OTg4MTJ9i.HMz_tzZ90_b
+      0QZS-AXtQtvclZ7M4uDAs1WxCFxpgBfBanolW37X8h1ECrUJexbXMD6rrj_uuWEqPD738
+      oWRo0rOnoKJAgbF1GhXPAYnN5pZRygWSD1a6RcmN85SxUig0H0e7drmdmRkPQgbl2wMhu
+      -6h2Oqw-ize4dKmykN9UX_2drXrooSxpRZqFVYX8PkCvCCBuFy2O-HPRov_SwtJMk5qjU
+      WMyn2I4Nu2s-R20aCA-7T5dunr0iWCkLQnVnaXMfA22RlRiU87nl21zappYb1_EHF9ePy
+      q3Q353cDUY7vje8m2kKXYTgc_bUAYuW-W3SMSw5UlKaHtSZ6PQICoA
+    Accept: text/plain, application/json, application/*+json, */*
+    Host: idp-p.example.com
+    Connection: Keep-Alive
+    User-Agent: Apache-HttpClient/4.2.3 (java 1.5)
+
+
+And receives a document in response like the following:
+
+
+
+    HTTP/1.1 200 OK
+    Date: Tue, 16 Dec 2014 03:00:12 GMT
+    Access-Control-Allow-Origin: *
+    Content-Type: application/json;charset=ISO-8859-1
+    Content-Language: en-US
+    Content-Length: 333
+    Connection: close
+
+    {
+       "sub": "6WZQPpnQxV",
+       "iss": "https://idp-p.example.com"
+       "given_name": "Stephen",
+       "family_name": "Emeritus",
+    }
+
+
+OpenID Providers MUST support the generation of JWT encoded responses from the
+UserInfo Endpoint in addition to unsigned JSON objects. Signed responses MUST
+be signed by the OpenID Provider's key, and encrypted responses MUST be
+encrypted with the authorized client's public key. The OpenID Provider MUST
+support the RS256 signature method (the Rivest, Shamir, and Adleman (RSA)
+signature algorithm with a 256-bit hash), SHOULD support PS256 (RSA signature
+with 256-bit SHA2 digest using PSS signature padding scheme) and MAY use
+other asymmetric signature and encryption methods at least equally strong listed
+in the JSON Web Algorithms (JWA) specification.
+
+* TBD: drop support for unsigned UserInfo?
+* TODO move algorithms to section on algorithms.
 
 ## Request Objects
 * iGov: usable
