@@ -264,6 +264,9 @@ aud
 sub
 
     REQUIRED. The identifier of the user. OpenID Providers MUST support a pairwise identifier in accordance with OpenID Connect Core section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
+sub\_id\_type
+
+	REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interopable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the sub\_id\_type MUST be a URI.
 acr
 
     REQUIRED. The LoA the user was authenticated at. MUST be a member of the acr_values list from the authentication request. See Authentication Context for more details.
@@ -321,13 +324,16 @@ Its claims are as follows:
             "auth_time": 1418698782,
             "exp": 1418699412,
             "sub": "6WZQPpnQxV",
+			"sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
             "nonce": "188637b3af14a",
             "aud": [
               "c1bc84e4-47ee-4b64-bb52-5cda6c81f788"
             ],
             "iss": "https://idp-p.example.com/",
             "acr": "http://eidas.europa.eu/LoA/substantial",
-            "iat": 1418698812
+            "iat": 1418698812,
+			"jti": "a65c560d-085c-466e-97c5-f8639fca5ea7",
+            "nbf": 1418699112,
       }
 
 
