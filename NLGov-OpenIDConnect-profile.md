@@ -93,8 +93,11 @@ The Service is offered by a (semi)governmental or public Service Provider. The u
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OP. As target User audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
-* representation
-** ids/attrs representative
+This profile supports several use cases for representation, which applies when an End-User intends to consume an online Service that requires authentication on behalf of a Natural Person or Legal Entity (the Service Consumer). The End-User is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily on legal grounds, or a chain of representation relationships.
+
+The Service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
+
+This profile uses the delegation Use Case as specified in [RFC8693](https://tools.ietf.org/html/rfc8693) as a basis.
 
 ## Web and Native app
 This profile supports both web as well as native applications.
