@@ -332,8 +332,35 @@ Its claims are as follows:
 
 
 ## Pairwise Identifiers
-* iGov: usable
-* sectoral/public types
+Pairwise identifiers specified in OpenID Connect Core section 8 help protect
+an end user's privacy by allowing an OpenID Provider to represent a single
+user with a different subject identifier (sub) for every Client the user
+connects to. This technique can help mitigate correlation of a user between
+multiple clients by preventing the clients from using the subject identifier
+(the sub claim) to track a user between different sites and applications. Use
+of pairwise identifiers does not prevent clients from correlating data based
+on other identifying attributes such as names, phone numbers, email addresses,
+document numbers, or other attributes. However, since not all transactions
+require access to these attributes, but a subject identifier is always
+required, a pairwise identifier will aid in protecting the privacy of end
+users as they navigate the system.
+
+OpenID Providers MUST support pairwaise identifiers for cases where clients
+require this functionality. OpenID Providers MAY support public identifiers
+for frameworks where public identifiers are required, or for cases where
+public identifiers are shared as attributes and the framework does not have a
+requirement for subject anonymity.
+
+The _Burger Service Number_ (citizen service number, or _BSN_) is often used
+in the Netherlands as identifier for citizens or natural persons. The BSN is
+considered a public sectoral identifier in this profile.
+Note that the BSN MUST only be used by Relying Parties for Service eligible
+for using the BSN and the BSN SHOULD be encrypted.
+
+Other public identifiers, such as the RSIN or KvK number for legal entities,
+are similarly considered public sectoral identifiers.
+
+* TBD: include PP-pseudonyms as pairwise?
 
 ## UserInfo Endpoint
 * iGov: usable
