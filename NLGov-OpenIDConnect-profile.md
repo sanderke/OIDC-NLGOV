@@ -46,6 +46,7 @@ defined by OAuth 2.0, the terms "Claim Name", "Claim Value", and
 "JSON Web Token (JWT)" defined by JSON Web Token (JWT), 
 and the terms defined by OpenID Connect Core 1.0.
 
+- "Browser-based application" (from [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps))
 * TODO functional terminology such as representation, eIDAS, etc.
 * TODO abbreviations
 
@@ -723,6 +724,8 @@ following 2048-bit RSA key:
 ** TODO: others
 
 ## web-app security
+When using browser-based applications, 
+
 * HSTS
 * CSP
 * CORS
