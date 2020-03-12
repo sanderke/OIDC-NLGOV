@@ -111,9 +111,10 @@ This profile builds upon best practices for native applications, such as [RFC825
 * TODO FdK
 
 ## Misc
-* MUST NOT self-issued
-* E2E security
+OpenID Connect Core supports self-issued OpenID Connect Provider. As the context of this profile is centered around (semi-)governemental and public domain use cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
 
+As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to OPs, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called hotspot, points were data collection can be concentrated.
+To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
 
 # Flow
 * not in iGov, additional
