@@ -462,11 +462,183 @@ requests using them.
 * avoid amr, use acr instead
 
 ## Discovery
-* iGov: usable; (URL = discovery endpoint = identifier of issuer, mandatory?)
-* MUST support by OP
-* guidelines for caching duration and handling updates/changes
-** include JWK_uri content updates
-* relation to acceptable methods and algorithms
+OpenID Connect Discovery standard provides a standard, programatic way for
+clients to obtain configuration details for communicating with OpenID
+Providers. Discovery is an important part of building scalable federation
+ecosystems. Compliant OPs under this profile MUST publish their server
+metadata to help minimize configuration errors and support automation for
+scale-able deployments.
+
+Exposing a Discovery endpoint does NOT inherently put the OpenID Provider at
+risk to attack. Endpoints and parameters specified in the Discovery document
+SHOULD be considered public information regardless of the existence of the
+Discovery document.
+
+Access to the Discovery document MAY be protected with existing web
+authentication methods if required by the Provider. Credentials for the
+Discovery document are then managed by the Provider. Support for these
+authentication methods is outside the scope of this profile.
+
+Endpoints described in the Discovery document MUST be secured in accordance
+with this profile and MAY have additional controls the Provider wishes to
+support.
+
+All OpenID Providers are uniquely identified by a URL known as the issuer.
+This URL serves as the prefix of a service discovery endpoint as specified in
+the OpenID Connect Discovery standard or the [OAuth2 Authorization Server
+Metadata, RFC8414](https://tools.ietf.org/html/rfc8414). The OP SHOULD include
+a `signed_metadata` claim, as described in RFC8414 section 2.1.
+
+Note that for privacy considerations, only direct requests to the server metadata
+document SHOULD be used. The webfinger method to locate the relevant OP and
+its metadata, as described in OpenID Discovery section 2, MUST NOT be used.
+
+
+The discovery document MUST contain at minimum the following fields:
+
+issuer
+
+    REQUIRED. The fully qualified issuer URL of the OpenID Provider.
+authorization_endpoint
+
+    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint defined by [RFC6749].
+token_endpoint
+
+    REQUIRED. The fully qualified URL of the server's token endpoint defined by [RFC6749].
+introspection_endpoint
+
+    OPTIONAL. The fully qualified URL of the server's introspection endpoint defined by OAuth Token Introspection.
+revocation_endpoint
+
+    OPTIONAL. The fully qualified URL of the server's revocation endpoint defined by OAuth Token Revocation.
+jwks_uri
+
+    REQUIRED. The fully qualified URI of the server's public key in JWK Set format. For verifying the signatures on the id_token.
+scopes_supported
+
+    REQUIRED. The list of scopes, including iGov scopes, the server supports.
+claims_supported
+
+    REQUIRED. The list of claims available in the supported scopes. See below.
+vot
+
+    OPTIONAL. The vectors supported.
+acr_values
+
+    OPTIONAL. The acrs supported. See Level of Assurance.
+
+The following example shows the JSON document found at a discovery endpoint
+for an authorization server:
+
+
+
+    {
+      "request_parameter_supported": true,
+      "id_token_encryption_alg_values_supported": [
+        "RSA-OAEP", "RSA-OAEP-256"
+      ],
+      "registration_endpoint": "https://idp-p.example.com/register",
+      "userinfo_signing_alg_values_supported": [
+        "RS256", "RS384", "RS512"
+      ],
+      "token_endpoint": "https://idp-p.example.com/token",
+      "request_uri_parameter_supported": false,
+      "request_object_encryption_enc_values_supported": [
+        "A192CBC-HS384", "A192GCM", "A256CBC+HS512",
+        "A128CBC+HS256", "A256CBC-HS512",
+        "A128CBC-HS256", "A128GCM", "A256GCM"
+      ],
+      "token_endpoint_auth_methods_supported": [
+        "private_key_jwt",
+      ],
+      "userinfo_encryption_alg_values_supported": [
+        "RSA-OAEP", "RSA-OAEP-256"
+      ],
+      "subject_types_supported": [
+        "public", "pairwise"
+      ],
+      "id_token_encryption_enc_values_supported": [
+        "A192CBC-HS384", "A192GCM", "A256CBC+HS512",
+        "A128CBC+HS256", "A256CBC-HS512", "A128CBC-HS256",
+        "A128GCM", "A256GCM"
+      ],
+      "claims_parameter_supported": false,
+      "jwks_uri": "https://idp-p.example.com/jwk",
+      "id_token_signing_alg_values_supported": [
+        "RS256", "RS384", "RS512"
+      ],
+      "authorization_endpoint": "https://idp-p.example.com/authorize",
+      "require_request_uri_registration": false,
+      "introspection_endpoint": "https://idp-p.example.com/introspect",
+      "request_object_encryption_alg_values_supported": [
+        "RSA-OAEP", "RSA-OAEP-256"
+      ],
+      "service_documentation": "https://idp-p.example.com/about",
+      "response_types_supported": [
+        "code", "token"
+      ],
+      "token_endpoint_auth_signing_alg_values_supported": [
+        "RS256", "RS384", "RS512"
+      ],
+      "revocation_endpoint": "https://idp-p.example.com/revoke",
+      "request_object_signing_alg_values_supported": [
+        "HS256", "HS384", "HS512", "RS256", "RS384", "RS512"
+      ],
+      "claim_types_supported": [
+        "normal"
+      ],
+      "grant_types_supported": [
+        "authorization_code",
+      ],
+      "scopes_supported": [
+        "profile", "openid", "doc"
+      ],
+      "userinfo_endpoint": "https://idp-p.example.com/userinfo",
+      "userinfo_encryption_enc_values_supported": [
+        "A192CBC-HS384", "A192GCM", "A256CBC+HS512","A128CBC+HS256",
+        "A256CBC-HS512", "A128CBC-HS256", "A128GCM", "A256GCM"
+      ],
+      "op_tos_uri": "https://idp-p.example.com/about",
+      "issuer": "https://idp-p.example.com/",
+      "op_policy_uri": "https://idp-p.example.com/about",
+      "claims_supported": [
+        "sub", "name", "vot", "acr"
+      ],
+      "acr" " ??? "
+    }
+
+
+It is RECOMMENDED that servers provide cache information through HTTP headers
+and make the cache valid for at least one week.
+
+The server MUST provide its public key in JWK Set format, such as the
+following 2048-bit RSA key:
+
+
+
+    {
+      "keys": [
+        {
+          "alg": "RS256",
+          "e": "AQAB",
+          "n": "o80vbR0ZfMhjZWfqwPUGNkcIeUcweFyzB2S2T-hje83IOVct8gVg9Fx
+                vHPK1ReEW3-p7-A8GNcLAuFP_8jPhiL6LyJC3F10aV9KPQFF-w6Eq6V
+                tpEgYSfzvFegNiPtpMWd7C43EDwjQ-GrXMVCLrBYxZC-P1ShyxVBOze
+                R_5MTC0JGiDTecr_2YT6o_3aE2SIJu4iNPgGh9MnyxdBo0Uf0TmrqEI
+                abquXA1-V8iUihwfI8qjf3EujkYi7gXXelIo4_gipQYNjr4DBNl
+                E0__RI0kDU-27mb6esswnP2WgHZQPsk779fTcNDBIcYgyLujlcUATEq
+                fCaPDNp00J6AbY6w",
+          "kty": "RSA",
+          "kid": "rsa1"
+        }
+      ]
+    }
+
+
+* TOOD; (URL = discovery endpoint = identifier of issuer, mandatory?)
+* TODO: guidelines for caching duration and handling updates/changes
+** TODO: include JWK_uri content updates
+* TODO: relation to acceptable methods and algorithms
 
 ## Dynamic Registration
 * iGov: usable
