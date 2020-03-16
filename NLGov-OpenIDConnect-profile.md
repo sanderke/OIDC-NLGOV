@@ -717,6 +717,7 @@ following 2048-bit RSA key:
 # Security considerations
 * iGov: usable
 ** add NCSC TLS guidelines, SHOULD 'good', MAY 'sufficient', SHOULD NOT 'phase out'
+** HSTS
 ## algorithms
 * Default and acceptable algorithms for signing and encryption
 ** RS256 MUST, PS256 SHOULD (preferred)
@@ -724,16 +725,38 @@ following 2048-bit RSA key:
 ** TODO: others
 
 ## web-app security
-When using browser-based applications, 
+When using Browser-based applications (also referred to as "single-page applications"), 
+tokens provided by an OpenID provider are processed and stored in the browser. As such,
+they are vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft.
 
-* HSTS
-* CSP
-* CORS
-* SRI
-* Cookie security
-* other anti-XSS/CSRF techniques
-* short-lived sessions
+In Use Cases that involve Browser-based applications, OpenID Providers and applications 
+MUST follow the best practices as specified in [OAuth 2.0 for Browser-Based Apps]
+(https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps). 
+
+In addition to these best practices, this profile provides specific security measures 
+that aid in mitigating these attacks.
+
+- OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
+tokens; refresh tokens MUST rotate on each use.
+- OpenID Providers MUST support the necessary [Cross-Origin Resource Sharing (CORS)]
+(https://www.w3.org/TR/cors/) headers to allow browsers to make requests
+to its endpoints and SHOULD NOT use wildcard origins.
+- Browser-based applications SHOULD restrict its JavaScript execution to a set of statically
+hosted scripts via a [Content Security Policy (CSP)](https://www.w3.org/TR/CSP3/).
+- Browser-based applications SHOULD use [Subresource Integrity (SRI)](https://www.w3.org/TR/SRI/)
+to verify that external dependencies that they fetch (e.g. via a CDN) are not unexpectedly
+manipulated.
+
+
+
+TODO: het gebruik van httpOnly cookies voor tokens is meer voor oAuth, omdat het gaat over 
+toegang tot een resource server. Wellicht moeten we daar aangeven dat een AS naast een
+access_token in de header OOK een httpOnly cookie zet met een token dat afwijkt van het
+access token en dat de RS bij elk request zowel het access token als de httpOnly cookie
+valideert voor toegang. Hier valt ook webcrypto API onder.
 * utilize webcrypto API
+* Cookie security
+
 ## native app / SPA / JS security
 * RFC8252
 ** Strict in-app browser only!
