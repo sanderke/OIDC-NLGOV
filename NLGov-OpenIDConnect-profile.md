@@ -730,16 +730,16 @@ tokens provided by an OpenID provider are processed and stored in the browser. A
 they are vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft.
 
 In Use Cases that involve Browser-based applications, OpenID Providers and applications 
-MUST follow the best practices as specified in [OAuth 2.0 for Browser-Based Apps]
-(https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps). 
+MUST follow the best practices as specified in 
+[OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps). 
 
 In addition to these best practices, this profile provides specific security measures 
 that aid in mitigating these attacks.
 
 - OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
 tokens; refresh tokens MUST rotate on each use.
-- OpenID Providers MUST support the necessary [Cross-Origin Resource Sharing (CORS)]
-(https://www.w3.org/TR/cors/) headers to allow browsers to make requests
+- OpenID Providers MUST support the necessary 
+[Cross-Origin Resource Sharing (CORS)](https://www.w3.org/TR/cors/) headers to allow browsers to make requests
 to its endpoints and SHOULD NOT use wildcard origins.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically
 hosted scripts via a [Content Security Policy (CSP)](https://www.w3.org/TR/CSP3/).
