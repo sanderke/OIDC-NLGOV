@@ -244,29 +244,29 @@ In case of a mutual TLS connection (mTLS) between the client and the server, the
 * relation to token Exchange (RFC8693); limiting scope, switching of audiences, service intermediation (dienstbemiddeling)
 
 ## ID Tokens
-All clients MUST validate the signature of an ID Token before accepting it using the public key of the issuing server, which is published in JSON Web Key
-(JWK) format. ID Tokens MAY be encrypted using the appropriate key of the requesting client. 
-
-In addition to the OpenID Connect Core section 2 the following claims are mandatory:
-
-acr
-> REQUIRED see "Authentication Context" for applicable values 
-
+All clients MUST validate the signature of an ID Token before accepting it
+using the public key of the issuing server, which is published in JSON Web Key
+(JWK) format. ID Tokens MAY be encrypted using the appropriate key of the
+requesting client.
 
 Clients MUST verify the following in received ID tokens:
 
 iss
-> The "issuer" field is the Uniform Resource Locater (URL) of the expected issuer 
 
+    The `issuer` Claim is the Uniform Resource Locater (URL) of the expected issuer.
 aud
-> The "audience" field contains the client ID of the client
- 
+
+    The `audience` Claim contains the client ID of the client.
 exp, iat, nbf
-> The "expiration", "issued at", and "not before" timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges 
 
+    The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges.
+acr
 
-* iGov: usable
-** acr required
+    The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See "Authentication Context" for applicable values.
+
+represents
+
+    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 ### Representation
 If applcable, Representation is explicitly mentioned in the form of a `represents` Claim. 
