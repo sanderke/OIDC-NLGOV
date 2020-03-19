@@ -269,22 +269,32 @@ represents
     in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 ### Representation
-If applcable, Representation is explicitly mentioned in the form of a `represents` Claim. 
+If Representation is applcable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [RFC 8693](https://tools.ietf.org/html/rfc8693#section-1.1).
 
-The End-User is always mentioned in the `sub` Claim, the represented Service Consumer in the `represents` Claim. In case a chain representation is applicable, the represented Service Consumer is 
+As such, all clients MUST process `representation` claims used, in case Representation is applicable.
 
-If a representation relation in the form of a `represents` Claim is present in the ID Token, 
-In case Representation is applicable, the `represents` Claim provides information about applicable representation relations.
+This profile specifies representation relations in ID Tokens as follows:
+- The End-User is always mentioned in the `sub` Claim;
+- The represented Service Consumer is mentioned in the `represents` Claim.
+- In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `representation` Claim.
 
+A sample chain representation may look like:
 
-All clients MUST process `representation` claims used, in case Representation is applicable.
-
-
-
-
-Act/may\_act alike = ref RFC 8693
-* mandatory processing of "act" and "may\_act\_on\_behalf" like claims
-* TBD: impersonisation+user or user+authorizations?
+      {
+        /* End user */
+        sub": "RKyLpEVr1L",
+			  "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+        "represents": {
+          /* Intermediary in representation chain */
+          sub": "q5r5sd8ffY",
+			    "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+          "represents": {
+            /* Service Consumer */
+            sub": "4Yg8u72NxR",
+			      "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+          }
+        }
+      }
 
 ## Request Objects
 * iGov: usable
