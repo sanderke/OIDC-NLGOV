@@ -98,8 +98,6 @@ This profile supports several use cases for representation, which applies when a
 
 The Service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
-This profile uses the delegation Use Case as specified in [RFC8693](https://tools.ietf.org/html/rfc8693) as a basis.
-
 ## Web and Native app
 This profile supports both web as well as native applications.
 
@@ -232,7 +230,21 @@ https://idp-p.example.com/authorize?
 * iGov: usable
 ** acr required
 
-### Act/may\_act alike = ref RFC 8693
+### Representation
+If applcable, Representation is explicitly mentioned in the form of a `represents` Claim. 
+
+The End-User is always mentioned in the `sub` Claim, the represented Service Consumer in the `represents` Claim. In case a chain representation is applicable, the represented Service Consumer is 
+
+If a representation relation in the form of a `represents` Claim is present in the ID Token, 
+In case Representation is applicable, the `represents` Claim provides information about applicable representation relations.
+
+
+All clients MUST process `representation` claims used, in case Representation is applicable.
+
+
+
+
+Act/may\_act alike = ref RFC 8693
 * mandatory processing of "act" and "may\_act\_on\_behalf" like claims
 * TBD: impersonisation+user or user+authorizations?
 
@@ -287,7 +299,7 @@ sub
     REQUIRED. The identifier of the user. OpenID Providers MUST support a pairwise identifier in accordance with OpenID Connect Core section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
 sub\_id\_type
 
-	REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interopable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the sub\_id\_type MUST be a URI.
+	  REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interopable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the sub\_id\_type MUST be a URI.
 acr
 
     REQUIRED. The LoA the user was authenticated at. MUST be a member of the acr_values list from the authentication request. See Authentication Context for more details.
