@@ -224,11 +224,49 @@ https://idp-p.example.com/authorize?
 * claims parameter
 
 ## Requests to the Token Endpoint
+In addition to the requirements specified in Section 2.3.1 of the NL Gov OAuth2 profile, the following claims MUST be included:
+The following parameters are specified:
+
+grant_type
+> MUST be set to authorization_code.
+ 
+code
+> The value of the code parameter returned in the authorization response.
+
+client_assertion_type
+> MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
+ 
+client_assertion
+> The value of the signed client authentication JWT generated as described below. The RP must generate a new assertion JWT for each call to the token endpoint. 
+
+In case of a mutual TLS connection (mTLS) between the client and the server, the JWT assertion can be omitted.
+
 * iGov: usable
 * mTLS (RFC-to-be-8705) as alternative client authentication method, influences parameters client\_assertion
 * relation to token Exchange (RFC8693); limiting scope, switching of audiences, service intermediation (dienstbemiddeling)
 
 ## ID Tokens
+All clients MUST validate the signature of an ID Token before accepting it using the public key of the issuing server, which is published in JSON Web Key
+(JWK) format. ID Tokens MAY be encrypted using the appropriate key of the requesting client. 
+
+In addition to the OpenID Connect Core section 2 the following claims are mandatory:
+
+acr
+> REQUIRED see "Authentication Context" for applicable values 
+
+
+Clients MUST verify the following in received ID tokens:
+
+iss
+> The "issuer" field is the Uniform Resource Locater (URL) of the expected issuer 
+
+aud
+> The "audience" field contains the client ID of the client
+ 
+exp, iat, nbf
+> The "expiration", "issued at", and "not before" timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges 
+
+
 * iGov: usable
 ** acr required
 
