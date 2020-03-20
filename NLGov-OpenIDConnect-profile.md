@@ -297,10 +297,37 @@ A sample chain representation may look like:
       }
 
 ## Request Objects
+Clients MAY optionally send requests to the authorization endpoint using the
+request or request_uri parameter as defined by OpenID Connect. 
+The use of the request_uri is preferred because of browser limits and network latency
+
+Request objects MUST be signed by the client's registered key. Request objects MAY be 
+encrypted to the authorization server's public key.
+
 * iGov: usable
 * preferred + signed
 
 ## Discovery
+Client SHOULD use OP discovery to avoid manual configuration and risk of mistakes
+Clients and protected resources SHOULD cache OpenID Provider metadata once an
+OP has been discovered and used by the client. 
+
+Relying Parties and other Clients use the public keys made available from the jwks endpoint to 
+validate the signature on tokens. The OIDC spec recommends using the HTTP Cache-Control Header 
+option and the max-age directive to inform clients how long they can cache the public keys for 
+before returning to the jwks_uri location to retrieve replacement keys from the IdP.
+
+To rotate keys, the decrypting party can publish new keys at its jwks_uri location and 
+remove from the JWK Set those that are being decommissioned. The jwks_uri SHOULD include a 
+Cache-Control header in the response that contains a max-age directive, which enables the 
+encrypting party to safely cache the JWK Set and not have to re-retrieve the document for every 
+encryption event. 
+The decrypting party SHOULD 
+remove decommissioned keys from the JWK Set referenced by jwks_uri but retain them internally 
+for some reasonable period of time, coordinated with the cache duration, to facilitate a smooth 
+transition between keys by allowing the encrypting party some time to obtain the new keys. 
+The cache duration SHOULD also be coordinated with the issuance of new signing keys.
+
 * iGov: usable
 * SHOULD for client; reduce manual labour with risk of config mistakes
 * guidelines for caching duration and handling updates/changes
