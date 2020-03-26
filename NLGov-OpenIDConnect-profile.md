@@ -812,9 +812,21 @@ following recommendations ensure maximum cross-jurisdictional
 interoperability, while setting Client expectations on the type of data they
 may acquire.
 
-* add syntax of attribute(names)
-* add default 'Dutch' attributes in relation to BRP
-** Reference to ISA<sup>2</sup> for common semantics
+## Claim Interoperability
+As per section 5.1.2 of the OpenID Core specification, claims names SHOULD be
+collision-resistant. It is RECOMMENDED to use domain name based URIs as
+attribute names.
+
+OpenID Core section 5.1 specifies a list of standard claims. In a (Dutch)
+governmental, attribute Claims are commonly defined in the BRP.
+Usage or interoperability with the ISA<sup>2</sup> core vocabularies is
+RECOMMENDED.
+
+* TODO: add proper BRP / GBA-V reference.
+* TBD: add default/recommended mapping OIDC <-> BRP?
+** usable: name, given_name (probably), family_name (possibly), gender, email, phone, locale
+** unusable: middle_name (ambiguous), birthdate (unknown day not in OIDC), address (insufficient detail split out, no address type)
+** inapplicable: nickname, profile, preferred_username, website, zoneinfo
 
 ## Claims Supported
 Discovery mandates the inclusion of the `claims_supported` field that defines
@@ -824,29 +836,74 @@ asserting it can provide a user claim does not imply that this data is
 available for all its users: clients MUST be prepared to receive partial data.
 Providers MAY return claims outside of the `claims_supported` list, but they
 MUST still ensure that the extra claims to not violate the privacy policies
-set out by the federation, if applicable. The Provider MUST ensure to comply
-with applicable privacy legislation (e.g. GDPR) at all times.
-
+set out by the trust framework the Provider supports. The Provider MUST ensure
+to comply with applicable privacy legislation (e.g. informed consent as per
+GDPR) at all times.
 
 * TODO: applicable (recursively) when dealing with representation (act / may\_act\_on\_behalf alike) as well
 
 ## Scope Profiles
-* iGov: usable
-** note that NL often _is_ able to provide a single identifier for all citizens based on an authoritative register of citizens
-** 'profile' profile is very wide, from privacy/data protection point of view
-** doc profile not well suited for NL
+In the interests of data minimization balanced with the requirement to
+successfully identify the individual signing in to a service, the default
+OpenID Connect profiles may not be appropriate.
+
+Matching of the identity assertion based on claims to a local identifier or
+'account' related to the individual identity at a level of assurance is a
+requirement where the government in question is not able to provide a single
+identifier for all citizens based on an authoritative register of citizens.
+
+The requirement for matching is also of importance where a cross-border or
+cross-jurisdiction authentication is required and therefore the availability
+of a single identifier (e.g. social security number) cannot be guaranteed for
+the individual wishing to authenticate.
+
+However, in the Netherlands a common identifier (BSN) for citizines is
+available for eligable organizations. Nationwide interoperable pseudonyms
+per Relying Party for non-eligable organizations is supported as well.
+
+The default 'profile' scope of OIDC is very wide, which is undesired from a
+privacy perspective. As such, the profile scope SHOULD NOT be used.
+
+Note that the 'doc' profile described in the iGov profile for OpenID Connect
+is not in common use in the Netherlands and therefor not included in this
+profile.
 
 ## Claims Request
-* iGov: usable
+OpenID Core section 5.5 defines a method for a client to request specific
+claims in the UserInfo object. OpenID Providers MUST support this claims
+parameter in the interest of data minimization - that is, the Provider only
+returns information on the subject the Client specifically asks for, and does
+not volunteer additonal information about the subject.
+
+Clients requesting the profile scope MAY provide a claims request parameter.
+If the claims request is omitted, the OpenID Provider SHOULD provide a default
+claims set that it has available for the subject, in accordance with any
+policies set out by the trust framework the Provider supports.
+
 * TBD: claims parameter has benefits functionally/security wise, support may be less widespread though
 
 ## Claims Response
-* iGov: mostly irrelevant, as doc profile less usefull in NL
+Response to a UserInfo request MUST match the scope and claims requested to
+avoid having a OpenID Provider over-expose a user's identity information.
+
+Claims response MAY also make use of the aggregated and/or distributed claims
+structure to refer to the original source of the subject's claims.
 
 ## Claims Metadata
-* iGov: usable
-* add source/time of attribute for quality/reliability of attributes, fits well with aggregated/distributed claims, limited supported in tools though
-* criteria for acceptance up to relying party, beyond scope of this profile
+Claims Metadata (such as locale or the confidence level the OpenID Provider
+has in the Claim for the user) can be expressed as attributes within the
+UserInfo object, but are outside the scope of this document. These types of
+claims are best described by the trust framework the clients and OpenID
+Providers operate within.
+It is up to the Relying Party to assess the level of confidence provided by
+the OP or the trust framework, per claim. Expressing or evaluating such
+confidence is beyond the scope of this profile.
+
+In order to provide a source, including integrity and optionally confidentiality,
+and OP SHOULD be able to provide aggregated or distributed claims. The signee of
+such aggregated or distributed claims implies the source and can support in
+assessing the level confidence or quality of the claim.
+
 
 # Relation with 3rd party (Resource Servers)
 ## Service Intermediation
