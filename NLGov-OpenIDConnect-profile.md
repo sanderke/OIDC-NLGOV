@@ -749,40 +749,14 @@ following 2048-bit RSA key:
 * TODO: relation to acceptable methods and algorithms
 
 ## Dynamic Registration
-Dynamic Registration allows for authorized Clients to on-board programatically 
-without administrative intervention. This is particularly important in ecosystems 
-with many potential Clients, including Mobile Apps acting as independent Clients. 
-Authorization servers MUST support dynamic client registration, and clients MAY 
-register using the Dynamic Client Registration Protocol for authorization code 
-grant types. Clients MUST NOT dynamically register for the client credentials 
-grant type. Authorization servers MAY limit the scopes available to dynamically 
-registered clients.
+If the OP is acting as an NL-iGov OAuth Authorization Server (NL-iGov OAuth2
+profile), then Dynamic Registration MUST be supported in accordance with that
+specification (see section 3.1.3).
 
-Authorization servers MAY protect their Dynamic Registration endpoints by requiring 
-clients to present credentials that the authorization server would recognize as 
-authorized participants. Authorization servers MAY accept signed software statements 
-as described in [RFC7591] issued to client software developers from a trusted 
-registration entity. The software statement can be used to tie together many 
-instances of the same client software that will be run, dynamically registered, 
-and authorized separately at runtime. The software statement MUST include the 
-following client metadata parameters:
+In other cases, particularly when dealing with Browser-based applications or
+Native Apps, Dynamic Registration SHOULD be supported in accordance with the
+NL-iGov OAuth2 specification.
 
-redirect_uris
-
-    array of redirect URIs used by the client; subject to the requirements listed in Section 2.2.1
-grant_types
-
-    grant type used by the client; must be "authorization_code” or "client_credentials”
-jwks_uri or jwks
-
-    client's public key in JWK Set format; if jwks_uri is used it MUST be reachable by the Authorization Server and point to the client's public key set
-client_name
-
-    human-readable name of the client
-client_uri
-
-    URL of a web page containing further information about the client
-    
 * iGov: usable
 * SHOULD (Strongly recommended!) support by OP
 ** mandatory when native instance is client
