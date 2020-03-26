@@ -593,9 +593,12 @@ support.
 
 All OpenID Providers are uniquely identified by a URL known as the issuer.
 This URL serves as the prefix of a service discovery endpoint as specified in
-the OpenID Connect Discovery standard or the [OAuth2 Authorization Server
-Metadata, RFC8414](https://tools.ietf.org/html/rfc8414). The OP SHOULD include
-a `signed_metadata` claim, as described in RFC8414 section 2.1.
+the OpenID Connect Discovery standard and the [OAuth2 Authorization Server
+Metadata, RFC8414](https://tools.ietf.org/html/rfc8414). An OP SHOULD publish
+the same JSON metadata on both `/.well-known/openid-configuration` and
+`/.well-known/oauth-authorization-server`, and MAY publish on other locations.
+The OP SHOULD include a `signed_metadata` claim, as described in RFC8414 section
+2.1.
 
 Note that for privacy considerations, only direct requests to the server metadata
 document SHOULD be used. The webfinger method to locate the relevant OP and
@@ -750,7 +753,6 @@ following 2048-bit RSA key:
     }
 
 
-* TOOD; (URL = discovery endpoint = identifier of issuer, mandatory?)
 * TODO: relation to acceptable methods and algorithms
 
 ## Dynamic Registration
