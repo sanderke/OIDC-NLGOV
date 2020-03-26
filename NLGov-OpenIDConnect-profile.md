@@ -760,15 +760,31 @@ following 2048-bit RSA key:
 * SHOULD (Strongly recommended!) support by OP
 ** mandatory when native instance is client
 
-# User Info
-* iGov: usable
 
-## Claims Supported
-* iGov: usable
+# User Info
+The availability, quality, and reliability of an individual's identity
+attributes will vary greatly across jurisdictions and Provider systems. The
+following recommendations ensure maximum cross-jurisdictional
+interoperability, while setting Client expectations on the type of data they
+may acquire.
+
 * add syntax of attribute(names)
 * add default 'Dutch' attributes in relation to BRP
 ** Reference to ISA<sup>2</sup> for common semantics
-* applicable (recursively) when dealing with representation (act / may\_act\_on\_behalf alike) as well
+
+## Claims Supported
+Discovery mandates the inclusion of the `claims_supported` field that defines
+the claims a Client MAY expect to receive for the supported scopes. OpenID
+Providers MUST return claims on a best effort basis. However, a Provider
+asserting it can provide a user claim does not imply that this data is
+available for all its users: clients MUST be prepared to receive partial data.
+Providers MAY return claims outside of the `claims_supported` list, but they
+MUST still ensure that the extra claims to not violate the privacy policies
+set out by the federation, if applicable. The Provider MUST ensure to comply
+with applicable privacy legislation (e.g. GDPR) at all times.
+
+
+* TODO: applicable (recursively) when dealing with representation (act / may\_act\_on\_behalf alike) as well
 
 ## Scope Profiles
 * iGov: usable
