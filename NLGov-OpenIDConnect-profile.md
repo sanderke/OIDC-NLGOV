@@ -335,6 +335,42 @@ The cache duration SHOULD also be coordinated with the issuance of new signing k
 * relation to acceptable methods and algorithms
 
 ## Registration
+All clients MUST register with the authorization server. For client software that may be 
+installed on multiple client instances, such as native applications or web application software, 
+each client instance MAY receive a unique client identifier from the authorization server. 
+Clients that share client identifiers are considered public clients.
+
+Clients SHOULD use Dynamic Registration as per [RFC7591](https://tools.ietf.org/html/rfc7591) 
+to reduce manual labor and the risks of configuration errors. 
+Dynamic Client Registration Management Protocol [RFC7592](https://tools.ietf.org/html/rfc7592) 
+MAY be used by clients.
+An initial access token is REQUIRED for making the client registration request. 
+The client metadata MUST use the `authorization_code` and SHOULD use `jwks_uri` values.
+The use of `subject_type` `pairwise` is highly recommended(?)
+
+An example of a client registration request:
+> POST /connect/register HTTP/1.1
+  Content-Type: application/json
+  Accept: application/json
+  Host: server.example.com
+  Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJ ...
+
+>  {
+   "application_type": "web",
+   "redirect_uris":
+     ["https://client.example.org/callback",
+      "https://client.example.org/callback2"],
+   "client_name": "My Example",
+   "subject_type": "pairwise",
+   "sector_identifier_uri":
+     "https://other.example.net/file_of_redirect_uris.json",
+   "token_endpoint_auth_method": "client_secret_basic",
+   "jwks_uri": "https://client.example.org/my_public_keys.jwks",
+   "userinfo_encrypted_response_alg": "RSA1_5",
+   "userinfo_encrypted_response_enc": "A128CBC-HS256",
+   "contacts": ["mary@example.org"],
+  }
+
 * not in iGov, additional
 * MAY/SHOULD for Client; reduce manual labour with risk of config mistakes
 * TBD: details of minimal registraton parameters?
@@ -593,9 +629,12 @@ support.
 
 All OpenID Providers are uniquely identified by a URL known as the issuer.
 This URL serves as the prefix of a service discovery endpoint as specified in
-the OpenID Connect Discovery standard or the [OAuth2 Authorization Server
-Metadata, RFC8414](https://tools.ietf.org/html/rfc8414). The OP SHOULD include
-a `signed_metadata` claim, as described in RFC8414 section 2.1.
+the OpenID Connect Discovery standard and the [OAuth2 Authorization Server
+Metadata, RFC8414](https://tools.ietf.org/html/rfc8414). An OP SHOULD publish
+the same JSON metadata on both `/.well-known/openid-configuration` and
+`/.well-known/oauth-authorization-server`, and MAY publish on other locations.
+The OP SHOULD include a `signed_metadata` claim, as described in RFC8414 section
+2.1.
 
 Note that for privacy considerations, only direct requests to the server metadata
 document SHOULD be used. The webfinger method to locate the relevant OP and
@@ -718,6 +757,13 @@ for an authorization server:
 
 It is RECOMMENDED that servers provide cache information through HTTP headers
 and make the cache valid for at least one week.
+An OP SHOULD document its change procedure. In order to support automated
+transitions to configuraion updates, an OP SHOULD only make non-breaking changes
+and retain backward compatability when possible. It is RECOMMENDED an OP
+monitors usage of outdated configuration options used by any Relying Party and
+actively work with their administrators to update configurations.
+The above on caching an changed MUST be applied for the `jwks_uri` containing the
+OP's key set.
 
 The server MUST provide its public key in JWK Set format, such as the
 following 2048-bit RSA key:
@@ -743,9 +789,6 @@ following 2048-bit RSA key:
     }
 
 
-* TOOD; (URL = discovery endpoint = identifier of issuer, mandatory?)
-* TODO: guidelines for caching duration and handling updates/changes
-** TODO: include JWK_uri content updates
 * TODO: relation to acceptable methods and algorithms
 
 ## Dynamic Registration
