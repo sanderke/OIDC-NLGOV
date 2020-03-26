@@ -1,0 +1,7 @@
+/* Style for Logius Centrum voor Standaarden */
+
+@import "base.css";
+
+body {
+  background-image: url('logos-LogiusCvS.svg') ;
+}
