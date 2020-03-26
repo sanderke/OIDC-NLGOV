@@ -718,6 +718,13 @@ for an authorization server:
 
 It is RECOMMENDED that servers provide cache information through HTTP headers
 and make the cache valid for at least one week.
+An OP SHOULD document its change procedure. In order to support automated
+transitions to configuraion updates, an OP SHOULD only make non-breaking changes
+and retain backward compatability when possible. It is RECOMMENDED an OP
+monitors usage of outdated configuration options used by any Relying Party and
+actively work with their administrators to update configurations.
+The above on caching an changed MUST be applied for the `jwks_uri` containing the
+OP's key set.
 
 The server MUST provide its public key in JWK Set format, such as the
 following 2048-bit RSA key:
@@ -744,8 +751,6 @@ following 2048-bit RSA key:
 
 
 * TOOD; (URL = discovery endpoint = identifier of issuer, mandatory?)
-* TODO: guidelines for caching duration and handling updates/changes
-** TODO: include JWK_uri content updates
 * TODO: relation to acceptable methods and algorithms
 
 ## Dynamic Registration
