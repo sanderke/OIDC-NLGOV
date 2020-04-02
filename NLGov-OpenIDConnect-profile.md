@@ -1052,13 +1052,13 @@ that aid in mitigating these attacks.
 - OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
 tokens; refresh tokens MUST rotate on each use.
 - OpenID Providers MUST support the necessary 
-[Cross-Origin Resource Sharing (CORS)](https://www.w3.org/TR/cors/) headers to allow browsers to make requests
+"Cross-Origin Resource Sharing (CORS)"[[cors]] headers to allow browsers to make requests
 to its endpoints and SHOULD NOT use wildcard origins.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically
-hosted scripts via a [Content Security Policy (CSP)](https://www.w3.org/TR/CSP3/).
-- Browser-based applications SHOULD use [Subresource Integrity (SRI)](https://www.w3.org/TR/SRI/)
-to verify that external dependencies that they fetch (e.g. via a CDN) are not unexpectedly
-manipulated.
+hosted scripts via a "Content Security Policy (CSP)"[[CSP 3]].
+- Browser-based applications SHOULD use "Subresource Integrity (SRI)" [[SRI]]
+to verify that external dependencies that they include (e.g. via a content
+delivery network (CDN)) are not unexpectedly manipulated.
 
 
 
