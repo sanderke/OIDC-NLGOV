@@ -984,12 +984,35 @@ Considerations sections of [[rfc6749]] and those found in the OAuth 2.0 Threat
 Model and Security Considerations document [[!rfc6819]]. For all Tokens, the
 JSON Web Token Best Current Practices [[!rfc8725]] SHOULD be applied.
 
+<!-- [Algorithms](#Algorithms) --->
+## Algorithms
+Security of OpenID Connect and OAuth2 is significantly based on application of
+cryptography. Herein the choice of algorithms is important for both security as
+well as interoperability. This section lists relevant choices for algorithms
+for all message and tokens.
 
-## algorithms
-* Default and acceptable algorithms for signing and encryption
-** RS256 MUST, PS256 SHOULD (preferred)
-** A256GCM SHOULD (preferred)
-** TODO: others
+For signing of messages and tokens, implementations:
+- MUST support RS256.
+- SHOULD support PS256; usage of PS256 is RECOMMENDED over RS256.
+- MAY support other algorithms, provided they are at least equally secure as RS256.
+- MUST NOT support algorithms that are less secure than RS256.
+
+For assymetric encryption, in particular encryption of content encryption keys,
+implementations:
+- MUST support RSA-OAEP.
+- SHOULD support RSA-OAEP-256.
+- MAY support other algorithms, provided they are at least equally secure as RSA-OAEP.
+- MUST NOT support algorithms that are less secure than RSA-OAEP.
+
+For symmetric encryption, implementations:
+- MUST support A256GCM.
+- MAY support other algorithms, provided they are at least equally secure as A256GCM.
+- MUST NOT support algorithms that are less secure than A256GCM.
+
+In addition to proper selection and configuration of algorithms, implementation
+MUST ensure to use a cryptographically secure (pseudo)random generator.
+Administrators and implementations MUST apply industry best practices for key
+management of cryptographic keys.
 
 ## web-app security
 When using Browser-based applications (also referred to as "single-page applications"), 
