@@ -1064,7 +1064,15 @@ valideert voor toegang. Hier valt ook webcrypto API onder.
 
 
 # Future updates
-* not part of iGov
+This profile was creating using published, finalized specifications and
+standards as basis. Some relevant new documents are under development at the
+time of writing. As this profile does not use any draft documents as basis,
+these cannot be included.
+However, we want to attend readers to these developments and for them to take
+into account that future updates to this profile may incorporate the resulting
+standards and specifications. Furthermore we would like encourage readers to
+follow relevant developments.
+
 
 ## Federations
 This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain. However, no specific support or requirements for federations are included in this version of this profile.
