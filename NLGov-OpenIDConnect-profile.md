@@ -252,20 +252,23 @@ Clients MUST verify the following in received ID tokens:
 
 iss
 
-    The `issuer` Claim is the Uniform Resource Locater (URL) of the expected issuer.
+>    The `issuer` Claim is the Uniform Resource Locater (URL) of the expected issuer.
+
 aud
 
-    The `audience` Claim contains the client ID of the client.
+>    The `audience` Claim contains the client ID of the client.
+
 exp, iat, nbf
 
-    The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges.
+>    The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges.
+
 acr
 
-    The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See "Authentication Context" for applicable values.
+>    The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See "Authentication Context" for applicable values.
 
 represents
 
-    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
+>    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 ### Representation
 If Representation is applcable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [RFC 8693](https://tools.ietf.org/html/rfc8693#section-1.1).
