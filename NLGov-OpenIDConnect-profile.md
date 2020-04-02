@@ -1012,7 +1012,8 @@ For symmetric encryption, implementations:
 In addition to proper selection and configuration of algorithms, implementation
 MUST ensure to use a cryptographically secure (pseudo)random generator.
 Administrators and implementations MUST apply industry best practices for key
-management of cryptographic keys.
+management of cryptographic keys. This includes best practices for selection of
+applicable key length, as applicable for the relevant algorithms selected.
 
 ## web-app security
 When using Browser-based applications (also referred to as "single-page applications"), 
