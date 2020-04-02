@@ -816,12 +816,13 @@ As per section 5.1.2 of the OpenID Core specification, claim names SHOULD be
 collision-resistant. It is RECOMMENDED to use domain name based URIs as
 attribute names.
 
-OpenID Core section 5.1 specifies a list of standard claims. In a (Dutch)
-governmental, attribute Claims are commonly defined in the BRP.
+OpenID Core section 5.1 specifies a list of standard claims. In a Dutch
+governmental context, attribute Claims are commonly registred in the BRP
+(_Basis Registratie Personen_, the Dutch citizen registry), as defined in
+[[LO.GBA-V]].
 Usage or interoperability with the ISA<sup>2</sup> core vocabularies is
 RECOMMENDED.
 
-* TODO: add proper BRP / GBA-V reference.
 * TBD: add default/recommended mapping OIDC <-> BRP?
 ** usable: name, given_name (probably), family_name (possibly), gender, email, phone, locale
 ** unusable: middle_name (ambiguous), birthdate (unknown day not in OIDC), address (insufficient detail split out, no address type)
