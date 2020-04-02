@@ -326,12 +326,13 @@ remove decommissioned keys from the JWK Set referenced by jwks_uri but retain th
 for some reasonable period of time, coordinated with the cache duration, to facilitate a smooth 
 transition between keys by allowing the encrypting party some time to obtain the new keys. 
 The cache duration SHOULD also be coordinated with the issuance of new signing keys.
+Please refer to [Algorithms](#Algorithms) for more information on cryptographic
+algorithms and keys.
 
 * iGov: usable
 * SHOULD for client; reduce manual labour with risk of config mistakes
 * guidelines for caching duration and handling updates/changes
 ** include JWK_uri content updates
-* relation to acceptable methods and algorithms
 
 ## Registration
 All clients MUST register with the authorization server. For client software that may be 
@@ -375,7 +376,10 @@ An example of a client registration request:
 * TBD: details of minimal registraton parameters?
 * relation to RFC7591 OAuth 2.0 Dynamic Client Registration
 * MAY support RFC7592 OAuth 2.0 Dynamic Client Registration Management Protocol 
-* relation to acceptable methods and algorithms
+
+Please refer to [Algorithms](#Algorithms) for more information on eligable
+cryptographic methods and keys that can be used when registering a Client.
+
 
 ## Native/SPA, extra security measures
 * not in iGov, additional
@@ -565,15 +569,11 @@ And receives a document in response like the following:
 OpenID Providers MUST support the generation of JWT encoded responses from the
 UserInfo Endpoint in addition to unsigned JSON objects. Signed responses MUST
 be signed by the OpenID Provider's key, and encrypted responses MUST be
-encrypted with the authorized client's public key. The OpenID Provider MUST
-support the RS256 signature method (the Rivest, Shamir, and Adleman (RSA)
-signature algorithm with a 256-bit hash), SHOULD support PS256 (RSA signature
-with 256-bit SHA2 digest using PSS signature padding scheme) and MAY use
-other asymmetric signature and encryption methods at least equally strong listed
-in the JSON Web Algorithms (JWA) specification.
+encrypted with the authorized client's public key. Please refer to
+[Algorithms](#Algorithms) for more information on cryptographic algorithms
+and keys.
 
 * TBD: drop support for unsigned UserInfo?
-* TODO move algorithms to section on algorithms.
 
 ## Request Objects
 OpenID Providers MUST accept requests containing a request object signed by
@@ -787,8 +787,9 @@ following 2048-bit RSA key:
       ]
     }
 
+Please refer to [Algorithms](#Algorithms) for more information on eligable
+cryptographic methods and keys that can be used by OpenID Providers.
 
-* TODO: relation to acceptable methods and algorithms
 
 ## Dynamic Registration
 If the OP is acting as an NL-iGov OAuth Authorization Server (NL-iGov OAuth2
