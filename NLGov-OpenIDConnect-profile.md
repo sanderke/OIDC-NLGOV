@@ -919,11 +919,54 @@ assessing the level confidence or quality of the claim.
 
 
 # Privacy considerations
-* iGov: usable
-* Encrypt BSN and other identifiers
-** either full token, or using aggregated/distributed claims
-* minimize scope, use RFC8693 token exchange to switch scopes
-* minimize use of attributes, in general
+
+Data minimization is an essential concept in trust frameworks and federations
+exchanging user identity information for government applications. The design
+of this profile takes into consideration mechanisms to protect the
+user's government identity information and activity from unintentional
+exposure.
+
+Pairwise anonymous identifiers MUST be supported by the OpenID Providers for
+frameworks where subjects should not be traceable across clients by their
+subject ID. This prevents a situation where a user may inadvertently be
+assigned a universal government identifier.
+
+Request claims MUST be supported by the OpenID Providers to ensure that only
+the data the client explicitly requests is provided in the UserInfo response
+or ID Token.
+This prevents situations where a client may only require a partial set of
+claims, but receives (and is therefore exposed to) a full set of claims. For
+example, if a client only needs an identifier and the persons legal age,
+the OpenID Provider MUST NOT send the client the full user name and birthdate.
+
+All relying parties MUST apply the concept of data minimization. As a result,
+a client MUST NOT request any more identifiers, attributes or other claims
+than strictly necessary.
+Additionally, clients SHOULD ensure they minimize the scope and audience they
+request, use and forward. This principle applies to both to usage at the
+client as well as forwarded access tokens in a Service Intermediation scenario.
+Token Exchange ([[rfc8693]]) SHOULD be used to request access tokens with a
+minimal scope and audience.
+
+Despite the mechanisms enforced by this specification, the operational
+circumstances may allow these controls to be relaxed in a specific context.
+For example, if a bilateral agreement between to agencies legally entitles 
+usage of citizen identifiers, then the pairwise anonymous identifer requirement
+may be relaxed. In cases where all clients are entitled to process 
+associated to a subject at an OpenID Provider, the claims request requirement
+may be relaxed.
+
+The reasons for relaxing the controls that support data minimalization are
+outside the scope of this specification.
+
+In order to provide end-to-end security and privacy, identifiers and
+attributes SHOULD be encrypted from the providing source to the ultimate
+intended recipient. This can be accomplished by either encrypting entire
+response and tokens or by utilizing aggregated or distributed claims. applying
+end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burger Service
+Number_, the Dutch citizen ID) and sensative attributes.
+
+** TODO: check consistency wrt aggregated/distributed claims
 
 # Security considerations
 * iGov: usable
