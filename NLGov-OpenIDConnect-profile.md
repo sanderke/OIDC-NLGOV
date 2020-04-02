@@ -416,7 +416,8 @@ sub
 
 sub\_id\_type
 
->	  REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interopable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the sub\_id\_type MUST be a URI.
+>	  REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way,
+>     the type of identifier used for the identifier in `sub` is explicitly included. The value of the sub\_id\_type MUST be a URI.
 
 acr
 
