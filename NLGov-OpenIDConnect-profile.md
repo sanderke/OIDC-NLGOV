@@ -329,7 +329,7 @@ remove decommissioned keys from the JWK Set referenced by jwks_uri but retain th
 for some reasonable period of time, coordinated with the cache duration, to facilitate a smooth 
 transition between keys by allowing the encrypting party some time to obtain the new keys. 
 The cache duration SHOULD also be coordinated with the issuance of new signing keys.
-Please refer to [Algorithms](#Algorithms) for more information on cryptographic
+Please refer to [Algorithms](#algorithms) for more information on cryptographic
 algorithms and keys.
 
 * iGov: usable
@@ -380,7 +380,7 @@ An example of a client registration request:
 * relation to RFC7591 OAuth 2.0 Dynamic Client Registration
 * MAY support RFC7592 OAuth 2.0 Dynamic Client Registration Management Protocol 
 
-Please refer to [Algorithms](#Algorithms) for more information on eligable
+Please refer to [Algorithms](#algorithms) for more information on eligable
 cryptographic methods and keys that can be used when registering a Client.
 
 
@@ -585,7 +585,7 @@ OpenID Providers MUST support the generation of JWT encoded responses from the
 UserInfo Endpoint in addition to unsigned JSON objects. Signed responses MUST
 be signed by the OpenID Provider's key, and encrypted responses MUST be
 encrypted with the authorized client's public key. Please refer to
-[Algorithms](#Algorithms) for more information on cryptographic algorithms
+[Algorithms](#algorithms) for more information on cryptographic algorithms
 and keys.
 
 * TBD: drop support for unsigned UserInfo?
@@ -811,7 +811,7 @@ following 2048-bit RSA key:
       ]
     }
 
-Please refer to [Algorithms](#Algorithms) for more information on eligable
+Please refer to [Algorithms](#algorithms) for more information on eligable
 cryptographic methods and keys that can be used by OpenID Providers.
 
 
@@ -1009,7 +1009,7 @@ Considerations sections of [[rfc6749]] and those found in the OAuth 2.0 Threat
 Model and Security Considerations document [[!rfc6819]]. For all Tokens, the
 JSON Web Token Best Current Practices [[!rfc8725]] SHOULD be applied.
 
-<!-- [Algorithms](#Algorithms) --->
+<!-- [Algorithms](#algorithms) --->
 ## Algorithms
 Security of OpenID Connect and OAuth2 is significantly based on application of
 cryptography. Herein the choice of algorithms is important for both security as
