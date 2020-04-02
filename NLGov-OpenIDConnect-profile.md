@@ -404,40 +404,51 @@ Token). ID Token values have the following meanings:
 
 iss
 
-    REQUIRED. The "issuer" field is the Uniform Resource Locater (URL) of the expected issuer.
+>    REQUIRED. The "issuer" field is the Uniform Resource Locater (URL) of the expected issuer.
+
 aud
 
-    REQUIRED. The "audience" field contains the client ID of the client.
+>    REQUIRED. The "audience" field contains the client ID of the client.
+
 sub
 
-    REQUIRED. The identifier of the user. OpenID Providers MUST support a pairwise identifier in accordance with OpenID Connect Core section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
+>    REQUIRED. The identifier of the user. OpenID Providers MUST support a pairwise identifier in accordance with OpenID Connect Core section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
+
 sub\_id\_type
 
-	  REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interopable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the sub\_id\_type MUST be a URI.
+>	  REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interopable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the sub\_id\_type MUST be a URI.
+
 acr
 
-    REQUIRED. The LoA the user was authenticated at. MUST be a member of the acr_values list from the authentication request. See Authentication Context for more details.
+>    REQUIRED. The LoA the user was authenticated at. MUST be a member of the acr_values list from the authentication request. See Authentication Context for more details.
+
 nonce
 
-    REQUIRED. MUST match the nonce value that was provided in the Authentication Request.
+>    REQUIRED. MUST match the nonce value that was provided in the Authentication Request.
+
 jti
 
-    REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identity the ID Token between sender and receiver for at least 12 months.
+>    REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identity the ID Token between sender and receiver for at least 12 months.
+
 auth_time
 
-    RECOMMENDED. This SHOULD be included if the provider can assert an end- user's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
+>    RECOMMENDED. This SHOULD be included if the provider can assert an end- user's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
+
 exp, iat, nbf
 
-    REQUIRED. The "expiration", "issued at", and "not before" timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges.
+>    REQUIRED. The "expiration", "issued at", and "not before" timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges.
+
 represents
 
-	REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
+>	REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
+
 vot
 
-    OPTIONAL. The vector value as specified in Vectors of Trust. See Vectors of Trust for more details. As eIDAS is leading in many scenarios, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust.
+>    OPTIONAL. The vector value as specified in Vectors of Trust. See Vectors of Trust for more details. As eIDAS is leading in many scenarios, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust.
+
 vtm
 
-    REQUIRED if vot is provided. The trustmark URI as specified in Vectors of Trust. See Vectors of Trust for more details.
+>    REQUIRED if vot is provided. The trustmark URI as specified in Vectors of Trust. See Vectors of Trust for more details.
 
 Other Claims MAY be included. See Claims Request below on how such Claims SHOULD be requested by the Client to be provided by the OpenID Provider.
 
@@ -644,34 +655,43 @@ The discovery document MUST contain at minimum the following fields:
 
 issuer
 
-    REQUIRED. The fully qualified issuer URL of the OpenID Provider.
+>    REQUIRED. The fully qualified issuer URL of the OpenID Provider.
+
 authorization_endpoint
 
-    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint defined by [RFC6749].
+>    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint defined by [RFC6749].
+
 token_endpoint
 
-    REQUIRED. The fully qualified URL of the server's token endpoint defined by [RFC6749].
+>    REQUIRED. The fully qualified URL of the server's token endpoint defined by [RFC6749].
+
 introspection_endpoint
 
-    OPTIONAL. The fully qualified URL of the server's introspection endpoint defined by OAuth Token Introspection.
+>    OPTIONAL. The fully qualified URL of the server's introspection endpoint defined by OAuth Token Introspection.
+
 revocation_endpoint
 
-    OPTIONAL. The fully qualified URL of the server's revocation endpoint defined by OAuth Token Revocation.
+>    OPTIONAL. The fully qualified URL of the server's revocation endpoint defined by OAuth Token Revocation.
+
 jwks_uri
 
-    REQUIRED. The fully qualified URI of the server's public key in JWK Set format. For verifying the signatures on the id_token.
+>    REQUIRED. The fully qualified URI of the server's public key in JWK Set format. For verifying the signatures on the id_token.
+
 scopes_supported
 
-    REQUIRED. The list of scopes, including iGov scopes, the server supports.
+>    REQUIRED. The list of scopes, including iGov scopes, the server supports.
+
 claims_supported
 
-    REQUIRED. The list of claims available in the supported scopes. See below.
+>    REQUIRED. The list of claims available in the supported scopes. See below.
+
 vot
 
-    OPTIONAL. The vectors supported.
+>    OPTIONAL. The vectors supported.
+
 acr_values
 
-    OPTIONAL. The acrs supported. See Level of Assurance.
+>    OPTIONAL. The acrs supported. See Level of Assurance.
 
 The following example shows the JSON document found at a discovery endpoint
 for an authorization server:
