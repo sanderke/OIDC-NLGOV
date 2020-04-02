@@ -969,9 +969,22 @@ Number_, the Dutch citizen ID) and sensative attributes.
 ** TODO: check consistency wrt aggregated/distributed claims
 
 # Security considerations
-* iGov: usable
-** add NCSC TLS guidelines, SHOULD 'good', MAY 'sufficient', SHOULD NOT 'phase out'
-** HSTS
+All transactions MUST be protected in transit by TLS as described in BCP195
+[[!rfc7525]]. In addition, all compliant implementations MUST apply the IT
+Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD
+only implement settings and options indicated as 'good', SHOULD NOT use any
+settings with a status 'phase out' and MUST NOT use any setting with a status
+'insufficient' in these security guidelines or future updates thereof.
+
+Implementations MUST implement HTTP Strict Transport Security, as specified in
+[[!rfc6797]].
+
+All clients MUST conform to applicable recommendations found in the Security
+Considerations sections of [[rfc6749]] and those found in the OAuth 2.0 Threat
+Model and Security Considerations document [[!rfc6819]]. For all Tokens, the
+JSON Web Token Best Current Practices [[!rfc8725]] SHOULD be applied.
+
+
 ## algorithms
 * Default and acceptable algorithms for signing and encryption
 ** RS256 MUST, PS256 SHOULD (preferred)
@@ -1041,6 +1054,8 @@ Both practices are already part of the OpenID Connect Core specifications.
 Future updates to this profile are likely to seek interoperability with these RFCs once finalized.
 
 * rar; work in progress @ IETF (OAuth2)
+
+* OAuth2 Security Best Practices, currently in draft / work in progress @ IETF.
 
 
 #  Appendix Notices
