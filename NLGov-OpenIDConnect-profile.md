@@ -26,8 +26,7 @@ online.
 ## Requirements Notation and Conventions
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in 
-[RFC 2119](https://openid.net/specs/openid-igov-openid-connect-1_0.html#RFC2119).
+document are to be interpreted as described in [[!rfc2119]].
 
 All uses of 
 [JSON Web Signature (JWS)](https://openid.net/specs/openid-igov-openid-connect-1_0.html#RFC7515) 
@@ -813,7 +812,7 @@ interoperability, while setting Client expectations on the type of data they
 may acquire.
 
 ## Claim Interoperability
-As per section 5.1.2 of the OpenID Core specification, claims names SHOULD be
+As per section 5.1.2 of the OpenID Core specification, claim names SHOULD be
 collision-resistant. It is RECOMMENDED to use domain name based URIs as
 attribute names.
 
