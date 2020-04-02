@@ -1078,9 +1078,11 @@ Similarly, a RFC for pushing Authorization Requests to relieve Clients from host
 Both practices are already part of the OpenID Connect Core specifications.
 Future updates to this profile are likely to seek interoperability with these RFCs once finalized.
 
-* rar; work in progress @ IETF (OAuth2)
+* rar; work in progress @ IETF (OAuth2 WG)
 
-* OAuth2 Security Best Practices, currently in draft / work in progress @ IETF.
+* OAuth2 Security Best Practices, currently in draft / work in progress @ IETF (OAuth2 WG).
+
+* Browser based apps, work in progress @ IETF (OAuth2 WG)
 
 
 #  Appendix Notices
