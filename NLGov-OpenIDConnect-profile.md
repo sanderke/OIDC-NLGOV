@@ -26,14 +26,12 @@ online.
 ## Requirements Notation and Conventions
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in [[!rfc2119]].
+document are to be interpreted as described in [[rfc2119]].
 
-All uses of 
-[JSON Web Signature (JWS)](https://openid.net/specs/openid-igov-openid-connect-1_0.html#RFC7515) 
-and [JSON Web Encryption (JWE)](https://openid.net/specs/openid-igov-openid-connect-1_0.html#RFC7516) 
-data structures in this specification utilize the JWS Compact Serialization or 
-the JWE Compact Serialization; the JWS JSON Serialization and the JWE JSON
-Serialization are not used.
+All uses of "JSON Web Signature (JWS)" [[rfc7515]] and "JSON Web Encryption
+(JWE)" [[rfc7516]] data structures in this specification utilize the JWS
+Compact Serialization or the JWE Compact Serialization; the JWS JSON
+Serialization and the JWE JSON Serialization are not used.
 
 ## Terminology
 This specification uses the terms "Access Token", "Authorization Code", 
@@ -106,7 +104,7 @@ For native applications two deployment modes are supported under this profile. E
 
 Finally, hybrid forms of web- and native application are appearing as well. These are to be treated as either a web-application with a back-end server, or as a native application with individual "installations" as Client. It depends on the architecture and implementation which is applicable in a specific scenario.
 
-This profile builds upon best practices for native applications, such as [RFC8252](https://tools.ietf.org/html/rfc8252), along with additional security and privacy considerations.
+This profile builds upon best practices for native applications, such as [[rfc8252]], along with additional security and privacy considerations.
 
 ## Service Intermediation
 * TODO FdK
@@ -134,10 +132,10 @@ This profile does not directly place any constraints on the placement of claims 
 ## Requests to the Authorization Endpoint (Authentication Request)
 The NL GOV Assurance profile for OAuth 2.0 profile specifies requirements for requests to Authorization Endpoints - for example, when to use the PKCE parameters to secure token exchange.
 
-Full clients, native clients with dynamically registered keys, and direct access clients as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the [JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants][rfc7523] using only the private_key_jwt method defined in [OpenID Connect Core] [OpenID.Core].
+Full clients, native clients with dynamically registered keys, and direct access clients as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
 In case of a mutual TLS connection (mTLS) between the client and the server, the JWT assertion can be omitted.
 
-In case the Authorization Server, Resource Server and client are not operated under responsibility of the same organisation, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [rfc7517] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
+In case the Authorization Server, Resource Server and client are not operated under responsibility of the same organisation, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
 
 In addition to the requirements specified in Section 2.1.1 of the NL Gov OAuth2 profile, the following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible IdPs.
 
@@ -239,7 +237,7 @@ client_assertion
 In case of a mutual TLS connection (mTLS) between the client and the server, the JWT assertion can be omitted.
 
 * iGov: usable
-* mTLS (RFC-to-be-8705) as alternative client authentication method, influences parameters client\_assertion
+* mTLS (RFC8705) as alternative client authentication method, influences parameters client\_assertion
 * relation to token Exchange (RFC8693); limiting scope, switching of audiences, service intermediation (dienstbemiddeling)
 
 ## ID Tokens
@@ -271,7 +269,7 @@ represents
 >    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 ### Representation
-If Representation is applcable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [RFC 8693](https://tools.ietf.org/html/rfc8693#section-1.1).
+If Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC 8693]].
 
 As such, all clients MUST process `representation` claims used, in case Representation is applicable.
 
@@ -343,10 +341,9 @@ installed on multiple client instances, such as native applications or web appli
 each client instance MAY receive a unique client identifier from the authorization server. 
 Clients that share client identifiers are considered public clients.
 
-Clients SHOULD use Dynamic Registration as per [RFC7591](https://tools.ietf.org/html/rfc7591) 
-to reduce manual labor and the risks of configuration errors. 
-Dynamic Client Registration Management Protocol [RFC7592](https://tools.ietf.org/html/rfc7592) 
-MAY be used by clients.
+Clients SHOULD use Dynamic Registration as per [[rfc7591]] to reduce manual
+labor and the risks of configuration errors. Dynamic Client Registration
+Management Protocol [[rfc7592]] MAY be used by clients.
 An initial access token is REQUIRED for making the client registration request. 
 The client metadata MUST use the `authorization_code` and SHOULD use `jwks_uri` values.
 The use of `subject_type` `pairwise` is highly recommended(?)
@@ -643,12 +640,12 @@ support.
 
 All OpenID Providers are uniquely identified by a URL known as the issuer.
 This URL serves as the prefix of a service discovery endpoint as specified in
-the OpenID Connect Discovery standard and the [OAuth2 Authorization Server
-Metadata, RFC8414](https://tools.ietf.org/html/rfc8414). An OP SHOULD publish
+the OpenID Connect Discovery standard and "OAuth2 Authorization Server
+Metadata" [[rfc8414]]. An OP SHOULD publish
 the same JSON metadata on both `/.well-known/openid-configuration` and
 `/.well-known/oauth-authorization-server`, and MAY publish on other locations.
-The OP SHOULD include a `signed_metadata` claim, as described in RFC8414 section
-2.1.
+The OP SHOULD include a `signed_metadata` claim, as described in [[rfc8414]]
+section 2.1.
 
 Note that for privacy considerations, only direct requests to the server metadata
 document SHOULD be used. The webfinger method to locate the relevant OP and
@@ -663,11 +660,11 @@ issuer
 
 authorization_endpoint
 
->    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint defined by [RFC6749].
+>    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint defined by [[rfc6749]].
 
 token_endpoint
 
->    REQUIRED. The fully qualified URL of the server's token endpoint defined by [RFC6749].
+>    REQUIRED. The fully qualified URL of the server's token endpoint defined by [[rfc6749]].
 
 introspection_endpoint
 
@@ -995,19 +992,19 @@ Number_, the Dutch citizen ID) and sensative attributes.
 
 # Security considerations
 All transactions MUST be protected in transit by TLS as described in BCP195
-[[!rfc7525]]. In addition, all compliant implementations MUST apply the IT
+[[rfc7525]]. In addition, all compliant implementations MUST apply the IT
 Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD
 only implement settings and options indicated as 'good', SHOULD NOT use any
 settings with a status 'phase out' and MUST NOT use any setting with a status
 'insufficient' in these security guidelines or future updates thereof.
 
 Implementations MUST implement HTTP Strict Transport Security, as specified in
-[[!rfc6797]].
+[[rfc6797]].
 
 All clients MUST conform to applicable recommendations found in the Security
 Considerations sections of [[rfc6749]] and those found in the OAuth 2.0 Threat
-Model and Security Considerations document [[!rfc6819]]. For all Tokens, the
-JSON Web Token Best Current Practices [[!rfc8725]] SHOULD be applied.
+Model and Security Considerations document [[rfc6819]]. For all Tokens, the
+JSON Web Token Best Current Practices [[rfc8725]] SHOULD be applied.
 
 <!-- [Algorithms](#algorithms) --->
 ## Algorithms
