@@ -48,14 +48,18 @@ and the terms defined by OpenID Connect Core 1.0.
 * TODO abbreviations
 
 ## Conformance
-* TBD: based upon OpenID Connect iGov?
-
 This specification defines requirements for the following components:
 - OpenID Connect 1.0 relying parties (also known as OpenID Clients)
 - OpenID Connect 1.0 identity providers (also known as OpenID Providers)
 
 The specification also defines features for interaction between these components:
 - Relying party to identity provider
+
+This profile is based upon the International Government Assurance Profile (iGov) for 
+OpenID Connect 1.0 [iGOV.OpenID] as published by the OpenID Foundation 
+(https://openid.net/foundation/). It should be considered a fork of this profile, as 
+the iGov profile is geared more towards a United States context and the Netherlands 
+towards a European Union context.
 
 When an iGov-NL-compliant component is interacting with other iGov-NL-compliant 
 components, in any valid combination, all components MUST fully conform to the 
@@ -77,40 +81,52 @@ An iGov-NL-compliant OpenID Connect client MUST use all functions as described
 in this specification. A general-purpose client library MAY support additional 
 features for use with non-iGov-NL IdPs.
 
-# Use case & context
-This profiles supports several use cases. Design choices within this profile have been made with these use cases under consideration.
+# Use Case & context
+This profiles supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
 
-The generic use case is a User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
+The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
 
 Authentication is provided in a federated manner. In other words, a Client system is relying upon another system for authentication.
-Either a central IDP / OpenID Provider (OP) or a (distributed) network of OPs, a.k.a. a federation or scheme is being used. The ecosystem supported by the OP can either be a single organisation (intra organisational) or can be an interorganisational setting, through either bilateral or multilateral agreements.
+Either a central Identity Provider (IDP) / OpenID Provider (OP) or a (distributed) network of OPs, a.k.a. a federation or scheme is being used. The ecosystem supported by the OP can either be a single organisation (intra organisational) or can be an interorganisational setting, through either bilateral or multilateral agreements.
 In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
 
-The Service is offered by a (semi)governmental or public Service Provider. The use case therefor explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in other contexts.
+The Service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in other contexts.
 
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OP. As target User audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
-This profile supports several use cases for representation, which applies when an End-User intends to consume an online Service that requires authentication on behalf of a Natural Person or Legal Entity (the Service Consumer). The End-User is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
+This profile supports several Use Cases for representation, which applies when an End-User intends to consume an online Service that requires authentication on behalf of a Natural Person or Legal Entity (the Service Consumer). The End-User is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
 
 The Service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
-## Web and Native app
-This profile supports both web as well as native applications.
+## Supported Client types
+This profile supports several types of Client applications.
 
-For web applications, the web server of the Relying Party is always considered the Client. As this is a centrally managed server, this server is assumed to have a private key at its disposal.
+Although this is not an exhaustive overview, design considerations related to security and platform capabilities were made in this profile with the following types of Client applications under consideration:
 
-For native applications two deployment modes are supported under this profile. Either the native application has a back-end system of the provider, where the back-end system is considered the Client. Or each individual installation is its own Client and registered as such. Native applications where the generic software package itself (in an _appstore_) is configured as a single Client, are explicitly prohibited under this profile.
+Client/Server web applications
 
-Finally, hybrid forms of web- and native application are appearing as well. These are to be treated as either a web-application with a back-end server, or as a native application with individual "installations" as Client. It depends on the architecture and implementation which is applicable in a specific scenario.
+> For Client/Server web applications, the web server of the Relying Party is always considered the Client. As this is a centrally managed server, this server is assumed to have a private key at its disposal.
 
-This profile builds upon best practices for native applications, such as [[rfc8252]], along with additional security and privacy considerations.
+Native applications
+
+> Native applications are clients installed and executed on the device used by the resource owner (i.e., desktop application, native mobile application). This profile supports two deployment models for native applications. Either the native application has a back-end system of the provider, where the back-end system is considered the Client. Or each individual installation is its own Client and registered as such. Native applications where the generic software package itself (in an _appstore_) is configured as a single Client, are explicitly prohibited under this profile.
+
+Browser-based applications
+
+> Browser-based applications are dynamically downloaded and executed in a web browser and are also sometimes referred to as *single-page applications*.
+
+Hybrid applications
+
+> Apps implemented using web-based technology but distributed as a native app, are considered equivalent to native apps for the purpose of this profile.
+
+This profile builds upon best practices for these applications, such as [[rfc8252]] for Native and Hybrid applications, [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) for Browser-based applications, along with additional security and privacy considerations.
 
 ## Service Intermediation
 * TODO FdK
 
 ## Misc
-OpenID Connect Core supports self-issued OpenID Connect Provider. As the context of this profile is centered around (semi-)governemental and public domain use cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
+OpenID Connect Core supports self-issued OpenID Connect Provider. As the context of this profile is centered around (semi-)governemental and public domain Use Cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
 
 As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to OPs, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called hotspot, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
@@ -532,7 +548,7 @@ are similarly considered public sectoral identifiers.
 ## UserInfo Endpoint
 OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the sub
 (subject) claim. It is expected that the sub claim will remain pseudonymous in
-use cases where obtaining personal information is not needed.
+Use Cases where obtaining personal information is not needed.
 
 Support for a UserInfo Endpoint is important for maximum client implementation
 interoperability even if no additional user information is returned. Clients
