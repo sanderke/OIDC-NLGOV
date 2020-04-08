@@ -87,40 +87,36 @@ This profiles supports several Use Cases. Design choices within this profile hav
 The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
 
 Authentication is provided in a federated manner. In other words, a Client system is relying upon another system for authentication.
-Either a central Identity Provider (IDP) / OpenID Provider (OP) or a (distributed) network of OPs, a.k.a. a federation or scheme is being used. The ecosystem supported by the OP can either be a single organisation (intra organisational) or can be an interorganisational setting, through either bilateral or multilateral agreements.
+Either a central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OPs, a.k.a. a federation or scheme is being used. The ecosystem supported by the OP can either be a single organisation (intra organisational) or can be an interorganisational setting, through either bilateral or multilateral agreements.
 In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
 
 The Service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in other contexts.
 
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OP. As target User audiences are diverse, multiple types of identifiers can be supported.
 
+## Supported Client types
+This profile supports several types of Client applications. This profile makes specific design considerations related to security and platform capabilities with the following types of Client applications in mind:
+
+Web applications
+
+> Web applications run on a web server. These are considered as confidential clients by Section 2.1 of OAuth 2.0 [RFC6749], as they are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. client credentials and tokens).
+
+Browser-based applications
+
+> Browser-based applications are dynamically downloaded and executed in a web browser and are also sometimes referred to as *single-page applications*. As protocol data and credentials are easily accessible to the End-User, these clients are considered as public clients by Section 2.1 of OAuth 2.0 [RFC6749]. This profile builds upon best practices for these applications, such as specified in OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps), along with additional security and privacy considerations.
+
+Native applications
+
+> Native applications are clients installed and executed on the device used by the resource owner (i.e., desktop applications, native mobile applications). Except when using a mechanism like Dynamic Client Registration [RFC7591] to provision per-instance secrets, native apps are classified as public clients, as defined by Section 2.1 of OAuth 2.0 [RFC6749]. Native apps for which this is not the case--where the generic software package itself (in an _appstore_) is configured as a single Client--are *explicitly prohibited* under this profile. This profile builds upon best practices for Native applications, such as specified in [[rfc8252]], along with additional security and privacy considerations.
+
+Hybrid applications
+
+> Applications implemented using web-based technology but distributed as a native app, are considered equivalent to native apps for the purpose of this profile.
+
 ## Representation
 This profile supports several Use Cases for representation, which applies when an End-User intends to consume an online Service that requires authentication on behalf of a Natural Person or Legal Entity (the Service Consumer). The End-User is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
 
 The Service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
-
-## Supported Client types
-This profile supports several types of Client applications.
-
-Although this is not an exhaustive overview, design considerations related to security and platform capabilities were made in this profile with the following types of Client applications under consideration:
-
-Client/Server web applications
-
-> For Client/Server web applications, the web server of the Relying Party is always considered the Client. As this is a centrally managed server, this server is assumed to have a private key at its disposal.
-
-Native applications
-
-> Native applications are clients installed and executed on the device used by the resource owner (i.e., desktop application, native mobile application). This profile supports two deployment models for native applications. Either the native application has a back-end system of the provider, where the back-end system is considered the Client. Or each individual installation is its own Client and registered as such. Native applications where the generic software package itself (in an _appstore_) is configured as a single Client, are explicitly prohibited under this profile.
-
-Browser-based applications
-
-> Browser-based applications are dynamically downloaded and executed in a web browser and are also sometimes referred to as *single-page applications*.
-
-Hybrid applications
-
-> Apps implemented using web-based technology but distributed as a native app, are considered equivalent to native apps for the purpose of this profile.
-
-This profile builds upon best practices for these applications, such as [[rfc8252]] for Native and Hybrid applications, [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) for Browser-based applications, along with additional security and privacy considerations.
 
 ## Service Intermediation
 * TODO FdK
