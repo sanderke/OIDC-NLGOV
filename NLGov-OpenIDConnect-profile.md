@@ -280,21 +280,23 @@ This profile specifies representation relations in ID Tokens as follows:
 
 A sample chain representation may look like:
 
-      {
-        /* End user */
-        sub": "RKyLpEVr1L",
-			  "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
-        "represents": {
-          /* Intermediary in representation chain */
-          sub": "q5r5sd8ffY",
-			    "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
-          "represents": {
-            /* Service Consumer */
-            sub": "4Yg8u72NxR",
-			      "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
-          }
-        }
-      }
+```javascript
+{
+  /* End user */
+  sub": "RKyLpEVr1L",
+  "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+  "represents": {
+    /* Intermediary in representation chain */
+    sub": "q5r5sd8ffY",
+    "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+    "represents": {
+      /* Service Consumer */
+      sub": "4Yg8u72NxR",
+      "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+    }
+  }
+}
+```
 
 ## Request Objects
 Clients MAY optionally send requests to the authorization endpoint using the
