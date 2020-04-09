@@ -4,7 +4,8 @@ pages:
   stage: deploy
   script:
     - mkdir .public
-    - cp -r * .public
+    - cp -r pub .public
+    - cp NLGov-OpenIDConnect-profile.md .public
     - mv .public public
   artifacts:
     paths:
