@@ -5,7 +5,7 @@ pages:
   script:
     - mkdir .public
     - cp -r pub/* .public
-    - cp NLGov-OpenIDConnect-profile.md .public
+    - cp *.md .public
     - mv .public public
   artifacts:
     paths:
