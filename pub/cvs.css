@@ -5,3 +5,7 @@
 body {
   background-image: url('logos-LogiusCvS.svg') ;
 }
+
+.logo {
+  border-bottom: none !important;
+}
