@@ -98,7 +98,7 @@ The Service Provider or Relying Party requests either an authenticated identifie
 This profile supports several types of Client applications to which specific design considerations related to security and platform capabilities apply. The following main types of Client applications are supported by this profile:
 
 - **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. client credentials and tokens) and are therefore considered *confidential* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore considered *public* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 - **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 - **Hybrid applications** are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
@@ -384,12 +384,6 @@ An example of a client registration request:
 
 Please refer to [Algorithms](#algorithms) for more information on eligable
 cryptographic methods and keys that can be used when registering a Client.
-
-
-## Native/SPA, extra security measures
-* not in iGov, additional
-* see security considerations
-
 
 # OpenID Provider profile
 * TBD: add section on access token? (on top of / in relation to OAuth2)
@@ -1042,17 +1036,13 @@ Administrators and implementations MUST apply industry best practices for key
 management of cryptographic keys. This includes best practices for selection of
 applicable key length, as applicable for the relevant algorithms selected.
 
-## web-app security
-When using Browser-based applications (also referred to as "single-page applications"), 
-tokens provided by an OpenID provider are processed and stored in the browser. As such,
-they are vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft.
-
+## Browser-based Applications
 In Use Cases that involve Browser-based applications, OpenID Providers and applications 
 MUST follow the best practices as specified in 
 [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps). 
 
-In addition to these best practices, this profile provides specific security measures 
-that aid in mitigating these attacks.
+In addition to these best practices, the following security measures apply to Use Cases that involve
+Browser-Based applications:
 
 - OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
 tokens; refresh tokens MUST rotate on each use.
@@ -1065,8 +1055,6 @@ hosted scripts via a "Content Security Policy (CSP)"[[CSP 3]].
 to verify that external dependencies that they include (e.g. via a content
 delivery network (CDN)) are not unexpectedly manipulated.
 
-
-
 TODO: het gebruik van httpOnly cookies voor tokens is meer voor oAuth, omdat het gaat over 
 toegang tot een resource server. Wellicht moeten we daar aangeven dat een AS naast een
 access_token in de header OOK een httpOnly cookie zet met een token dat afwijkt van het
@@ -1075,19 +1063,18 @@ valideert voor toegang. Hier valt ook webcrypto API onder.
 * utilize webcrypto API
 * Cookie security
 
-## native app / SPA / JS security
-* RFC8252
-** Strict in-app browser only!
-** HTTPS scheme URL handler only
-* HSTS
-* CSP
-* CORS
-* SRI
-* Cookie security
-* other anti-XSS/CSRF techniques
-* short-lived sessions
-** use refresh tokens
+## Native Applications
+In Use Cases that involve Native applications, OpenID Providers and applications 
+MUST follow the best practices as specified in 
+OAuth 2.0 for Native Apps [[RFC8252]].
 
+In addition to these best practices, the following security measures apply to Use Cases that involve
+Native applications:
+
+- OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
+tokens; refresh tokens MUST rotate on each use.
+- Native applications MUST use an external user-agent or in-app browser tab to make authorization 
+requests; embedded user-agents or web-view components MUST NOT be used for this purpose.
 
 # Future updates
 This profile was creating using published, finalized specifications and
