@@ -97,14 +97,12 @@ The Service Provider or Relying Party requests either an authenticated identifie
 ## Supported Client types
 This profile supports several types of Client applications to which specific design considerations related to security and platform capabilities apply. The following main types of Client applications are supported by this profile:
 
-- **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. client credentials and tokens) and are therefore designated as *confidential* clients by Section 2.1 of OAuth 2.0 [[RFC6749]].
-- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore designated as *public* clients by Section 2.1 of OAuth 2.0 [[RFC6749]].
-- **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of client credentials, but can sufficiently protect dynamically issued credentials such as tokens. OAuth 2.0 [[RFC6749]] classifies native applications as public clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration.
+- **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. client credentials and tokens) and are therefore considered *confidential* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore considered *public* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+- **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 - **Hybrid applications** are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
 This profile builds upon security and usability best practices for Browser-based applications based on [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) and for Native apps based on [[rfc8252]], along with additional security and privacy considerations.
-
-TODO: is dit constraint nog relevant: Native apps for which this is not the case--where the generic software package itself (in an _appstore_) is configured as a single Client--are *explicitly prohibited* under this profile.
 
 ## Representation
 This profile supports several Use Cases for representation, which applies when an End-User intends to consume an online Service that requires authentication on behalf of a Natural Person or Legal Entity (the Service Consumer). The End-User is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
@@ -276,12 +274,12 @@ represents
 ### Representation
 If Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC 8693]].
 
-As such, all clients MUST process `representation` claims used, in case Representation is applicable.
+As such, all clients MUST process `represents` claims used, in case Representation is applicable.
 
 This profile specifies representation relations in ID Tokens as follows:
 - The End-User is always mentioned in the `sub` Claim;
 - The represented Service Consumer is mentioned in the `represents` Claim.
-- In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `representation` Claim.
+- In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
 
 A sample chain representation may look like:
 
