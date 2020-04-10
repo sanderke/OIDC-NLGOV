@@ -368,27 +368,28 @@ The client metadata MUST use the `authorization_code` and SHOULD use `jwks_uri` 
 The use of `subject_type` `pairwise` is highly recommended(?)
 
 An example of a client registration request:
-> POST /connect/register HTTP/1.1
-  Content-Type: application/json
-  Accept: application/json
-  Host: server.example.com
-  Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJ ...
+  
+    POST /connect/register HTTP/1.1
+    Content-Type: application/json
+    Accept: application/json
+    Host: server.example.com
+    Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJ ...
 
->  {
-   "application_type": "web",
-   "redirect_uris":
-     ["https://client.example.org/callback",
-      "https://client.example.org/callback2"],
-   "client_name": "My Example",
-   "subject_type": "pairwise",
-   "sector_identifier_uri":
-     "https://other.example.net/file_of_redirect_uris.json",
-   "token_endpoint_auth_method": "client_secret_basic",
-   "jwks_uri": "https://client.example.org/my_public_keys.jwks",
-   "userinfo_encrypted_response_alg": "RSA1_5",
-   "userinfo_encrypted_response_enc": "A128CBC-HS256",
-   "contacts": ["mary@example.org"],
-  }
+    {
+    "application_type": "web",
+    "redirect_uris":
+      ["https://client.example.org/callback",
+        "https://client.example.org/callback2"],
+    "client_name": "My Example",
+    "subject_type": "pairwise",
+    "sector_identifier_uri":
+      "https://other.example.net/file_of_redirect_uris.json",
+    "token_endpoint_auth_method": "client_secret_basic",
+    "jwks_uri": "https://client.example.org/my_public_keys.jwks",
+    "userinfo_encrypted_response_alg": "RSA1_5",
+    "userinfo_encrypted_response_enc": "A128CBC-HS256",
+    "contacts": ["mary@example.org"],
+    }
 
 * not in iGov, additional
 * MAY/SHOULD for Client; reduce manual labour with risk of config mistakes
