@@ -240,6 +240,8 @@ In case of a mutual TLS connection (mTLS) between the client and the server, the
 
 * iGov: usable
 * mTLS (RFC8705) as alternative client authentication method, influences parameters client\_assertion
+
+## Token Exchange Request and Response
 * relation to token Exchange (RFC8693); limiting scope, switching of audiences, service intermediation (dienstbemiddeling)
 
 ## ID Tokens
@@ -285,15 +287,15 @@ A sample chain representation may look like:
 ```javascript
 {
   /* End user */
-  sub": "RKyLpEVr1L",
+  "sub": "RKyL<<end_user>>pEVr1L",
   "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
   "represents": {
     /* Intermediary in representation chain */
-    sub": "q5r5sd8ffY",
+    "sub": "q5r5sd8ffY",
     "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
     "represents": {
       /* Service Consumer */
-      sub": "4Yg8u72NxR",
+      "sub": "4Yg8u72NxR",
       "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
     }
   }
@@ -811,18 +813,16 @@ cryptographic methods and keys that can be used by OpenID Providers.
 
 
 ## Dynamic Registration
-If the OP is acting as an NL-iGov OAuth Authorization Server (NL-iGov OAuth2
+If the OpenID Provider is acting as an NL-iGov OAuth Authorization Server (NL-iGov OAuth2
 profile), then Dynamic Registration MUST be supported in accordance with that
 specification (see section 3.1.3).
+
+Dynamic Registration MUST also be supported in combination with per-instance provisioning 
+of secrets when registering Native Applications as confidential clients.
 
 In other cases, particularly when dealing with Browser-based applications or
 Native Apps, Dynamic Registration SHOULD be supported in accordance with the
 NL-iGov OAuth2 specification.
-
-* iGov: usable
-* SHOULD (Strongly recommended!) support by OP
-** mandatory when native instance is client
-
 
 # User Info
 The availability, quality, and reliability of an individual's identity
@@ -1091,10 +1091,10 @@ This profile acknowledges that federations are widely in use, in particular amon
 The OpenID Foundation is currently drafting a specification for explicit support of federations using OpenID Connect. Future updates to this profile are likely to adopt this specification once finalized. See [Federation at the OpenID Foundation](https://openid.net/tag/federation/).
 
 ## Other features
-A RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF. Future updates to this profile are likely to seek interoperability with such RFC once finalized. See [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/).
+An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF. Future updates to this profile are likely to seek interoperability with such RFC once finalized. See [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/).
 
-A RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the OAuth2 working group at IETF.
-Similarly, a RFC for pushing Authorization Requests to relieve Clients from hosting `request_uri` based requests is being drafted in the OAuth2 working group at IETF.
+An RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the OAuth2 working group at IETF.
+Similarly, an RFC for pushing Authorization Requests to relieve Clients from hosting `request_uri` based requests is being drafted in the OAuth2 working group at IETF.
 Both practices are already part of the OpenID Connect Core specifications.
 Future updates to this profile are likely to seek interoperability with these RFCs once finalized.
 
