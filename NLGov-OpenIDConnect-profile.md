@@ -111,6 +111,18 @@ The Service is offered by a (semi)governmental or public Service Provider; examp
 ## Service Intermediation
 * TODO FdK
 
+## Token Exchange
+This profile supports the exchanging of security tokens as specified in [[RFC8693]]. This invoves 
+exchanging an earlier obtained token into a differently scoped token or an entirely different kind 
+of token.
+
+Use Cases include, but are not limited by:
+- Exchanging a token with a specific audience or represented Service Consumer into a token with a
+different audience or represented Service Consumer;
+- A Service Intermediary exchanging a token that it obtained earlier into a token specific to a service that it intermediates; and
+- An OAuth 2.0 Resource Server exchanging an earlier obtained access token into a new token that
+is appropriate to include in a call to a backend service.
+
 ## Misc
 OpenID Connect Core supports self-issued OpenID Connect Provider. As the context of this profile is centered around (semi-)governemental and public domain Use Cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
 
@@ -241,9 +253,6 @@ In case of a mutual TLS connection (mTLS) between the client and the server, the
 * iGov: usable
 * mTLS (RFC8705) as alternative client authentication method, influences parameters client\_assertion
 
-## Token Exchange Request and Response
-* relation to token Exchange (RFC8693); limiting scope, switching of audiences, service intermediation (dienstbemiddeling)
-
 ## ID Tokens
 All clients MUST validate the signature of an ID Token before accepting it
 using the public key of the issuing server, which is published in JSON Web Key
@@ -310,6 +319,12 @@ encrypted to the authorization server's public key.
 
 * iGov: usable
 * preferred + signed
+
+## Token Exchange
+If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
+then the Token Exchange Request and Response MUST be in accordance with
+that specification (see section 2), using the extension grant type
+*"urn:ietf:params:oauth:grant-type:token-exchange"*.
 
 ## Discovery
 Client SHOULD use OP discovery to avoid manual configuration and risk of mistakes
