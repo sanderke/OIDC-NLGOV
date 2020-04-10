@@ -139,14 +139,14 @@ This profile supports several types of Client applications to which specific des
 
 - **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. client credentials and tokens) and are therefore considered *confidential* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 The iGov profile for OAuth 2.0 identifies two types of Web applications: *Full clients* act on behalf of a Resource Owner and *Direct Access clients* act on behalf of themselves (e.g. those clients that facilitate bulk transfers). The scope of this profile is limited to *Full clients*.
-- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 - **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 - **Hybrid applications** are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
 ## Requests to the Authorization Endpoint (Authentication Request)
 The NL GOV Assurance profile for OAuth 2.0 profile specifies requirements for requests to Authorization Endpoints - for example, when to use the PKCE parameters to secure token exchange.
 
-Full clients, native clients with dynamically registered keys, and direct access clients as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
+Confidential clients (Web applications and Native clients with per-instance provisioned secrets) as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
 In case of a mutual TLS connection (mTLS) between the client and the server, the JWT assertion can be omitted.
 
 In case the Authorization Server, Resource Server and client are not operated under responsibility of the same organisation, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
@@ -282,7 +282,7 @@ represents
 >    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 ### Representation
-If Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC 8693]].
+In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC 8693]].
 
 As such, all clients MUST process `represents` claims used, in case Representation is applicable.
 
@@ -355,10 +355,13 @@ algorithms and keys.
 ** include JWK_uri content updates
 
 ## Registration
-All clients MUST register with the authorization server. For client software that may be 
-installed on multiple client instances, such as native applications or web application software, 
-each client instance MAY receive a unique client identifier from the authorization server. 
-Clients that share client identifiers are considered public clients.
+All Clients MUST register with the Authorization Server.
+
+Native Clients MUST either be provisioned a unique per-instance client identifier or be 
+registered as *public* clients by using a common client identifier and use PKCE to 
+protect calls to the token endpoint.
+
+Browser-based Clients MUST be registered as *public* clients and use PKCE to protect calls to the token endpoint.
 
 Clients SHOULD use Dynamic Registration as per [[rfc7591]] to reduce manual
 labor and the risks of configuration errors. Dynamic Client Registration
@@ -376,19 +379,19 @@ An example of a client registration request:
     Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJ ...
 
     {
-    "application_type": "web",
-    "redirect_uris":
-      ["https://client.example.org/callback",
+      "application_type": "web",
+      "redirect_uris":
+        ["https://client.example.org/callback",
         "https://client.example.org/callback2"],
-    "client_name": "My Example",
-    "subject_type": "pairwise",
-    "sector_identifier_uri":
-      "https://other.example.net/file_of_redirect_uris.json",
-    "token_endpoint_auth_method": "client_secret_basic",
-    "jwks_uri": "https://client.example.org/my_public_keys.jwks",
-    "userinfo_encrypted_response_alg": "RSA1_5",
-    "userinfo_encrypted_response_enc": "A128CBC-HS256",
-    "contacts": ["mary@example.org"],
+      "client_name": "My Example",
+      "subject_type": "pairwise",
+      "sector_identifier_uri":
+        "https://other.example.net/file_of_redirect_uris.json",
+      "token_endpoint_auth_method": "client_secret_basic",
+      "jwks_uri": "https://client.example.org/my_public_keys.jwks",
+      "userinfo_encrypted_response_alg": "RSA1_5",
+      "userinfo_encrypted_response_enc": "A128CBC-HS256",
+      "contacts": ["mary@example.org"],
     }
 
 * not in iGov, additional
@@ -524,19 +527,21 @@ require access to these attributes, but a subject identifier is always
 required, a pairwise identifier will aid in protecting the privacy of end
 users as they navigate the system.
 
-OpenID Providers MUST support pairwaise identifiers for cases where clients
+OpenID Providers MUST support pairwise identifiers for cases where clients
 require this functionality. OpenID Providers MAY support public identifiers
 for frameworks where public identifiers are required, or for cases where
 public identifiers are shared as attributes and the framework does not have a
 requirement for subject anonymity.
 
-The _Burger Service Number_ (citizen service number, or _BSN_) is often used
+The _Burgerservicenummer_ (citizen service number, or _BSN_) is often used
 in the Netherlands as identifier for citizens or natural persons. The BSN is
 considered a public sectoral identifier in this profile.
 Note that the BSN MUST only be used by Relying Parties for Service eligible
 for using the BSN and the BSN SHOULD be encrypted.
 
-Other public identifiers, such as the RSIN or KvK number for legal entities,
+Other public identifiers, such as the 
+_Rechtspersonen en Samenwerkingsverbanden Identificatienummer_ (RSIN) or 
+_Kamer van Koophandel_ (KvK) number for legal entities,
 are similarly considered public sectoral identifiers.
 
 * TBD: include PP-pseudonyms as pairwise?
@@ -554,8 +559,6 @@ error if they do.
 In an example transaction, the client sends a request to the UserInfo Endpoint
 like the following:
 
-
-
     GET /userinfo HTTP/1.1
     Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJleHAiOjE0MTg3MDI0MTIsIm
       F1ZCI6WyJjMWJjODRlNC00N2VlLTRiNjQtYmI1Mi01Y2RhNmM4MWY3ODgiXSwiaXNzIjo
@@ -571,10 +574,7 @@ like the following:
     Connection: Keep-Alive
     User-Agent: Apache-HttpClient/4.2.3 (java 1.5)
 
-
 And receives a document in response like the following:
-
-
 
     HTTP/1.1 200 OK
     Date: Tue, 16 Dec 2014 03:00:12 GMT
