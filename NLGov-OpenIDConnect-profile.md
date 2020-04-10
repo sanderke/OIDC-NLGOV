@@ -94,15 +94,6 @@ The Service is offered by a (semi)governmental or public Service Provider. The U
 
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OP. As target User audiences are diverse, multiple types of identifiers can be supported.
 
-## Supported Client types
-This profile supports several types of Client applications to which specific design considerations related to security and platform capabilities apply. This profile supports and provides specific security and privacy considerations for the following types of Client applications:
-
-- **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. client credentials and tokens) and are therefore considered *confidential* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-The iGov profile for OAuth 2.0 identifies two types of Web applications: *Full clients* act on behalf of a Resource Owner and *Direct Access clients* act on behalf of themselves (e.g. those clients that facilitate bulk transfers). The scope of this profile is limited to *Full clients*.
-- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-- **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-- **Hybrid applications** are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
-
 ## Representation
 This profile supports several Use Cases for representation, which apply when an End-User intends to consume an online Service that requires authentication on behalf of a Natural Person or Legal Entity (the Service Consumer). The End-User is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
 
@@ -130,8 +121,7 @@ As the Dutch identity eco-system supports multiple Identity Providers (OpenID Pr
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
 
 # Flow
-* not in iGov, additional
-* Authoriation code flow
+This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint.
 
 ## Access Token as JWT Bearer
 This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov and iGov profiles.
@@ -143,6 +133,16 @@ This profile does not directly place any constraints on the placement of claims 
 
 
 # Client / Relying Party profile
+
+## Client types
+This profile supports several types of Client applications to which specific design considerations related to security and platform capabilities apply. This profile supports and provides specific security and privacy considerations for the following types of Client applications:
+
+- **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. client credentials and tokens) and are therefore considered *confidential* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+The iGov profile for OAuth 2.0 identifies two types of Web applications: *Full clients* act on behalf of a Resource Owner and *Direct Access clients* act on behalf of themselves (e.g. those clients that facilitate bulk transfers). The scope of this profile is limited to *Full clients*.
+- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+- **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+- **Hybrid applications** are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
+
 ## Requests to the Authorization Endpoint (Authentication Request)
 The NL GOV Assurance profile for OAuth 2.0 profile specifies requirements for requests to Authorization Endpoints - for example, when to use the PKCE parameters to secure token exchange.
 
