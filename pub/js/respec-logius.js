@@ -281,13 +281,13 @@ function(e){return e.join(X).replace(ae,de).replace(ie,le)})(t),r=e.transform;r&
        div.parentNode.classList.toggle('wrapped');
      }
   </script>`),[...document.querySelectorAll("[id]")].filter(e=>-1===["STYLE","SCRIPT","BODY"].indexOf(e.tagName)&&a[e.id]&&Array.isArray(a[e.id])).forEach(e=>{const t=a[e.id],n=function(e){const t=e.closest("section"),{previousElementSibling:n,parentNode:r}=t;if(n&&n.classList.contains("mdn"))return n;const o=Yt`<aside class="mdn before wrapped"></aside>`;return r.insertBefore(o,t),o}(e);t.map(e=>{const t=document.createElement("div");return ma(t,e),t}).forEach(e=>n.appendChild(e))})}});var ba=Object.freeze({__proto__:null,name:"geonovum/conformance",run:function(){const e=document.querySelector("section#conformance");e&&function(e){const t=Yt`
-    <h2>Conformiteit</h2>
-    <p>
+    <h2 style="display: none">Conformiteit</h2>
+    <p style="display: none">
       Naast onderdelen die als niet normatief gemarkeerd zijn, zijn ook alle
       diagrammen, voorbeelden, en noten in dit document niet normatief. Verder
       is alles in dit document normatief.
     </p>
-    <p>
+    <p style="display: none">
       Informatief en normatief.
     </p>
   `;e.prepend(...t.childNodes)}(e)}});const ya=new Map([["text/html","html"],["application/xml","xml"]]);function va(e,t=document){const n=ya.get(e);if(!n){const t=[...ya.values()].join(", ");throw new TypeError(`Invalid format: ${e}. Expected one of: ${t}.`)}const r=function(e,t){const n=t.cloneNode(!0);!function(e){const{head:t,body:n,documentElement:r}=e;An(e),e.querySelectorAll(".removeOnSave, #toc-nav").forEach(e=>e.remove()),n.classList.remove("toc-sidebar"),sn(r);const s=e.createDocumentFragment(),i=e.querySelector("meta[name='viewport']");i&&t.firstChild!==i&&s.appendChild(i);let a=e.querySelector("meta[charset], meta[content*='charset=']");a||(a=Yt`<meta charset="utf-8">`);s.appendChild(a);const c=`ReSpec ${window.respecVersion||"Developer Channel"}`,l=Yt`
