@@ -1,6 +1,6 @@
 # Abstract
 The OpenID Connect protocol defines an identity federation system that allows
-a relying party to request and receive authentication and profile information
+a Relying Party to request and receive authentication and profile information
 about an end user.
 
 This specification profiles the OpenID Connect protocol to increase baseline
@@ -49,11 +49,11 @@ and the terms defined by OpenID Connect Core 1.0.
 
 ## Conformance
 This specification defines requirements for the following components:
-- OpenID Connect 1.0 relying parties (also known as OpenID Clients)
-- OpenID Connect 1.0 identity providers (also known as OpenID Providers)
+- OpenID Connect 1.0 Relying Parties (also known as OpenID Clients)
+- OpenID Connect 1.0 Identity Providers (also known as OpenID Providers)
 
 The specification also defines features for interaction between these components:
-- Relying party to identity provider
+- Relying Party to Identity Provider
 
 This profile is based upon the International Government Assurance Profile (iGov) for 
 OpenID Connect 1.0 [iGOV.OpenID] as published by the OpenID Foundation 
@@ -66,20 +66,20 @@ components, in any valid combination, all components MUST fully conform to the
 features and requirements of this specification. All interaction with 
 non-iGov-NL components is outside the scope of this specification.
 
-An iGov-NL-compliant OpenID Connect IdP MUST support all features as described 
-in this specification. A general-purpose IdP MAY support additional features 
+An iGov-NL-compliant OpenID Connect Identity Provider MUST support all features as described 
+in this specification. A general-purpose Identity Provider MAY support additional features 
 for use with non-iGov-NL clients.
 
-An iGov-NL-compliant OpenID Connect IdP MAY also provide iGov-NL-compliant 
+An iGov-NL-compliant OpenID Connect Identity Provider MAY also provide iGov-NL-compliant 
 OAuth 2.0 authorization server functionality. In such cases, the authorization 
 server MUST fully implement the OAuth 2.0 iGov-NL profile. If an 
-iGov-NL-compliant OpenID Connect IdP does not provide iGov-NL-compliant 
+iGov-NL-compliant OpenID Connect Identity Provider does not provide iGov-NL-compliant 
 OAuth 2.0 authorization server services, all features related to interaction 
 between the authorization server and protected resource are therefore OPTIONAL.
 
 An iGov-NL-compliant OpenID Connect client MUST use all functions as described 
 in this specification. A general-purpose client library MAY support additional 
-features for use with non-iGov-NL IdPs.
+features for use with non-iGov-NL OpenID Connect Identity Providers.
 
 # Use Case & context
 This profiles supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
@@ -87,7 +87,7 @@ This profiles supports several Use Cases. Design choices within this profile hav
 The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
 
 Authentication is provided in a federated manner. In other words, a Client system is relying upon another system for authentication.
-Either a central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OPs, a.k.a. a federation or scheme is being used. The ecosystem supported by the OP can either be a single organisation (intra organisational) or can be an interorganisational setting, through either bilateral or multilateral agreements.
+Either a central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organisation (intra organisational) or can be an interorganisational setting, through either bilateral or multilateral agreements.
 In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
 
 The Service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in other contexts.
@@ -151,7 +151,7 @@ In case of a mutual TLS connection (mTLS) between the client and the server, the
 
 In case the Authorization Server, Resource Server and client are not operated under responsibility of the same organisation, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
 
-In addition to the requirements specified in Section 2.1.1 of the NL Gov OAuth2 profile, the following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible IdPs.
+In addition to the requirements specified in Section 2.1.1 of the NL Gov OAuth2 profile, the following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible Identity Providers.
 
 Request Parameters:
 
@@ -176,7 +176,7 @@ redirect_uri
 state
 
 
->  REQUIRED. Unguessable random string generated by the RP, used to protect against CSRF attacks. Must contain a sufficient amount of entropy to avoid guessing. Returned to the RP in the authentication response. 
+>  REQUIRED. Unguessable random string generated by the Relying Party, used to protect against CSRF attacks. Must contain a sufficient amount of entropy to avoid guessing. Returned to the Relying Party in the authentication response. 
 
 nonce
 
@@ -209,7 +209,7 @@ client_assertion_type
 
 client_assertion
 
-> The value of the signed client authentication JWT generated as described below. The RP must generate a new assertion JWT for each call to the token endpoint. 
+> The value of the signed client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
 
 
@@ -246,7 +246,7 @@ client_assertion_type
 > MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
  
 client_assertion
-> The value of the signed client authentication JWT generated as described below. The RP must generate a new assertion JWT for each call to the token endpoint. 
+> The value of the signed client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
 In case of a mutual TLS connection (mTLS) between the client and the server, the JWT assertion can be omitted.
 
@@ -327,14 +327,14 @@ that specification (see section 2), using the extension grant type
 *"urn:ietf:params:oauth:grant-type:token-exchange"*.
 
 ## Discovery
-Client SHOULD use OP discovery to avoid manual configuration and risk of mistakes
+Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes
 Clients and protected resources SHOULD cache OpenID Provider metadata once an
-OP has been discovered and used by the client. 
+OpenID Provider has been discovered and used by the client. 
 
 Relying Parties and other Clients use the public keys made available from the jwks endpoint to 
 validate the signature on tokens. The OIDC spec recommends using the HTTP Cache-Control Header 
 option and the max-age directive to inform clients how long they can cache the public keys for 
-before returning to the jwks_uri location to retrieve replacement keys from the IdP.
+before returning to the jwks_uri location to retrieve replacement keys from the Identity Provider.
 
 To rotate keys, the decrypting party can publish new keys at its jwks_uri location and 
 remove from the JWK Set those that are being decommissioned. The jwks_uri SHOULD include a 
@@ -450,7 +450,7 @@ jti
 
 auth_time
 
->    RECOMMENDED. This SHOULD be included if the provider can assert an end- user's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
+>    RECOMMENDED. This SHOULD be included if the OpenID Provider can assert an end- user's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
 
 exp, iat, nbf
 
@@ -655,14 +655,14 @@ support.
 All OpenID Providers are uniquely identified by a URL known as the issuer.
 This URL serves as the prefix of a service discovery endpoint as specified in
 the OpenID Connect Discovery standard and "OAuth2 Authorization Server
-Metadata" [[rfc8414]]. An OP SHOULD publish
+Metadata" [[rfc8414]]. An OpenID Provider SHOULD publish
 the same JSON metadata on both `/.well-known/openid-configuration` and
 `/.well-known/oauth-authorization-server`, and MAY publish on other locations.
-The OP SHOULD include a `signed_metadata` claim, as described in [[rfc8414]]
+The OpenID Provider SHOULD include a `signed_metadata` claim, as described in [[rfc8414]]
 section 2.1.
 
 Note that for privacy considerations, only direct requests to the server metadata
-document SHOULD be used. The webfinger method to locate the relevant OP and
+document SHOULD be used. The webfinger method to locate the relevant OpenID Provider and
 its metadata, as described in OpenID Discovery section 2, MUST NOT be used.
 
 
@@ -791,13 +791,13 @@ for an authorization server:
 
 It is RECOMMENDED that servers provide cache information through HTTP headers
 and make the cache valid for at least one week.
-An OP SHOULD document its change procedure. In order to support automated
-transitions to configuraion updates, an OP SHOULD only make non-breaking changes
+An OpenID Provider SHOULD document its change procedure. In order to support automated
+transitions to configuraion updates, an OpenID Provider SHOULD only make non-breaking changes
 and retain backward compatability when possible. It is RECOMMENDED an OP
 monitors usage of outdated configuration options used by any Relying Party and
 actively work with their administrators to update configurations.
 The above on caching an changed MUST be applied for the `jwks_uri` containing the
-OP's key set.
+OpenID Provider's key set.
 
 The server MUST provide its public key in JWK Set format, such as the
 following 2048-bit RSA key:
@@ -930,11 +930,11 @@ UserInfo object, but are outside the scope of this document. These types of
 claims are best described by the trust framework the clients and OpenID
 Providers operate within.
 It is up to the Relying Party to assess the level of confidence provided by
-the OP or the trust framework, per claim. Expressing or evaluating such
+the OpenID Provider or the trust framework, per claim. Expressing or evaluating such
 confidence is beyond the scope of this profile.
 
 In order to provide a source, including integrity and optionally confidentiality,
-and OP SHOULD be able to provide aggregated or distributed claims. The signee of
+an OpenID Provider SHOULD be able to provide aggregated or distributed claims. The signee of
 such aggregated or distributed claims implies the source and can support in
 assessing the level confidence or quality of the claim.
 
@@ -973,7 +973,7 @@ claims, but receives (and is therefore exposed to) a full set of claims. For
 example, if a client only needs an identifier and the persons legal age,
 the OpenID Provider MUST NOT send the client the full user name and birthdate.
 
-All relying parties MUST apply the concept of data minimization. As a result,
+All Relying Parties MUST apply the concept of data minimization. As a result,
 a client MUST NOT request any more identifiers, attributes or other claims
 than strictly necessary.
 Additionally, clients SHOULD ensure they minimize the scope and audience they
