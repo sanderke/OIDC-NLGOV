@@ -1,7 +1,7 @@
 # Abstract
 The OpenID Connect protocol defines an identity federation system that allows
 a Relying Party to request and receive authentication and profile information
-about an end user.
+about an End-User.
 
 This specification profiles the OpenID Connect protocol to increase baseline
 security, provide greater interoperability, and structure deployments in a
@@ -41,10 +41,15 @@ This specification uses the terms "Access Token", "Authorization Code",
 "Resource Owner", "Resource Server", "Response Type", and "Token Endpoint" 
 defined by OAuth 2.0, the terms "Claim Name", "Claim Value", and 
 "JSON Web Token (JWT)" defined by JSON Web Token (JWT), 
+"Browser-based application" defined by 
+[OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps),
+"Native application" defined by OAuth 2.0 for Native Apps [[RFC8252]],
 and the terms defined by OpenID Connect Core 1.0.
 
-- "Browser-based application" (from [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps))
-* TODO functional terminology such as representation, eIDAS, etc.
+* TODO functional terminology:
+- representation
+- eIDAS
+- etc.
 * TODO abbreviations
 
 ## Conformance
@@ -81,18 +86,22 @@ An iGov-NL-compliant OpenID Connect Client MUST use all functions as described
 in this specification. A general-purpose Client library MAY support additional 
 features for use with non-iGov-NL OpenID Connect Identity Providers.
 
+As well as sections marked as non-normative, all authoring guidelines, diagrams, 
+examples, and notes in this specification are non-normative. Everything else in 
+this specification is normative.
+
 # Use Case & context
 This profiles supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
 
 The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
 
 Authentication is provided in a federated manner. In other words, a Client system is relying upon another system for authentication.
-Either a central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organisation (intra organisational) or can be an interorganisational setting, through either bilateral or multilateral agreements.
+Either a central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organization (intra organizational) or can be an interorganizational setting, through either bilateral or multilateral agreements.
 In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
 
 The Service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in other contexts.
 
-The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OP. As target User audiences are diverse, multiple types of identifiers can be supported.
+The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target User audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
 This profile supports several Use Cases for representation, which apply when an End-User intends to consume an online Service that requires authentication on behalf of a Natural Person or Legal Entity (the Service Consumer). The End-User is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
@@ -115,9 +124,9 @@ different audience or represented Service Consumer;
 is appropriate to include in a call to a backend service.
 
 ## Misc
-OpenID Connect Core supports self-issued OpenID Connect Provider. As the context of this profile is centered around (semi-)governemental and public domain Use Cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
+OpenID Connect Core supports self-issued OpenID Connect Providers. As the context of this profile is centered around (semi-)governemental and public domain Use Cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
 
-As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to OPs, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called hotspot, points were data collection can be concentrated.
+As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to OpenID Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called hotspot, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
 
 # Flow
@@ -130,7 +139,6 @@ Using a JWT formatted Access Token allows any Relying Party to consume and verif
 
 Note that ID Token en Userinfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
 This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum freedom and interoperability.
-
 
 # Client / Relying Party profile
 
@@ -149,7 +157,7 @@ The NL GOV Assurance profile for OAuth 2.0 profile specifies requirements for re
 Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
 In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
 
-In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organisation, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
+In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
 
 In addition to the requirements specified in Section 2.1.1 of the NL Gov OAuth2 profile, the following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible Identity Providers.
 
@@ -165,39 +173,31 @@ response_type
 
 scope
 
-
 >  REQUIRED. Indicates the attributes being requested. (See below) 
 
 redirect_uri
-
 
 >  REQUIRED. Indicates a valid endpoint where the Client will receive the authentication response. MUST be an absolute HTTPS URL, pre-registered with the Authorization Server.
 
 state
 
-
->  REQUIRED. Unguessable random string generated by the Relying Party, used to protect against CSRF attacks. Must contain a sufficient amount of entropy to avoid guessing. Returned to the Relying Party in the authentication response. 
+>  REQUIRED. Unguessable random string generated by the Relying Party, used to protect against CSRF attacks. Must contain a sufficient amount of entropy to avoid guessing. Returned to the Relying Party in the Authentication Response. 
 
 nonce
 
-
 >  REQUIRED. Unguessable random string generated by the Client, used to protect against CSRF attacks. Must contain a sufficient amount of entropy to avoid guessing. Returned to the Client in the ID Token. 
 
-
 vtr
-
 
 >  OPTIONAL. MUST be set to a value as described in Section 6.1 of Vectors of Trust. acr_values takes precedence over vtr. 
 
 acr_values
 
-
 >  OPTIONAL. Lists the acceptable LoAs for this authentication. See (below). 
 
 code_challenge and code_challenge_method
 
-
->  OPTIONAL. See NL Gov OAuth2 profile. In case of using a native app as user-agent mandatory.
+>  OPTIONAL. See NL Gov OAuth2 profile. REQUIRED in Use Cases where public clients are involved.
 
 claims
 
@@ -209,9 +209,7 @@ client_assertion_type
 
 client_assertion
 
-> The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
-
-
+> The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint.
 
 A sample request may look like:
 ```
@@ -229,7 +227,7 @@ https://idp-p.example.com/authorize?
 * iGov: usable; vtr not applicable (acr\_values for LoA preferred)
 * private\_key\_jwt authentication
 ** mTLS (RFC-to-be-8705) optional alternative
-* intra-organisation PKIo, as in OAuth NL-Gov profile
+* intra-organization PKIo, as in OAuth NL-Gov profile
 * claims parameter
 
 ## Requests to the Token Endpoint
@@ -237,16 +235,16 @@ In addition to the requirements specified in Section 2.3.1 of the NL Gov OAuth2 
 The following parameters are specified:
 
 grant_type
-> MUST be set to authorization_code.
+> REQUIRED. MUST be set to authorization_code.
  
 code
-> The value of the code parameter returned in the authorization response.
+> REQUIRED. The value of the code parameter returned in the authorization response.
 
 client_assertion_type
-> MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
+> REQUIRED. MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
  
 client_assertion
-> The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
+> REQUIRED. The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
 In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
 
@@ -295,7 +293,7 @@ A sample chain representation may look like:
 
       {
         /* End user */
-        "sub": "RKyL<<end_user>>pEVr1L",
+        "sub": "RKyLpEVr1L",
         "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
         "represents": {
           /* Intermediary in representation chain */
@@ -312,7 +310,7 @@ A sample chain representation may look like:
 ## Request Objects
 Clients MAY optionally send requests to the authorization endpoint using the
 request or request_uri parameter as defined by OpenID Connect. 
-The use of the request_uri is preferred because of browser limits and network latency
+The use of the request_uri is preferred because of browser limits and network latency.
 
 Request objects MUST be signed by the Client's registered key. Request objects MAY be 
 encrypted to the authorization server's public key.
