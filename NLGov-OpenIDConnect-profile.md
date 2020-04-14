@@ -68,7 +68,7 @@ non-iGov-NL components is outside the scope of this specification.
 
 An iGov-NL-compliant OpenID Connect Identity Provider MUST support all features as described 
 in this specification. A general-purpose Identity Provider MAY support additional features 
-for use with non-iGov-NL clients.
+for use with non-iGov-NL Clients.
 
 An iGov-NL-compliant OpenID Connect Identity Provider MAY also provide iGov-NL-compliant 
 OAuth 2.0 authorization server functionality. In such cases, the authorization 
@@ -77,8 +77,8 @@ iGov-NL-compliant OpenID Connect Identity Provider does not provide iGov-NL-comp
 OAuth 2.0 authorization server services, all features related to interaction 
 between the authorization server and protected resource are therefore OPTIONAL.
 
-An iGov-NL-compliant OpenID Connect client MUST use all functions as described 
-in this specification. A general-purpose client library MAY support additional 
+An iGov-NL-compliant OpenID Connect Client MUST use all functions as described 
+in this specification. A general-purpose Client library MAY support additional 
 features for use with non-iGov-NL OpenID Connect Identity Providers.
 
 # Use Case & context
@@ -137,19 +137,19 @@ This profile does not directly place any constraints on the placement of claims 
 ## Client types
 This profile supports several types of Client applications to which specific design considerations related to security and platform capabilities apply. This profile supports and provides specific security and privacy considerations for the following types of Client applications:
 
-- **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. client credentials and tokens) and are therefore considered *confidential* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-The iGov profile for OAuth 2.0 identifies two types of Web applications: *Full clients* act on behalf of a Resource Owner and *Direct Access clients* act on behalf of themselves (e.g. those clients that facilitate bulk transfers). The scope of this profile is limited to *Full clients*.
-- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-- **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+- **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+The iGov profile for OAuth 2.0 identifies two types of Web applications: *Full Clients* act on behalf of a Resource Owner and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). The scope of this profile is limited to *Full Clients*.
+- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+- **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 - **Hybrid applications** are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
 ## Requests to the Authorization Endpoint (Authentication Request)
 The NL GOV Assurance profile for OAuth 2.0 profile specifies requirements for requests to Authorization Endpoints - for example, when to use the PKCE parameters to secure token exchange.
 
-Confidential clients (Web applications and Native clients with per-instance provisioned secrets) as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
-In case of a mutual TLS connection (mTLS) between the client and the server, the JWT assertion can be omitted.
+Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
+In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
 
-In case the Authorization Server, Resource Server and client are not operated under responsibility of the same organisation, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
+In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organisation, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
 
 In addition to the requirements specified in Section 2.1.1 of the NL Gov OAuth2 profile, the following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible Identity Providers.
 
@@ -171,7 +171,7 @@ scope
 redirect_uri
 
 
->  REQUIRED. Indicates a valid endpoint where the client will receive the authentication response. MUST be an absolute HTTPS URL, pre-registered with the Authorization Server.
+>  REQUIRED. Indicates a valid endpoint where the Client will receive the authentication response. MUST be an absolute HTTPS URL, pre-registered with the Authorization Server.
 
 state
 
@@ -181,7 +181,7 @@ state
 nonce
 
 
->  REQUIRED. Unguessable random string generated by the client, used to protect against CSRF attacks. Must contain a sufficient amount of entropy to avoid guessing. Returned to the client in the ID Token. 
+>  REQUIRED. Unguessable random string generated by the Client, used to protect against CSRF attacks. Must contain a sufficient amount of entropy to avoid guessing. Returned to the Client in the ID Token. 
 
 
 vtr
@@ -209,7 +209,7 @@ client_assertion_type
 
 client_assertion
 
-> The value of the signed client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
+> The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
 
 
@@ -246,18 +246,18 @@ client_assertion_type
 > MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
  
 client_assertion
-> The value of the signed client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
+> The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
-In case of a mutual TLS connection (mTLS) between the client and the server, the JWT assertion can be omitted.
+In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
 
 * iGov: usable
-* mTLS (RFC8705) as alternative client authentication method, influences parameters client\_assertion
+* mTLS (RFC8705) as alternative Client authentication method, influences parameters client\_assertion
 
 ## ID Tokens
-All clients MUST validate the signature of an ID Token before accepting it
+All Clients MUST validate the signature of an ID Token before accepting it
 using the public key of the issuing server, which is published in JSON Web Key
 (JWK) format. ID Tokens MAY be encrypted using the appropriate key of the
-requesting client.
+requesting Client.
 
 Clients MUST verify the following in received ID tokens:
 
@@ -267,7 +267,7 @@ iss
 
 aud
 
->    The `audience` Claim contains the client ID of the client.
+>    The `audience` Claim contains the client ID of the Client.
 
 exp, iat, nbf
 
@@ -284,7 +284,7 @@ represents
 ### Representation
 In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC 8693]].
 
-As such, all clients MUST process `represents` claims used, in case Representation is applicable.
+As such, all Clients MUST process `represents` claims used, in case Representation is applicable.
 
 This profile specifies representation relations in ID Tokens as follows:
 - The End-User is always mentioned in the `sub` Claim;
@@ -314,7 +314,7 @@ Clients MAY optionally send requests to the authorization endpoint using the
 request or request_uri parameter as defined by OpenID Connect. 
 The use of the request_uri is preferred because of browser limits and network latency
 
-Request objects MUST be signed by the client's registered key. Request objects MAY be 
+Request objects MUST be signed by the Client's registered key. Request objects MAY be 
 encrypted to the authorization server's public key.
 
 * iGov: usable
@@ -329,11 +329,11 @@ that specification (see section 2), using the extension grant type
 ## Discovery
 Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes
 Clients and protected resources SHOULD cache OpenID Provider metadata once an
-OpenID Provider has been discovered and used by the client. 
+OpenID Provider has been discovered and used by the Client. 
 
 Relying Parties and other Clients use the public keys made available from the jwks endpoint to 
 validate the signature on tokens. The OIDC spec recommends using the HTTP Cache-Control Header 
-option and the max-age directive to inform clients how long they can cache the public keys for 
+option and the max-age directive to inform Clients how long they can cache the public keys for 
 before returning to the jwks_uri location to retrieve replacement keys from the Identity Provider.
 
 To rotate keys, the decrypting party can publish new keys at its jwks_uri location and 
@@ -350,27 +350,27 @@ Please refer to [Algorithms](#algorithms) for more information on cryptographic
 algorithms and keys.
 
 * iGov: usable
-* SHOULD for client; reduce manual labour with risk of config mistakes
+* SHOULD for Client; reduce manual labour with risk of config mistakes
 * guidelines for caching duration and handling updates/changes
 ** include JWK_uri content updates
 
 ## Registration
 All Clients MUST register with the Authorization Server.
 
-Native Clients MUST either be provisioned a unique per-instance client identifier or be 
-registered as *public* clients by using a common client identifier and use PKCE to 
+Native Clients MUST either be provisioned a unique per-instance Client identifier or be 
+registered as *public* Clients by using a common Client identifier and use PKCE to 
 protect calls to the token endpoint.
 
-Browser-based Clients MUST be registered as *public* clients and use PKCE to protect calls to the token endpoint.
+Browser-based Clients MUST be registered as *public* Clients and use PKCE to protect calls to the token endpoint.
 
 Clients SHOULD use Dynamic Registration as per [[rfc7591]] to reduce manual
 labor and the risks of configuration errors. Dynamic Client Registration
-Management Protocol [[rfc7592]] MAY be used by clients.
-An initial access token is REQUIRED for making the client registration request. 
-The client metadata MUST use the `authorization_code` and SHOULD use `jwks_uri` values.
+Management Protocol [[rfc7592]] MAY be used by Clients.
+An initial access token is REQUIRED for making the Client registration request. 
+The Client metadata MUST use the `authorization_code` and SHOULD use `jwks_uri` values.
 The use of `subject_type` `pairwise` is highly recommended(?)
 
-An example of a client registration request:
+An example of a Client registration request:
   
     POST /connect/register HTTP/1.1
     Content-Type: application/json
@@ -408,7 +408,7 @@ cryptographic methods and keys that can be used when registering a Client.
 
 ## ID Tokens
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
-ID Tokens MAY be encrypted using the appropriate key of the requesting client.
+ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
 
 The ID Token MUST expire and SHOULD have an active lifetime no longer than
 five minutes. Since the ID token is consumed by the Client and not presented
@@ -425,7 +425,7 @@ iss
 
 aud
 
->    REQUIRED. The "audience" field contains the client ID of the client.
+>    REQUIRED. The "audience" field contains the client ID of the Client.
 
 sub
 
@@ -518,16 +518,16 @@ Pairwise identifiers specified in OpenID Connect Core section 8 help protect
 an end user's privacy by allowing an OpenID Provider to represent a single
 user with a different subject identifier (sub) for every Client the user
 connects to. This technique can help mitigate correlation of a user between
-multiple clients by preventing the clients from using the subject identifier
+multiple Clients by preventing the Clients from using the subject identifier
 (the sub claim) to track a user between different sites and applications. Use
-of pairwise identifiers does not prevent clients from correlating data based
+of pairwise identifiers does not prevent Clients from correlating data based
 on other identifying attributes such as names, phone numbers, email addresses,
 document numbers, or other attributes. However, since not all transactions
 require access to these attributes, but a subject identifier is always
 required, a pairwise identifier will aid in protecting the privacy of end
 users as they navigate the system.
 
-OpenID Providers MUST support pairwise identifiers for cases where clients
+OpenID Providers MUST support pairwise identifiers for cases where Clients
 require this functionality. OpenID Providers MAY support public identifiers
 for frameworks where public identifiers are required, or for cases where
 public identifiers are shared as attributes and the framework does not have a
@@ -551,12 +551,12 @@ OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the sub
 (subject) claim. It is expected that the sub claim will remain pseudonymous in
 Use Cases where obtaining personal information is not needed.
 
-Support for a UserInfo Endpoint is important for maximum client implementation
+Support for a UserInfo Endpoint is important for maximum Client implementation
 interoperability even if no additional user information is returned. Clients
 are not required to call the UserInfo Endpoint, but should not receive an
 error if they do.
 
-In an example transaction, the client sends a request to the UserInfo Endpoint
+In an example transaction, the Client sends a request to the UserInfo Endpoint
 like the following:
 
     GET /userinfo HTTP/1.1
@@ -595,7 +595,7 @@ And receives a document in response like the following:
 OpenID Providers MUST support the generation of JWT encoded responses from the
 UserInfo Endpoint in addition to unsigned JSON objects. Signed responses MUST
 be signed by the OpenID Provider's key, and encrypted responses MUST be
-encrypted with the authorized client's public key. Please refer to
+encrypted with the authorized Client's public key. Please refer to
 [Algorithms](#algorithms) for more information on cryptographic algorithms
 and keys.
 
@@ -610,9 +610,9 @@ accept request objects encrypted with the server's public key.
 OpenID Providers SHOULD accept request objects by reference using the `request_uri`
 parameter.
 
-Both of these methods allow for clients to create a request that is protected
+Both of these methods allow for Clients to create a request that is protected
 from tampering through the browser, allowing for a higher security mode of
-operation for clients and applications that require it. Clients are not
+operation for Clients and applications that require it. Clients are not
 required to use request objects, but OpenID Providers are required to support
 requests using them.
 
@@ -632,7 +632,7 @@ requests using them.
 
 ## Discovery
 OpenID Connect Discovery standard provides a standard, programatic way for
-clients to obtain configuration details for communicating with OpenID
+Clients to obtain configuration details for communicating with OpenID
 Providers. Discovery is an important part of building scalable federation
 ecosystems. Compliant OPs under this profile MUST publish their server
 metadata to help minimize configuration errors and support automation for
@@ -832,7 +832,7 @@ profile), then Dynamic Registration MUST be supported in accordance with that
 specification (see section 3.1.3).
 
 Dynamic Registration MUST also be supported in combination with per-instance provisioning 
-of secrets when registering Native Applications as confidential clients.
+of secrets when registering Native Applications as confidential Clients.
 
 In other cases, particularly when dealing with Browser-based applications or
 Native Apps, Dynamic Registration SHOULD be supported in accordance with the
@@ -867,7 +867,7 @@ Discovery mandates the inclusion of the `claims_supported` field that defines
 the claims a Client MAY expect to receive for the supported scopes. OpenID
 Providers MUST return claims on a best effort basis. However, a Provider
 asserting it can provide a user claim does not imply that this data is
-available for all its users: clients MUST be prepared to receive partial data.
+available for all its users: Clients MUST be prepared to receive partial data.
 Providers MAY return claims outside of the `claims_supported` list, but they
 MUST still ensure that the extra claims to not violate the privacy policies
 set out by the trust framework the Provider supports. The Provider MUST ensure
@@ -903,7 +903,7 @@ is not in common use in the Netherlands and therefor not included in this
 profile.
 
 ## Claims Request
-OpenID Core section 5.5 defines a method for a client to request specific
+OpenID Core section 5.5 defines a method for a Client to request specific
 claims in the UserInfo object. OpenID Providers MUST support this claims
 parameter in the interest of data minimization - that is, the Provider only
 returns information on the subject the Client specifically asks for, and does
@@ -927,7 +927,7 @@ structure to refer to the original source of the subject's claims.
 Claims Metadata (such as locale or the confidence level the OpenID Provider
 has in the Claim for the user) can be expressed as attributes within the
 UserInfo object, but are outside the scope of this document. These types of
-claims are best described by the trust framework the clients and OpenID
+claims are best described by the trust framework the Clients and OpenID
 Providers operate within.
 It is up to the Relying Party to assess the level of confidence provided by
 the OpenID Provider or the trust framework, per claim. Expressing or evaluating such
@@ -961,24 +961,24 @@ user's government identity information and activity from unintentional
 exposure.
 
 Pairwise anonymous identifiers MUST be supported by the OpenID Providers for
-frameworks where subjects should not be traceable across clients by their
+frameworks where subjects should not be traceable across Clients by their
 subject ID. This prevents a situation where a user may inadvertently be
 assigned a universal government identifier.
 
 Request claims MUST be supported by the OpenID Providers to ensure that only
-the data the client explicitly requests is provided in the UserInfo response
+the data the Client explicitly requests is provided in the UserInfo response
 or ID Token.
-This prevents situations where a client may only require a partial set of
+This prevents situations where a Client may only require a partial set of
 claims, but receives (and is therefore exposed to) a full set of claims. For
-example, if a client only needs an identifier and the persons legal age,
-the OpenID Provider MUST NOT send the client the full user name and birthdate.
+example, if a Client only needs an identifier and the persons legal age,
+the OpenID Provider MUST NOT send the Client the full user name and birthdate.
 
 All Relying Parties MUST apply the concept of data minimization. As a result,
-a client MUST NOT request any more identifiers, attributes or other claims
+a Client MUST NOT request any more identifiers, attributes or other claims
 than strictly necessary.
-Additionally, clients SHOULD ensure they minimize the scope and audience they
+Additionally, Clients SHOULD ensure they minimize the scope and audience they
 request, use and forward. This principle applies to both to usage at the
-client as well as forwarded access tokens in a Service Intermediation scenario.
+Client as well as forwarded access tokens in a Service Intermediation scenario.
 Token Exchange ([[rfc8693]]) SHOULD be used to request access tokens with a
 minimal scope and audience.
 
@@ -986,7 +986,7 @@ Despite the mechanisms enforced by this specification, the operational
 circumstances may allow these controls to be relaxed in a specific context.
 For example, if a bilateral agreement between to agencies legally entitles 
 usage of citizen identifiers, then the pairwise anonymous identifer requirement
-may be relaxed. In cases where all clients are entitled to process 
+may be relaxed. In cases where all Clients are entitled to process 
 associated to a subject at an OpenID Provider, the claims request requirement
 may be relaxed.
 
@@ -1013,7 +1013,7 @@ settings with a status 'phase out' and MUST NOT use any setting with a status
 Implementations MUST implement HTTP Strict Transport Security, as specified in
 [[rfc6797]].
 
-All clients MUST conform to applicable recommendations found in the Security
+All Clients MUST conform to applicable recommendations found in the Security
 Considerations sections of [[rfc6749]] and those found in the OAuth 2.0 Threat
 Model and Security Considerations document [[rfc6819]]. For all Tokens, the
 JSON Web Token Best Current Practices [[rfc8725]] SHOULD be applied.
