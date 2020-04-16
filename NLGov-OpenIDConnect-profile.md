@@ -140,10 +140,10 @@ Using a JWT formatted Access Token allows any Relying Party to consume and verif
 Note that ID Token en Userinfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
 This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum freedom and interoperability.
 
-# Client / Relying Party profile
+# OpenID Client profile
 
 ## Client types
-This profile supports several types of Client applications to which specific design considerations related to security and platform capabilities apply. This profile supports and provides specific security and privacy considerations for the following types of Client applications:
+This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities (described in [section 11](#security-considerations)) apply:
 
 - **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 - **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
