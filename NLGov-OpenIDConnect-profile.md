@@ -143,14 +143,56 @@ This profile does not directly place any constraints on the placement of claims 
 # OpenID Client profile
 
 ## Client types
-This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities (described in [section 11](#security-considerations)) apply:
+This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities (described in [Section 11](#security-considerations)) apply:
 
-- **Web applications** are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-- **Browser-based applications** are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-- **Native applications** are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
-- **Hybrid applications** are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
+**Note:** the iGov profile for OAuth 2.0 utilizes a slightly different segregation of applications into the following types: *Full Clients* and *Native Clients* act on behalf of a Resource Owner and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
-The iGov profile for OAuth 2.0 utilizes a slightly different segregation of applications into the following types: *Full Clients* and *Native Clients* act on behalf of a Resource Owner and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+### Web Applications
+*Web applications* are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+
+### Browser-based Applications
+*Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+
+In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients  
+MUST follow the best practices as specified in 
+[OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps)
+as well as the following:
+
+- OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
+tokens; refresh tokens MUST rotate on each use.
+- OpenID Providers MUST support the necessary 
+"Cross-Origin Resource Sharing (CORS)"[[cors]] headers to allow browsers to make requests
+to its endpoints and SHOULD NOT use wildcard origins.
+- Browser-based applications MUST use PKCE to protect calls to the token endpoint.
+- Browser-based applications SHOULD restrict its JavaScript execution to a set of statically
+hosted scripts via a "Content Security Policy (CSP)"[[CSP 3]].
+- Browser-based applications SHOULD use "Subresource Integrity (SRI)" [[SRI]]
+to verify that external dependencies that they include (e.g. via a content
+delivery network (CDN)) are not unexpectedly manipulated.
+
+TODO: het gebruik van httpOnly cookies voor tokens is meer voor oAuth, omdat het gaat over 
+toegang tot een resource server. Wellicht moeten we daar aangeven dat een AS naast een
+access_token in de header OOK een httpOnly cookie zet met een token dat afwijkt van het
+access token en dat de RS bij elk request zowel het access token als de httpOnly cookie
+valideert voor toegang. Hier valt ook webcrypto API onder.
+* utilize webcrypto API
+* Cookie security
+
+### Native and Hybrid Applications
+*Native applications* are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+
+*Hybrid applications* are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
+
+In Use Cases that involve Native applications, OpenID Providers and OpenID Clients 
+MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC8252]] as well as the
+following:
+
+- OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
+tokens; refresh tokens MUST rotate on each use.
+- Public native applications MUST use PKCE to protect calls to the token endpoint. Confidential
+native applications MAY use PKCE.
+- Native applications MUST use an external user-agent or in-app browser tab to make authorization 
+requests; embedded user-agents or web-view components MUST NOT be used for this purpose.
 
 ## Requests to the Authorization Endpoint (Authentication Request)
 The NL GOV Assurance profile for OAuth 2.0 profile specifies requirements for requests to Authorization Endpoints - for example, when to use the PKCE parameters to secure token exchange.
@@ -357,10 +399,8 @@ algorithms and keys.
 All Clients MUST register with the Authorization Server.
 
 Native Clients MUST either be provisioned a unique per-instance Client identifier or be 
-registered as *public* Clients by using a common Client identifier and use PKCE to 
-protect calls to the token endpoint.
-
-Browser-based Clients MUST be registered as *public* Clients and use PKCE to protect calls to the token endpoint.
+registered as *public* Clients by using a common Client identifier; browser-based Clients
+MUST be registered as *public* Clients.
 
 Clients SHOULD use Dynamic Registration as per [[rfc7591]] to reduce manual
 labor and the risks of configuration errors. Dynamic Client Registration
@@ -404,6 +444,9 @@ cryptographic methods and keys that can be used when registering a Client.
 
 # OpenID Provider profile
 * TBD: add section on access token? (on top of / in relation to OAuth2)
+
+OpenID Providers MUST follow the security guidelines and best-practices listed
+in [Section 5.1](#client-types) for the Client types they support.
 
 ## ID Tokens
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
@@ -1047,46 +1090,6 @@ MUST ensure to use a cryptographically secure (pseudo)random generator.
 Administrators and implementations MUST apply industry best practices for key
 management of cryptographic keys. This includes best practices for selection of
 applicable key length, as applicable for the relevant algorithms selected.
-
-## Browser-based Applications
-In Use Cases that involve Browser-based applications, OpenID Providers and applications 
-MUST follow the best practices as specified in 
-[OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps). 
-
-In addition to these best practices, the following security measures apply to Use Cases that involve
-Browser-Based applications:
-
-- OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
-tokens; refresh tokens MUST rotate on each use.
-- OpenID Providers MUST support the necessary 
-"Cross-Origin Resource Sharing (CORS)"[[cors]] headers to allow browsers to make requests
-to its endpoints and SHOULD NOT use wildcard origins.
-- Browser-based applications SHOULD restrict its JavaScript execution to a set of statically
-hosted scripts via a "Content Security Policy (CSP)"[[CSP 3]].
-- Browser-based applications SHOULD use "Subresource Integrity (SRI)" [[SRI]]
-to verify that external dependencies that they include (e.g. via a content
-delivery network (CDN)) are not unexpectedly manipulated.
-
-TODO: het gebruik van httpOnly cookies voor tokens is meer voor oAuth, omdat het gaat over 
-toegang tot een resource server. Wellicht moeten we daar aangeven dat een AS naast een
-access_token in de header OOK een httpOnly cookie zet met een token dat afwijkt van het
-access token en dat de RS bij elk request zowel het access token als de httpOnly cookie
-valideert voor toegang. Hier valt ook webcrypto API onder.
-* utilize webcrypto API
-* Cookie security
-
-## Native Applications
-In Use Cases that involve Native applications, OpenID Providers and applications 
-MUST follow the best practices as specified in 
-OAuth 2.0 for Native Apps [[RFC8252]].
-
-In addition to these best practices, the following security measures apply to Use Cases that involve
-Native applications:
-
-- OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
-tokens; refresh tokens MUST rotate on each use.
-- Native applications MUST use an external user-agent or in-app browser tab to make authorization 
-requests; embedded user-agents or web-view components MUST NOT be used for this purpose.
 
 # Future updates
 This profile was creating using published, finalized specifications and
