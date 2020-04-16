@@ -195,13 +195,6 @@ native applications MAY use PKCE.
 requests; embedded user-agents or web-view components MUST NOT be used for this purpose.
 
 ## Requests to the Authorization Endpoint (Authentication Request)
-The NL GOV Assurance profile for OAuth 2.0 profile specifies requirements for requests to Authorization Endpoints - for example, when to use the PKCE parameters to secure token exchange.
-
-Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
-In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
-
-In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
-
 In addition to the requirements specified in Section 2.1.1 of the NL Gov OAuth2 profile, the following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible Identity Providers.
 
 Request Parameters:
@@ -273,7 +266,26 @@ https://idp-p.example.com/authorize?
 * intra-organization PKIo, as in OAuth NL-Gov profile
 * claims parameter
 
+### Request Objects
+Clients MAY optionally send requests to the authorization endpoint using the
+request or request_uri parameter as defined by OpenID Connect. 
+The use of the request_uri is preferred because of browser limits and network latency.
+
+Request objects MUST be signed by the Client's registered key. Request objects MAY be 
+encrypted to the authorization server's public key.
+
+* iGov: usable
+* preferred + signed
+
 ## Requests to the Token Endpoint
+
+### Client Authentication
+Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
+In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
+
+In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
+
+### Token Request
 In addition to the requirements specified in Section 2.3.1 of the NL Gov OAuth2 profile, the following claims MUST be included:
 The following parameters are specified:
 
@@ -293,6 +305,12 @@ In case of a mutual TLS connection (mTLS) between the Client and the server, the
 
 * iGov: usable
 * mTLS (RFC8705) as alternative Client authentication method, influences parameters client\_assertion
+
+### Token Exchange Request
+If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
+then the Token Exchange Request and Response MUST be in accordance with
+that specification (see section 2), using the extension grant type
+*"urn:ietf:params:oauth:grant-type:token-exchange"*.
 
 ## ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it
@@ -349,23 +367,6 @@ A sample chain representation may look like:
           }
         }
       }
-
-## Request Objects
-Clients MAY optionally send requests to the authorization endpoint using the
-request or request_uri parameter as defined by OpenID Connect. 
-The use of the request_uri is preferred because of browser limits and network latency.
-
-Request objects MUST be signed by the Client's registered key. Request objects MAY be 
-encrypted to the authorization server's public key.
-
-* iGov: usable
-* preferred + signed
-
-## Token Exchange
-If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
-then the Token Exchange Request and Response MUST be in accordance with
-that specification (see section 2), using the extension grant type
-*"urn:ietf:params:oauth:grant-type:token-exchange"*.
 
 ## Discovery
 Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes
@@ -628,7 +629,7 @@ And receives a document in response like the following:
 
     {
        "sub": "6WZQPpnQxV",
-       "iss": "https://idp-p.example.com"
+       "iss": "https://idp-p.example.com",
        "given_name": "Stephen",
        "family_name": "Emeritus",
     }
