@@ -143,7 +143,7 @@ This profile does not directly place any constraints on the placement of claims 
 # OpenID Client profile
 
 ## Client types
-This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities (described in [Section 11](#security-considerations)) apply:
+This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply:
 
 **Note:** the iGov profile for OAuth 2.0 utilizes a slightly different segregation of applications into the following types: *Full Clients* and *Native Clients* act on behalf of a Resource Owner and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
@@ -169,14 +169,6 @@ hosted scripts via a "Content Security Policy (CSP)"[[CSP 3]].
 - Browser-based applications SHOULD use "Subresource Integrity (SRI)" [[SRI]]
 to verify that external dependencies that they include (e.g. via a content
 delivery network (CDN)) are not unexpectedly manipulated.
-
-TODO: het gebruik van httpOnly cookies voor tokens is meer voor oAuth, omdat het gaat over 
-toegang tot een resource server. Wellicht moeten we daar aangeven dat een AS naast een
-access_token in de header OOK een httpOnly cookie zet met een token dat afwijkt van het
-access token en dat de RS bij elk request zowel het access token als de httpOnly cookie
-valideert voor toegang. Hier valt ook webcrypto API onder.
-* utilize webcrypto API
-* Cookie security
 
 ### Native and Hybrid Applications
 *Native applications* are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
@@ -280,10 +272,11 @@ encrypted to the authorization server's public key.
 ## Requests to the Token Endpoint
 
 ### Client Authentication
-Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined above MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [OpenID Connect Core] [OpenID.Core].
+Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined in [Section 5.1](#client-types) MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [[OpenID.Core]].
 In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
 
-In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
+TODO: Dit is exact hetzelfde als ook in het NL Gov OAuth 2.0 profiel staat. Is het zinvol om het hier nogmaals op te nemen?
+- In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
 
 ### Token Request
 In addition to the requirements specified in Section 2.3.1 of the NL Gov OAuth2 profile, the following claims MUST be included:
@@ -369,7 +362,9 @@ A sample chain representation may look like:
       }
 
 ## Discovery
-Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes
+Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk 
+of mistakes.
+
 Clients and protected resources SHOULD cache OpenID Provider metadata once an
 OpenID Provider has been discovered and used by the Client. 
 
