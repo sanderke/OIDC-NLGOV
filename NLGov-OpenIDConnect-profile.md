@@ -342,7 +342,7 @@ This profile specifies representation relations in ID Tokens as follows:
 - The represented Service Consumer is mentioned in the `represents` Claim.
 - In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
 
-A sample chain representation for a service identified with uuid `a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: claims that do not add to the example are omitted for readability):
+A sample chain representation for a service identified with uuid `a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: this example models the service uuid as a scope; claims that do not add to the example are omitted for readability):
 
       {
         "scopes": "openid a9e17a2e-d358-406d-9d5f-ad6045f712ba",
