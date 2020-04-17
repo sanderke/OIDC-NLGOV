@@ -345,7 +345,7 @@ This profile specifies representation relations in ID Tokens as follows:
 A sample chain representation for a service identified with uuid `a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: this example models the service uuid as a scope; claims that do not add to the example are omitted for readability):
 
       {
-        "scopes": "openid a9e17a2e-d358-406d-9d5f-ad6045f712ba",
+        "scope": "openid a9e17a2e-d358-406d-9d5f-ad6045f712ba",
         /* End user */
         "sub": "RKyLpEVr1L",
         "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
