@@ -274,8 +274,12 @@ encrypted to the authorization server's public key.
 Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined in [Section 5.1](#client-types) MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [[OpenID.Core]].
 In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
 
+<!-- 
+
 TODO: Dit is exact hetzelfde als ook in het NL Gov OAuth 2.0 profiel staat. Is het zinvol om het hier nogmaals op te nemen?
 - In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
+
+-->
 
 ### Token Request
 In addition to the requirements specified in Section 2.3.1 of the NL Gov OAuth2 profile, the following claims MUST be included:
