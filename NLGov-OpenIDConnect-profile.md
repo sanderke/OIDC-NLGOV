@@ -53,6 +53,10 @@ Native Apps [[RFC8252]], and the terms defined by OpenID Connect Core 1.0.
 * TODO abbreviations
 
 ## Conformance
+As well as sections marked as non-normative, all authoring guidelines, diagrams, 
+examples, and notes in this specification are non-normative. Everything else in 
+this specification is normative.
+
 This specification defines requirements for the following components:
 - OpenID Connect 1.0 Relying Parties (also known as OpenID Clients)
 - OpenID Connect 1.0 Identity Providers (also known as OpenID Providers)
@@ -85,10 +89,6 @@ between the authorization server and protected resource are therefore OPTIONAL.
 An iGov-NL-compliant OpenID Connect Client MUST use all functions as described 
 in this specification. A general-purpose Client library MAY support additional 
 features for use with non-iGov-NL OpenID Connect Identity Providers.
-
-As well as sections marked as non-normative, all authoring guidelines, diagrams, 
-examples, and notes in this specification are non-normative. Everything else in 
-this specification is normative.
 
 # Use Case & context
 This profiles supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
@@ -158,8 +158,7 @@ MUST follow the best practices as specified in
 [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps)
 as well as the following:
 
-- OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
-tokens; refresh tokens MUST rotate on each use.
+- OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
 - OpenID Providers MUST support the necessary 
 "Cross-Origin Resource Sharing (CORS)"[[cors]] headers to allow browsers to make requests
 to its endpoints and SHOULD NOT use wildcard origins.
@@ -179,10 +178,9 @@ In Use Cases that involve Native applications, OpenID Providers and OpenID Clien
 MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC8252]] as well as the
 following:
 
-- OpenID Providers SHOULD use short-lived access tokens and id tokens and long-lived refresh 
-tokens; refresh tokens MUST rotate on each use.
+- OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
 - Public native applications MUST use PKCE to protect calls to the token endpoint. Confidential
-native applications MAY use PKCE.
+native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or in-app browser tab to make authorization 
 requests; embedded user-agents or web-view components MUST NOT be used for this purpose.
 
@@ -225,7 +223,8 @@ acr_values
 
 code_challenge and code_challenge_method
 
->  OPTIONAL. See NL Gov OAuth2 profile. REQUIRED in Use Cases where public clients are involved.
+>  OPTIONAL. The use of PKCE is REQUIRED in Use Cases where public clients are involved and is RECOMMENDED
+in Use Cases where confidential clients are involved.
 
 claims
 
@@ -233,11 +232,11 @@ claims
 
 client_assertion_type
 
-> Must  MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
+> REQUIRED. MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
 
 client_assertion
 
-> The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint.
+> OPTIONAL. The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint.
 
 A sample request may look like:
 ```
@@ -343,9 +342,10 @@ This profile specifies representation relations in ID Tokens as follows:
 - The represented Service Consumer is mentioned in the `represents` Claim.
 - In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
 
-A sample chain representation may look like:
+A sample chain representation for a service identified with uuid `a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: claims that do not add to the example are omitted for readability):
 
       {
+        "scopes": "openid a9e17a2e-d358-406d-9d5f-ad6045f712ba",
         /* End user */
         "sub": "RKyLpEVr1L",
         "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
