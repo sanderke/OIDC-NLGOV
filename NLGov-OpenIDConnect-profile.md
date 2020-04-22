@@ -195,7 +195,7 @@ client_id
 
 response_type
 
-> REQUIRED. MUST be set to “code”.  
+> REQUIRED. MUST be set to `code`.  
 
 scope
 
@@ -215,7 +215,7 @@ nonce
 
 vtr
 
->  OPTIONAL. MUST be set to a value as described in Section 6.1 of Vectors of Trust. acr_values takes precedence over vtr. 
+>  OPTIONAL. MUST be set to a value as described in Section 6.1 of Vectors of Trust. `acr_values` takes precedence over `vtr`. 
 
 acr_values
 
@@ -232,7 +232,7 @@ claims
 
 client_assertion_type
 
-> REQUIRED. MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
+> REQUIRED. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
 
 client_assertion
 
@@ -260,7 +260,7 @@ https://idp-p.example.com/authorize?
 ### Request Objects
 Clients MAY optionally send requests to the authorization endpoint using the
 request or request_uri parameter as defined by OpenID Connect. 
-The use of the request_uri is preferred because of browser limits and network latency.
+The use of the `request_uri` is preferred because of browser limits and network latency.
 
 Request objects MUST be signed by the Client's registered key. Request objects MAY be 
 encrypted to the authorization server's public key.
@@ -286,13 +286,13 @@ In addition to the requirements specified in Section 2.3.1 of the NL Gov OAuth2 
 The following parameters are specified:
 
 grant_type
-> REQUIRED. MUST be set to authorization_code.
+> REQUIRED. MUST be set to `authorization_code`.
  
 code
 > REQUIRED. The value of the code parameter returned in the authorization response.
 
 client_assertion_type
-> REQUIRED. MUST be set to urn:ietf:params:oauth:client-assertion-type:jwt-bearer.
+> REQUIRED. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
  
 client_assertion
 > REQUIRED. The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
@@ -306,7 +306,7 @@ In case of a mutual TLS connection (mTLS) between the Client and the server, the
 If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
 then the Token Exchange Request and Response MUST be in accordance with
 that specification (see section 2), using the extension grant type
-*"urn:ietf:params:oauth:grant-type:token-exchange"*.
+`urn:ietf:params:oauth:grant-type:token-exchange`.
 
 ## ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it
@@ -373,17 +373,17 @@ Clients and protected resources SHOULD cache OpenID Provider metadata once an
 OpenID Provider has been discovered and used by the Client. 
 
 Relying Parties and other Clients use the public keys made available from the jwks endpoint to 
-validate the signature on tokens. The OIDC spec recommends using the HTTP Cache-Control Header 
-option and the max-age directive to inform Clients how long they can cache the public keys for 
-before returning to the jwks_uri location to retrieve replacement keys from the Identity Provider.
+validate the signature on tokens. The OIDC spec recommends using the HTTP `Cache-Control` Header 
+option and the `max-age` directive to inform Clients how long they can cache the public keys for 
+before returning to the `jwks_uri` location to retrieve replacement keys from the Identity Provider.
 
-To rotate keys, the decrypting party can publish new keys at its jwks_uri location and 
-remove from the JWK Set those that are being decommissioned. The jwks_uri SHOULD include a 
-Cache-Control header in the response that contains a max-age directive, which enables the 
+To rotate keys, the decrypting party can publish new keys at its `jwks_uri` location and 
+remove from the JWK Set those that are being decommissioned. The `jwks_uri` SHOULD include a 
+`Cache-Control` header in the response that contains a `max-age` directive, which enables the 
 encrypting party to safely cache the JWK Set and not have to re-retrieve the document for every 
 encryption event. 
 The decrypting party SHOULD 
-remove decommissioned keys from the JWK Set referenced by jwks_uri but retain them internally 
+remove decommissioned keys from the JWK Set referenced by `jwks_uri` but retain them internally 
 for some reasonable period of time, coordinated with the cache duration, to facilitate a smooth 
 transition between keys by allowing the encrypting party some time to obtain the new keys. 
 The cache duration SHOULD also be coordinated with the issuance of new signing keys.
@@ -463,11 +463,11 @@ Token). ID Token values have the following meanings:
 
 iss
 
->    REQUIRED. The "issuer" field is the Uniform Resource Locater (URL) of the expected issuer.
+>    REQUIRED. The `issuer` field is the Uniform Resource Locater (URL) of the expected issuer.
 
 aud
 
->    REQUIRED. The "audience" field contains the client ID of the Client.
+>    REQUIRED. The `audience` field contains the client ID of the Client.
 
 sub
 
@@ -475,8 +475,7 @@ sub
 
 sub\_id\_type
 
->	  REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way,
->     the type of identifier used for the identifier in `sub` is explicitly included. The value of the sub\_id\_type MUST be a URI.
+>    REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the `sub\_id\_type` MUST be a URI.
 
 acr
 
@@ -484,7 +483,7 @@ acr
 
 nonce
 
->    REQUIRED. MUST match the nonce value that was provided in the Authentication Request.
+>    REQUIRED. MUST match the `nonce` value that was provided in the Authentication Request.
 
 jti
 
@@ -496,11 +495,11 @@ auth_time
 
 exp, iat, nbf
 
->    REQUIRED. The "expiration", "issued at", and "not before" timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges.
+>    REQUIRED. The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from `1970-01-01T00:00:00Z UTC`) within acceptable ranges.
 
 represents
 
->	REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
+>	   REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 vot
 
@@ -508,7 +507,7 @@ vot
 
 vtm
 
->    REQUIRED if vot is provided. The trustmark URI as specified in Vectors of Trust. See Vectors of Trust for more details.
+>    REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See Vectors of Trust for more details.
 
 Other Claims MAY be included. See Claims Request below on how such Claims SHOULD be requested by the Client to be provided by the OpenID Provider.
 
@@ -748,7 +747,7 @@ vot
 
 acr_values
 
->    OPTIONAL. The acrs supported. See Level of Assurance.
+>    OPTIONAL. The Levels of Assurance supported. See Level of Assurance.
 
 The following example shows the JSON document found at a discovery endpoint
 for an authorization server:
@@ -924,7 +923,7 @@ successfully identify the individual signing in to a service, the default
 OpenID Connect profiles may not be appropriate.
 
 Matching of the identity assertion based on claims to a local identifier or
-'account' related to the individual identity at a level of assurance is a
+`account` related to the individual identity at a level of assurance is a
 requirement where the government in question is not able to provide a single
 identifier for all citizens based on an authoritative register of citizens.
 
@@ -937,11 +936,11 @@ However, in the Netherlands a common identifier (BSN) for citizines is
 available for eligable organizations. Nationwide interoperable pseudonyms
 per Relying Party for non-eligable organizations is supported as well.
 
-The default 'profile' scope of OIDC is very wide, which is undesired from a
+The default `profile` scope of OIDC is very wide, which is undesired from a
 privacy perspective. As such, the profile scope SHOULD NOT be used.
 
-Note that the 'doc' profile described in the iGov profile for OpenID Connect
-is not in common use in the Netherlands and therefor not included in this
+Note that the `doc` profile described in the iGov profile for OpenID Connect
+is not in common use in the Netherlands and therefore not included in this
 profile.
 
 ## Claims Request
@@ -1068,22 +1067,22 @@ well as interoperability. This section lists relevant choices for algorithms
 for all message and tokens.
 
 For signing of messages and tokens, implementations:
-- MUST support RS256.
-- SHOULD support PS256; usage of PS256 is RECOMMENDED over RS256.
-- MAY support other algorithms, provided they are at least equally secure as RS256.
-- MUST NOT support algorithms that are less secure than RS256.
+- MUST support `RS256`.
+- SHOULD support `PS256`; usage of `PS256` is RECOMMENDED over `RS256`.
+- MAY support other algorithms, provided they are at least equally secure as `RS256`.
+- MUST NOT support algorithms that are less secure than `RS256`.
 
 For assymetric encryption, in particular encryption of content encryption keys,
 implementations:
-- MUST support RSA-OAEP.
-- SHOULD support RSA-OAEP-256.
-- MAY support other algorithms, provided they are at least equally secure as RSA-OAEP.
-- MUST NOT support algorithms that are less secure than RSA-OAEP.
+- MUST support `RSA-OAEP`.
+- SHOULD support `RSA-OAEP-256`.
+- MAY support other algorithms, provided they are at least equally secure as `RSA-OAEP`.
+- MUST NOT support algorithms that are less secure than `RSA-OAEP`.
 
 For symmetric encryption, implementations:
-- MUST support A256GCM.
-- MAY support other algorithms, provided they are at least equally secure as A256GCM.
-- MUST NOT support algorithms that are less secure than A256GCM.
+- MUST support `A256GCM`.
+- MAY support other algorithms, provided they are at least equally secure as `A256GCM`.
+- MUST NOT support algorithms that are less secure than `A256GCM`.
 
 In addition to proper selection and configuration of algorithms, implementation
 MUST ensure to use a cryptographically secure (pseudo)random generator.
