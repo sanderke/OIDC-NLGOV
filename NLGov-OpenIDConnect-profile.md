@@ -203,7 +203,7 @@ scope
 
 redirect_uri
 
->  REQUIRED. Indicates a valid endpoint where the Client will receive the authentication response. MUST be an absolute HTTPS URL and MUST exactly match one of the Redirection URI values for the Client pre-registered at the OpenID Provider, with the matching performed as described in Section 6.2.1 of [RFC3986] (Simple String Comparison). Inter-app redirect URIs for Native applications SHOULD use Claimed "https" Scheme URI Redirection, as specified in Section 7.2 of [[RFC8252]].
+>  REQUIRED. Indicates a valid endpoint where the Client will receive the authentication response. MUST be an absolute HTTPS URL and MUST exactly match one of the Redirection URI values for the Client pre-registered at the OpenID Provider, with the matching performed as described in Section 6.2.1 of [[RFC3986]] (Simple String Comparison). Inter-app redirect URIs for Native applications SHOULD use Claimed "https" Scheme URI Redirection, as specified in Section 7.2 of [[RFC8252]].
 
 state
 
