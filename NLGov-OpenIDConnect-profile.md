@@ -9,11 +9,11 @@ manner specifically applicable to (but not limited to) government and public
 service domains in The Netherlands.
 
 This profile builds on top of, and inherits all properties of, the NL GOV 
-Assurance profile for OAuth 2.0.
+Assurance profile for OAuth 2.0 [[OAuth2.NLGov]].
 
 # Introduction
 Government regulations for permitting users (citizens and non-citizens) online
-access to government resources vary greatly from region to region. There is a
+access to government resources vary greatly from country to country. There is a
 strong desire to leverage federated authentication and identity services for
 public access to government resources online to reduce 'password fatigue',
 increase overall account security, reduce cost, and provide reliable identity
@@ -95,18 +95,18 @@ This profiles supports several Use Cases. Design choices within this profile hav
 
 The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
 
-Authentication is provided in a federated manner. In other words, a Client system is relying upon another system for authentication.
-Either a central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organization (intra organizational) or can be an interorganizational setting, through either bilateral or multilateral agreements.
+Authentication is provided in a federated manner. In other words, a Client system is relying upon another system, the OpenID Provider (OP), for authentication.
+Either a shared central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organization (intra organizational) or can be an interorganizational setting, through either bilateral or multilateral agreements.
 In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
 
-The Service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in other contexts.
+The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in those other contexts.
 
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target User audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
-This profile supports several Use Cases for representation, which apply when an End-User intends to consume an online Service that requires authentication on behalf of a Natural Person or Legal Entity (the Service Consumer). The End-User is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
+This profile supports several Use Cases for representation, which apply when an End-User intends to consume an online service on behalf of a Natural Person or Legal Entity (the Service Consumer), where authentication and autorisation is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
 
-The Service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
+The service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
 ## Service Intermediation
 * TODO FdK
@@ -126,19 +126,24 @@ is appropriate to include in a call to a backend service.
 ## Misc
 OpenID Connect Core supports self-issued OpenID Connect Providers. As the context of this profile is centered around (semi-)governemental and public domain Use Cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
 
-As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to OpenID Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called hotspot, points were data collection can be concentrated.
+As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to Identity Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called privacy hotspot, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
 
 # Flow
 This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint.
 
+* TODO: elaborate on flow, like in [[OAuth2.NLGov]].
+
 ## Access Token as JWT Bearer
-This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov and iGov profiles.
+This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
 
 Using a JWT formatted Access Token allows any Relying Party to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, Userinfo response and introspection response.
 
-Note that ID Token en Userinfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
-This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum freedom and interoperability.
+Note that ID Token and Userinfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
+The Resource Server is normally not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorizaiton Servers. In the case of Service Intermediation this is applicable by definition.
+This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
+
+
 
 # OpenID Client profile
 
