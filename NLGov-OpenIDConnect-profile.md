@@ -268,7 +268,7 @@ https://idp-p.example.com/authorize?
 ### Request Objects
 Clients MAY optionally send requests to the authorization endpoint using the
 'request' or 'request_uri' parameter as defined by OpenID Connect
-[[OpenID.Core]], section 6. 
+[[OpenID.Core]], section 6.
 The use of the `request_uri` is preferred because of browser limits and network latency.
 
 Request objects MUST be signed by the Client's registered key. Request objects MAY be 
@@ -568,7 +568,7 @@ Its claims are as follows:
 
 
 ## Pairwise Identifiers
-Pairwise identifiers specified in OpenID Connect Core section 8 help protect
+Pairwise identifiers specified in OpenID Connect Core [[OpenID.Core]] section 8 help protect
 an end user's privacy by allowing an OpenID Provider to represent a single
 user with a different subject identifier (sub) for every Client the user
 connects to. This technique can help mitigate correlation of a user between
@@ -588,10 +588,10 @@ public identifiers are shared as attributes and the framework does not have a
 requirement for subject anonymity.
 
 The _Burgerservicenummer_ (citizen service number, or _BSN_) is often used
-in the Netherlands as identifier for citizens or natural persons. The BSN is
+in the Netherlands as identifier for citizens or natural persons, in particular in governmental contexts. The BSN is
 considered a public sectoral identifier in this profile.
 Note that the BSN MUST only be used by Relying Parties for Service eligible
-for using the BSN and the BSN SHOULD be encrypted.
+for using the BSN and the BSN, or token containing it, SHOULD be encrypted.
 
 Other public identifiers, such as the 
 _Rechtspersonen en Samenwerkingsverbanden Identificatienummer_ (RSIN) or 
@@ -659,13 +659,15 @@ and keys.
 OpenID Providers MUST accept requests containing a request object signed by
 the Client's private key. Servers MUST validate the signature on such requests
 against the Client's registered public key. OpenID Connect Providers MUST
-accept request objects encrypted with the server's public key.
+accept request objects encrypted to the provider's public key.
 
 OpenID Providers SHOULD accept request objects by reference using the `request_uri`
-parameter.
+parameter. The request object can be either hosted by the Client or pushed prior to
+the Authentication Request to the OpenID Provider. OpenID Providers MUST verify the
+'request_uri' is referencing a trusted location.
 
 Both of these methods allow for Clients to create a request that is protected
-from tampering through the browser, allowing for a higher security mode of
+from tampering through the browser, allowing for a higher security and privacy mode of
 operation for Clients and applications that require it. Clients are not
 required to use request objects, but OpenID Providers are required to support
 requests using them.
