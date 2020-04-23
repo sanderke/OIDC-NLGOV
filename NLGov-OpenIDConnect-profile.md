@@ -11,6 +11,8 @@ service domains in The Netherlands.
 This profile builds on top of, and inherits all properties of, the NL GOV 
 Assurance profile for OAuth 2.0 [[OAuth2.NLGov]].
 
+
+
 # Introduction
 Government regulations for permitting users (citizens and non-citizens) online
 access to government resources vary greatly from country to country. There is a
@@ -90,6 +92,8 @@ An iGov-NL-compliant OpenID Connect Client MUST use all functions as described
 in this specification. A general-purpose Client library MAY support additional 
 features for use with non-iGov-NL OpenID Connect Identity Providers.
 
+
+
 # Use Case & context
 This profiles supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
 
@@ -112,7 +116,7 @@ The service is offered by a (semi)governmental or public Service Provider; examp
 * TODO FdK
 
 ## Token Exchange
-This profile supports the exchanging of security tokens as specified in [[rfc8693]]. This invoves 
+This profile supports the exchanging of security tokens as specified in [[RFC8693]]. This involves 
 exchanging an earlier obtained token into a differently scoped token or an entirely different kind 
 of token.
 
@@ -128,6 +132,8 @@ OpenID Connect Core supports self-issued OpenID Connect Providers. As the contex
 
 As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to Identity Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called privacy hotspot, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
+
+
 
 # Flow
 This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint.
@@ -153,12 +159,12 @@ This profile supports the following types of Client applications to which specif
 **Note:** the iGov profile for OAuth 2.0 utilizes a slightly different segregation of applications into the following types: *Full Clients* and *Native Clients* act on behalf of a Resource Owner and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
-*Web applications* are applications that run on a web server. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+*Web applications* are applications that run on a web server and are consumed through the User-Agent ("browser") by the User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 
 ### Browser-based Applications
 *Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 
-In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients  
+In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients 
 MUST follow the best practices as specified in 
 [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps)
 as well as the following:
@@ -167,7 +173,7 @@ as well as the following:
 - OpenID Providers MUST support the necessary 
 "Cross-Origin Resource Sharing (CORS)"[[cors]] headers to allow browsers to make requests
 to its endpoints and SHOULD NOT use wildcard origins.
-- Browser-based applications MUST use PKCE [[rfc7636]] to protect calls to the token endpoint.
+- Browser-based applications MUST use PKCE [[RFC7636]] to protect calls to the token endpoint.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically
 hosted scripts via a "Content Security Policy (CSP)"[[CSP]].
 - Browser-based applications SHOULD use "Subresource Integrity (SRI)" [[SRI]]
@@ -188,24 +194,28 @@ following:
 - Public native applications MUST use PKCE to protect calls to the token endpoint. Confidential
 native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or in-app browser tab to make authorization 
-requests; embedded user-agents or web-view components MUST NOT be used for this purpose.
+requests; embedded user-agents or web-view components MUST NOT be used for this purpose. See
+[[RFC8252]] for a description of the 'in-app browser tab' feature.
 
 ## Requests to the Authorization Endpoint (Authentication Request)
-In addition to the requirements specified in Section 2.1.1 of the NL Gov OAuth2 profile, the following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible Identity Providers.
+The following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible OpenID Provider.
+Some of these requirements are inherited as specified in Section 2.1.1 of the NL Gov OAuth2 profile.
 
 Request Parameters:
 
 client_id
 
-> REQUIRED. Valid OAuth 2.0 Client Identifier. MUST have the value as obtained during registration. 
+> REQUIRED. Valid OAuth 2.0 Client Identifier. MUST have the value as obtained during registration. Identical as in [[OAuth2.NLGov]].
 
 response_type
 
-> REQUIRED. MUST be set to `code`.  
+> REQUIRED. MUST have value `code` for the Authorization Code Flow. Identical as in [[OAuth2.NLGov]].
 
 scope
 
->  REQUIRED. Indicates the attributes being requested.
+>  REQUIRED. Indicates the attributes being requested. MUST contain at least the value 'openid' and SHOULD contain a specific scope for which access is requested.
+
+* FIXME: scope not for attributes!
 
 redirect_uri
 
@@ -227,22 +237,20 @@ acr_values
 
 >  OPTIONAL. Lists the acceptable LoAs for this authentication. See (below). 
 
-code_challenge and code_challenge_method
-
->  OPTIONAL. The use of PKCE is REQUIRED in Use Cases where public clients are involved and is RECOMMENDED
-in Use Cases where confidential clients are involved.
-
 claims
 
-> OPTIONAL. This parameter is used to request specific Claims. The value is a JSON object listing the requested Claims.
+> OPTIONAL. This parameter is used to request specific Claims. The value is a JSON object listing the requested Claims, as specified in section 5.5 of [[OpenID.Core]].
 
-client_assertion_type
+code_challenge
 
-> REQUIRED. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
+>  RECOMMENDED. Code challenge as in PKCE [[RFC7636]]. The use of PKCE is
+REQUIRED in Use Cases where public clients are involved and is RECOMMENDED
+in Use Cases where confidential clients are involved.
 
-client_assertion
+code_challenge_method
 
-> OPTIONAL. The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint.
+> REQUIRED, in case `code_challenge` is present. MUST use the value of 'S256'.
+
 
 A sample request may look like:
 ```
@@ -256,12 +264,6 @@ https://idp-p.example.com/authorize?
  &acr_values=http%3a%2f%2feidas.europa.eu%2fLoA%2fsubstantial
 ```
 
-
-* iGov: usable; vtr not applicable (acr\_values for LoA preferred)
-* private\_key\_jwt authentication
-** mTLS (RFC-to-be-8705) optional alternative
-* intra-organization PKIo, as in OAuth NL-Gov profile
-* claims parameter
 
 ### Request Objects
 Clients MAY optionally send requests to the authorization endpoint using the
@@ -278,7 +280,7 @@ encrypted to the authorization server's public key.
 
 ### Client Authentication
 Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined in [Section 5.1](#client-types) MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the private\_key\_jwt method defined in [[OpenID.Core]].
-In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
+Alternatively, Clients MAY authenticate using mutual authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the 'client_id' parameter MUST be included.
 
 <!-- 
 
@@ -292,27 +294,28 @@ In addition to the requirements specified in Section 2.3.1 of the NL Gov OAuth2 
 The following parameters are specified:
 
 grant_type
-> REQUIRED. MUST be set to `authorization_code`.
+> REQUIRED. MUST contain the value `authorization_code`. Identical as in [[OAuth2.NLGov]].
  
 code
-> REQUIRED. The value of the code parameter returned in the authorization response.
+> REQUIRED. The value of the code parameter returned in the Authorization Response. Identical as in [[OAuth2.NLGov]].
+
+client_assertion
+> REQUIRED, in case private_key_jwt is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
 client_assertion_type
-> REQUIRED. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
+> REQUIRED, in case 'client_assertion' is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
  
-client_assertion
-> REQUIRED. The value of the signed Client authentication JWT generated as described below. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
+client_id
+> REQUIRED, in case mutual authenticated TLS is used for client authentication.
 
-In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
-
-* iGov: usable
-* mTLS (RFC8705) as alternative Client authentication method, influences parameters client\_assertion
 
 ### Token Exchange Request
-If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[rfc8693]],
+If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
 then the Token Exchange Request and Response MUST be in accordance with
 that specification (see section 2), using the extension grant type
 *"urn:ietf:params:oauth:grant-type:token-exchange"*.
+
+* TODO elaborate on usage
 
 ## ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it
@@ -343,12 +346,12 @@ represents
 >    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 ### Representation
-In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[rfc8693]].
+In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC8693]].
 
-As such, all Clients MUST process `represents` claims used, in case Representation is applicable.
+As such, all Clients MUST process `represents` claims used, in case Representation can be applicable in the context of the Relying Party and OpenID Provider.
 
 This profile specifies representation relations in ID Tokens as follows:
-- The End-User is always mentioned in the `sub` Claim;
+- The End-User is always identified by the `sub` Claim;
 - The represented Service Consumer is mentioned in the `represents` Claim.
 - In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
 
@@ -371,12 +374,24 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
         }
       }
 
+* TODO elaborate on contents of 'represents', in particular 'iss'.
+
 ## Discovery
 Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk 
 of mistakes.
 
-Clients and protected resources SHOULD cache OpenID Provider metadata once an
-OpenID Provider has been discovered and used by the Client. 
+Clients and Resource Servers SHOULD acquire metadata using either the "OpenID
+Connect Discovery 1.0" [[OpenID.Discovery]] method using the
+'/.well-known/openid-configuration' location (section 4), or the "OAuth2 Server
+Metadata" [[RFC8414]] method using the '/.well-known/oauth-authorization-server'
+location (section 3). Methods using WebFinger with (partial) personal
+identifiable information SHOULD NOT be used, to avoid privacy issues such as
+leaking information to unknown locations.
+
+Clients and Resource Servers SHOULD cache OpenID Provider metadata once an
+OpenID Provider has been discovered and used by the Client. Clients and
+Resource Servers SHOULD utilize the HTTP headers provided by the server
+for caching [[RFC7234]].
 
 Clients use the public keys made available from the jwks endpoint to 
 validate the signature on tokens. The OpenID Connect spec recommends using the HTTP `Cache-Control` Header 
@@ -396,13 +411,8 @@ The cache duration SHOULD also be coordinated with the issuance of new signing k
 Please refer to [Algorithms](#algorithms) for more information on cryptographic
 algorithms and keys.
 
-* iGov: usable
-* SHOULD for Client; reduce manual labour with risk of config mistakes
-* guidelines for caching duration and handling updates/changes
-** include JWK_uri content updates
-
 ## Registration
-All Clients MUST register with the Authorization Server.
+All Clients MUST register with the OpenID Provider.
 
 Native Clients MUST either be provisioned a unique per-instance Client identifier or be 
 registered as *public* Clients by using a common Client identifier; browser-based Clients
@@ -439,14 +449,13 @@ An example of a Client registration request:
       "contacts": ["mary@example.org"],
     }
 
-* not in iGov, additional
-* MAY/SHOULD for Client; reduce manual labour with risk of config mistakes
 * TBD: details of minimal registraton parameters?
-* relation to RFC7591 OAuth 2.0 Dynamic Client Registration
-* MAY support RFC7592 OAuth 2.0 Dynamic Client Registration Management Protocol 
+* TBD: is an initial access token (always) required? for native app instances as well?
 
 Please refer to [Algorithms](#algorithms) for more information on eligable
 cryptographic methods and keys that can be used when registering a Client.
+
+
 
 # OpenID Provider profile
 * TBD: add section on access token? (on top of / in relation to OAuth2)
