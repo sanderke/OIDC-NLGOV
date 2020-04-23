@@ -500,7 +500,7 @@ exp, iat, nbf
 
 represents
 
->	   REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
+>    REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 vot
 
