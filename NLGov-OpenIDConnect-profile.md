@@ -65,7 +65,7 @@ The specification also defines features for interaction between these components
 - Relying Party to Identity Provider
 
 This profile is based upon the International Government Assurance Profile (iGov) for 
-OpenID Connect 1.0 [[?OpenID.iGov]] as published by the OpenID Foundation 
+OpenID Connect 1.0 [[OpenID.iGov]] as published by the OpenID Foundation 
 (https://openid.net/foundation/). It should be considered a fork of this profile, as 
 the iGov profile is geared more towards a United States context and the Netherlands 
 towards a European Union context.
