@@ -26,10 +26,10 @@ online.
 ## Requirements Notation and Conventions
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in [[rfc2119]].
+document are to be interpreted as described in [[RFC2119]].
 
-All uses of "JSON Web Signature (JWS)" [[rfc7515]] and "JSON Web Encryption
-(JWE)" [[rfc7516]] data structures in this specification utilize the JWS
+All uses of "JSON Web Signature (JWS)" [[RFC7515]] and "JSON Web Encryption
+(JWE)" [[RFC7516]] data structures in this specification utilize the JWS
 Compact Serialization or the JWE Compact Serialization; the JWS JSON
 Serialization and the JWE JSON Serialization are not used.
 
@@ -272,13 +272,13 @@ encrypted to the authorization server's public key.
 ## Requests to the Token Endpoint
 
 ### Client Authentication
-Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined in [Section 5.1](#client-types) MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[rfc7523]] using only the private\_key\_jwt method defined in [[OpenID.Core]].
+Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined in [Section 5.1](#client-types) MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the private\_key\_jwt method defined in [[OpenID.Core]].
 In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion can be omitted.
 
 <!-- 
 
 TODO: Dit is exact hetzelfde als ook in het NL Gov OAuth 2.0 profiel staat. Is het zinvol om het hier nogmaals op te nemen?
-- In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[rfc7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
+- In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[RFC7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
 
 -->
 
@@ -403,9 +403,9 @@ Native Clients MUST either be provisioned a unique per-instance Client identifie
 registered as *public* Clients by using a common Client identifier; browser-based Clients
 MUST be registered as *public* Clients.
 
-Clients SHOULD use Dynamic Registration as per [[rfc7591]] to reduce manual
+Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual
 labor and the risks of configuration errors. Dynamic Client Registration
-Management Protocol [[rfc7592]] MAY be used by Clients.
+Management Protocol [[RFC7592]] MAY be used by Clients.
 An initial access token is REQUIRED for making the Client registration request. 
 The Client metadata MUST use the `authorization_code` and SHOULD use `jwks_uri` values.
 The use of `subject_type` `pairwise` is highly recommended(?)
@@ -697,10 +697,10 @@ support.
 All OpenID Providers are uniquely identified by a URL known as the issuer.
 This URL serves as the prefix of a service discovery endpoint as specified in
 the OpenID Connect Discovery standard and "OAuth2 Authorization Server
-Metadata" [[rfc8414]]. An OpenID Provider SHOULD publish
+Metadata" [[RFC8414]]. An OpenID Provider SHOULD publish
 the same JSON metadata on both `/.well-known/openid-configuration` and
 `/.well-known/oauth-authorization-server`, and MAY publish on other locations.
-The OpenID Provider SHOULD include a `signed_metadata` claim, as described in [[rfc8414]]
+The OpenID Provider SHOULD include a `signed_metadata` claim, as described in [[RFC8414]]
 section 2.1.
 
 Note that for privacy considerations, only direct requests to the server metadata
@@ -716,11 +716,11 @@ issuer
 
 authorization_endpoint
 
->    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint defined by [[rfc6749]].
+>    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint defined by [[RFC6749]].
 
 token_endpoint
 
->    REQUIRED. The fully qualified URL of the server's token endpoint defined by [[rfc6749]].
+>    REQUIRED. The fully qualified URL of the server's token endpoint defined by [[RFC6749]].
 
 introspection_endpoint
 
@@ -1021,7 +1021,7 @@ than strictly necessary.
 Additionally, Clients SHOULD ensure they minimize the scope and audience they
 request, use and forward. This principle applies to both to usage at the
 Client as well as forwarded access tokens in a Service Intermediation scenario.
-Token Exchange ([[rfc8693]]) SHOULD be used to request access tokens with a
+Token Exchange ([[RFC8693]]) SHOULD be used to request access tokens with a
 minimal scope and audience.
 
 Despite the mechanisms enforced by this specification, the operational
@@ -1046,19 +1046,19 @@ Number_, the Dutch citizen ID) and sensative attributes.
 
 # Security considerations
 All transactions MUST be protected in transit by TLS as described in BCP195
-[[rfc7525]]. In addition, all compliant implementations MUST apply the IT
+[[RFC7525]]. In addition, all compliant implementations MUST apply the IT
 Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD
 only implement settings and options indicated as 'good', SHOULD NOT use any
 settings with a status 'phase out' and MUST NOT use any setting with a status
 'insufficient' in these security guidelines or future updates thereof.
 
 Implementations MUST implement HTTP Strict Transport Security, as specified in
-[[rfc6797]].
+[[RFC6797]].
 
 All Clients MUST conform to applicable recommendations found in the Security
-Considerations sections of [[rfc6749]] and those found in the OAuth 2.0 Threat
-Model and Security Considerations document [[rfc6819]]. For all Tokens, the
-JSON Web Token Best Current Practices [[rfc8725]] SHOULD be applied.
+Considerations sections of [[RFC6749]] and those found in the OAuth 2.0 Threat
+Model and Security Considerations document [[RFC6819]]. For all Tokens, the
+JSON Web Token Best Current Practices [[RFC8725]] SHOULD be applied.
 
 <!-- [Algorithms](#algorithms) --->
 ## Algorithms
