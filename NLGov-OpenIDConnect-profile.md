@@ -338,7 +338,7 @@ represents
 >    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 ### Representation
-In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC 8693]].
+In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC8693]].
 
 As such, all Clients MUST process `represents` claims used, in case Representation is applicable.
 
@@ -347,7 +347,7 @@ This profile specifies representation relations in ID Tokens as follows:
 - The represented Service Consumer is mentioned in the `represents` Claim.
 - In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
 
-A sample chain representation for a service identified with URI `urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: this example models the service uuid as a scope; claims that do not add to the example are omitted for readability):
+A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: the requested scope also includes the required `openid` scope; claims that do not add to the example are omitted for readability):
 
       {
         "scope": "openid urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba",
@@ -1119,6 +1119,8 @@ Future updates to this profile are likely to seek interoperability with these RF
 * OAuth2 Security Best Practices, currently in draft / work in progress @ IETF (OAuth2 WG).
 
 * Browser based apps, work in progress @ IETF (OAuth2 WG)
+
+* OAuth 2.1 requires authorization servers to support PKCE - OIDC clients MAY use nonce instead.
 
 
 #  Appendix Notices
