@@ -895,7 +895,7 @@ attribute names.
 OpenID Core section 5.1 specifies a list of standard claims. In a Dutch
 governmental context, attribute Claims are commonly registred in the BRP
 (_Basis Registratie Personen_, the Dutch citizen registry), as defined in
-[[LO.GBA]].
+[[?LO.GBA]].
 Usage or interoperability with the ISA<sup>2</sup> core vocabularies is
 RECOMMENDED.
 
