@@ -391,6 +391,10 @@ OpenID Provider has been discovered and used by the Client. Clients and
 Resource Servers SHOULD utilize the HTTP headers provided by the server
 for caching [[RFC7234]].
 
+Clients SHOULD support `signed_metadata` as specified in [[rfc8414]] section 2.1.
+In case signed metadata is available, this MUST be used over non-signed metadata
+and the signature MUST be verified  prior to further utilizing it contents.
+
 Clients use the public keys made available from the jwks endpoint to 
 validate the signature on tokens. The OpenID Connect spec recommends using the HTTP `Cache-Control` Header 
 option and the `max-age` directive to inform Clients how long they can cache the public keys for 
@@ -687,7 +691,7 @@ requests using them.
 * avoid amr, use acr instead
 
 ## Discovery
-OpenID Connect Discovery standard provides a standard, programatic way for
+The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programatic way for
 Clients to obtain configuration details for communicating with OpenID
 Providers. Discovery is an important part of building scalable federation
 ecosystems. Compliant OPs under this profile MUST publish their server
@@ -711,15 +715,15 @@ support.
 All OpenID Providers are uniquely identified by a URL known as the issuer.
 This URL serves as the prefix of a service discovery endpoint as specified in
 the OpenID Connect Discovery standard and "OAuth2 Authorization Server
-Metadata" [[RFC8414]]. An OpenID Provider SHOULD publish
-the same JSON metadata on both `/.well-known/openid-configuration` and
+Metadata" [[RFC8414]]. An OpenID Provider SHOULD publish equivalent JSON
+metadata on both `/.well-known/openid-configuration` and
 `/.well-known/oauth-authorization-server`, and MAY publish on other locations.
 The OpenID Provider SHOULD include a `signed_metadata` claim, as described in [[RFC8414]]
 section 2.1.
 
 Note that for privacy considerations, only direct requests to the server metadata
-document SHOULD be used. The webfinger method to locate the relevant OpenID Provider and
-its metadata, as described in OpenID Discovery section 2, MUST NOT be used.
+document SHOULD be used. The WebFinger method to locate the relevant OpenID Provider and
+its metadata, as described in [[OpenID.Discovery]] section 2, MUST NOT be supported.
 
 
 The discovery document MUST contain at minimum the following fields:
@@ -730,27 +734,27 @@ issuer
 
 authorization_endpoint
 
->    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint defined by [[RFC6749]].
+>    REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint as defined by [[RFC6749]].
 
 token_endpoint
 
->    REQUIRED. The fully qualified URL of the server's token endpoint defined by [[RFC6749]].
+>    REQUIRED. The fully qualified URL of the server's token endpoint as defined by [[RFC6749]].
 
 introspection_endpoint
 
->    OPTIONAL. The fully qualified URL of the server's introspection endpoint defined by OAuth Token Introspection.
+>    OPTIONAL. The fully qualified URL of the server's introspection endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
 
 revocation_endpoint
 
->    OPTIONAL. The fully qualified URL of the server's revocation endpoint defined by OAuth Token Revocation.
+>    OPTIONAL. The fully qualified URL of the server's revocation endpoint defined by "OAuth 2.0 Token Revocation" [[rfc7009]].
 
 jwks_uri
 
->    REQUIRED. The fully qualified URI of the server's public key in JWK Set format. For verifying the signatures on the id_token.
+>    REQUIRED. The fully qualified URI of the server's public key in JWK Set format. For verifying the signatures on tokens and responses and for encrypting requests to the server
 
 scopes_supported
 
->    REQUIRED. The list of scopes, including iGov scopes, the server supports.
+>    REQUIRED. The list of scopes the server supports.
 
 claims_supported
 
@@ -758,7 +762,7 @@ claims_supported
 
 vot
 
->    OPTIONAL. The vectors supported.
+>    OPTIONAL. The vectors of trust supported.
 
 acr_values
 
@@ -852,7 +856,7 @@ transitions to configuraion updates, an OpenID Provider SHOULD only make non-bre
 and retain backward compatability when possible. It is RECOMMENDED an OP
 monitors usage of outdated configuration options used by any Relying Party and
 actively work with their administrators to update configurations.
-The above on caching an changed MUST be applied for the `jwks_uri` containing the
+The above on caching an changes MUST be applied as well to the `jwks_uri` containing the
 OpenID Provider's key set.
 
 The server MUST provide its public key in JWK Set format, such as the
@@ -881,18 +885,21 @@ following 2048-bit RSA key:
 Please refer to [Algorithms](#algorithms) for more information on eligable
 cryptographic methods and keys that can be used by OpenID Providers.
 
+* TODO include x5c with PKIO.
 
 ## Dynamic Registration
-If the OpenID Provider is acting as an NL-iGov OAuth Authorization Server (NL-iGov OAuth2
+If the OpenID Provider is acting as an NL-Gov OAuth Authorization Server (NL-Gov OAuth2
 profile), then Dynamic Registration MUST be supported in accordance with that
-specification (see section 3.1.3).
+specification ([[OAuth2.NL-Gov]], see section 3.1.3).
 
 Dynamic Registration MUST also be supported in combination with per-instance provisioning 
 of secrets when registering Native Applications as confidential Clients.
 
 In other cases, particularly when dealing with Browser-based applications or
 Native Apps, Dynamic Registration SHOULD be supported in accordance with the
-NL-iGov OAuth2 specification.
+NL-Gov OAuth2 profile.
+
+
 
 # User Info
 The availability, quality, and reliability of an individual's identity
