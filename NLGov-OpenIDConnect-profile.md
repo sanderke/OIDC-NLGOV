@@ -470,7 +470,7 @@ five minutes. Since the ID token is consumed by the Client and not presented
 to remote systems, much shorter expiration times are RECOMMENDED where
 possible.
 
-The token response includes an access token (which can be used to make a
+The token response includes an Access Token (which can be used to make a
 UserInfo request) and ID Token (a signed and optionally encrypted JSON Web
 Token). ID Token values have the following meanings:
 
@@ -484,15 +484,15 @@ aud
 
 sub
 
->    REQUIRED. The identifier of the user. OpenID Providers MUST support a pairwise identifier in accordance with OpenID Connect Core section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
+>    REQUIRED. The identifier of the authenticated User. OpenID Providers MUST support a pairwise identifier in accordance with "OpenID Connect Core" [[OpenID.Core]] section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
 
-sub\_id\_type
+sub_id_type
 
 >    REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the `sub\_id\_type` MUST be a URI.
 
 acr
 
->    REQUIRED. The LoA the user was authenticated at. MUST be a member of the acr_values list from the authentication request. See Authentication Context for more details.
+>    REQUIRED. The LoA the user was authenticated at. MUST be a member of the 'acr_values' list from the authentication request. See Authentication Context for more details.
 
 nonce
 
@@ -500,11 +500,11 @@ nonce
 
 jti
 
->    REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identity the ID Token between sender and receiver for at least 12 months.
+>    REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identify the ID Token between sender and receiver for at least 12 months.
 
 auth_time
 
->    RECOMMENDED. This SHOULD be included if the OpenID Provider can assert an end- user's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
+>    RECOMMENDED. This SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
 
 exp, iat, nbf
 
@@ -512,11 +512,11 @@ exp, iat, nbf
 
 represents
 
->    REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
+>    REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a representation relationship for the acting party.
 
 vot
 
->    OPTIONAL. The vector value as specified in Vectors of Trust. See Vectors of Trust for more details. As eIDAS is leading in many scenarios, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust.
+>    OPTIONAL. The vector value as specified in Vectors of Trust. See Vectors of Trust for more details. As eIDAS is leading in most scenarios targeted by this profile, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust.
 
 vtm
 
