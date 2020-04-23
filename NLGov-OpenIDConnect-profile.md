@@ -267,14 +267,12 @@ https://idp-p.example.com/authorize?
 
 ### Request Objects
 Clients MAY optionally send requests to the authorization endpoint using the
-request or request_uri parameter as defined by OpenID Connect. 
+'request' or 'request_uri' parameter as defined by OpenID Connect
+[[OpenID.Core]], section 6. 
 The use of the `request_uri` is preferred because of browser limits and network latency.
 
 Request objects MUST be signed by the Client's registered key. Request objects MAY be 
-encrypted to the authorization server's public key.
-
-* iGov: usable
-* preferred + signed
+encrypted to the OpenID Provider's public key.
 
 ## Requests to the Token Endpoint
 
