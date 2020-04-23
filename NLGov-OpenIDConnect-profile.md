@@ -112,7 +112,7 @@ The Service is offered by a (semi)governmental or public Service Provider; examp
 * TODO FdK
 
 ## Token Exchange
-This profile supports the exchanging of security tokens as specified in [[RFC8693]]. This invoves 
+This profile supports the exchanging of security tokens as specified in [[rfc8693]]. This invoves 
 exchanging an earlier obtained token into a differently scoped token or an entirely different kind 
 of token.
 
@@ -162,9 +162,9 @@ as well as the following:
 - OpenID Providers MUST support the necessary 
 "Cross-Origin Resource Sharing (CORS)"[[cors]] headers to allow browsers to make requests
 to its endpoints and SHOULD NOT use wildcard origins.
-- Browser-based applications MUST use PKCE to protect calls to the token endpoint.
+- Browser-based applications MUST use PKCE [[rfc7636]] to protect calls to the token endpoint.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically
-hosted scripts via a "Content Security Policy (CSP)"[[CSP 3]].
+hosted scripts via a "Content Security Policy (CSP)"[[CSP]].
 - Browser-based applications SHOULD use "Subresource Integrity (SRI)" [[SRI]]
 to verify that external dependencies that they include (e.g. via a content
 delivery network (CDN)) are not unexpectedly manipulated.
@@ -303,7 +303,7 @@ In case of a mutual TLS connection (mTLS) between the Client and the server, the
 * mTLS (RFC8705) as alternative Client authentication method, influences parameters client\_assertion
 
 ### Token Exchange Request
-If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
+If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[rfc8693]],
 then the Token Exchange Request and Response MUST be in accordance with
 that specification (see section 2), using the extension grant type
 *"urn:ietf:params:oauth:grant-type:token-exchange"*.
@@ -337,7 +337,7 @@ represents
 >    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
 ### Representation
-In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC 8693]].
+In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[rfc8693]].
 
 As such, all Clients MUST process `represents` claims used, in case Representation is applicable.
 
