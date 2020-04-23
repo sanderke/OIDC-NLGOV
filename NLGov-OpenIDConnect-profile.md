@@ -179,6 +179,7 @@ MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC82
 following:
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
+- The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications.
 - Public native applications MUST use PKCE to protect calls to the token endpoint. Confidential
 native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or in-app browser tab to make authorization 
@@ -199,7 +200,7 @@ response_type
 
 scope
 
->  REQUIRED. Indicates the attributes being requested. (See below) 
+>  REQUIRED. Indicates the attributes being requested.
 
 redirect_uri
 
