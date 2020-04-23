@@ -65,7 +65,7 @@ The specification also defines features for interaction between these components
 - Relying Party to Identity Provider
 
 This profile is based upon the International Government Assurance Profile (iGov) for 
-OpenID Connect 1.0 [iGOV.OpenID] as published by the OpenID Foundation 
+OpenID Connect 1.0 [[iGOV.OpenID]] as published by the OpenID Foundation 
 (https://openid.net/foundation/). It should be considered a fork of this profile, as 
 the iGov profile is geared more towards a United States context and the Netherlands 
 towards a European Union context.
@@ -81,7 +81,7 @@ for use with non-iGov-NL Clients.
 
 An iGov-NL-compliant OpenID Connect Identity Provider MAY also provide iGov-NL-compliant 
 OAuth 2.0 authorization server functionality. In such cases, the authorization 
-server MUST fully implement the OAuth 2.0 iGov-NL profile. If an 
+server MUST fully implement the OAuth 2.0 iGov-NL profile [[OAuth2.NLGov]]. If an 
 iGov-NL-compliant OpenID Connect Identity Provider does not provide iGov-NL-compliant 
 OAuth 2.0 authorization server services, all features related to interaction 
 between the authorization server and protected resource are therefore OPTIONAL.
