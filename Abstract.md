@@ -1,4 +1,3 @@
-# Abstract
 The OpenID Connect protocol defines an identity federation system that allows
 a Relying Party to request and receive authentication and profile information
 about an End-User.
