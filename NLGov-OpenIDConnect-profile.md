@@ -890,7 +890,7 @@ cryptographic methods and keys that can be used by OpenID Providers.
 ## Dynamic Registration
 If the OpenID Provider is acting as an NL-Gov OAuth Authorization Server (NL-Gov OAuth2
 profile), then Dynamic Registration MUST be supported in accordance with that
-specification ([[OAuth2.NL-Gov]], see section 3.1.3).
+specification ([[OAuth2.NLGov]], see section 3.1.3).
 
 Dynamic Registration MUST also be supported in combination with per-instance provisioning 
 of secrets when registering Native Applications as confidential Clients.
