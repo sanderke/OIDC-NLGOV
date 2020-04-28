@@ -131,7 +131,7 @@ This profile requires an Access Token to be in JWT form. This is in line with th
 Using a JWT formatted Access Token allows any Relying Party to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, Userinfo response and introspection response.
 
 Note that ID Token and Userinfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
-The Resource Server is normally not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorizaiton Servers. In the case of Service Intermediation this is applicable by definition.
+The Resource Server is normally not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorization Servers. In the case of Service Intermediation this is applicable by definition.
 This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
 
 
