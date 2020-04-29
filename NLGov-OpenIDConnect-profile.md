@@ -902,7 +902,7 @@ OpenID Core section 5.1 specifies a list of standard claims. In a Dutch
 governmental context, attribute Claims are commonly registred in the BRP
 (_Basis Registratie Personen_, the Dutch citizen registry), as defined in
 [[?LO.GBA]].
-Usage or interoperability with the ISA<sup>2</sup> core vocabularies is
+Usage of, or interoperability with, the ISA<sup>2</sup> core vocabularies is
 RECOMMENDED.
 
 * TBD: add default/recommended mapping OIDC <-> BRP?
@@ -939,34 +939,38 @@ cross-jurisdiction authentication is required and therefore the availability
 of a single identifier (e.g. social security number) cannot be guaranteed for
 the individual wishing to authenticate.
 
-However, in the Netherlands a common identifier (BSN) for citizines is
+However, in the Netherlands a common identifier (BSN) for citizens is
 available for eligable organizations. Nationwide interoperable pseudonyms
-per Relying Party for non-eligable organizations is supported as well.
+per Relying Party for non-BSN-eligable organizations exists as well.
 
 The default `profile` scope of OpenID Connect is very wide, which is undesired from a
-privacy perspective. As such, the profile scope SHOULD NOT be used.
+privacy perspective. As such, the `profile` scope SHOULD NOT be used.
 
 Note that the `doc` profile described in the iGov profile for OpenID Connect
-is not in common use in the Netherlands and therefore not included in this
-profile.
+[[[OpenID.iGov]] is not in common use in the Netherlands and therefore not
+included in this profile.
 
 ## Claims Request
-OpenID Core section 5.5 defines a method for a Client to request specific
-claims in the UserInfo object. OpenID Providers MUST support this claims
+OpenID Core section 5.5 [[OpenID.Core]] defines a method for a Client to request specific
+claims in the UserInfo object. OpenID Providers MUST support this `claims`
 parameter in the interest of data minimization - that is, the Provider only
 returns information on the subject the Client specifically asks for, and does
 not volunteer additonal information about the subject.
 
-Clients requesting the profile scope MAY provide a claims request parameter.
+Clients requesting the `profile` scope MAY provide a claims request parameter.
 If the claims request is omitted, the OpenID Provider SHOULD provide a default
 claims set that it has available for the subject, in accordance with any
 policies set out by the trust framework the Provider supports.
+NOTE that clients SHOULD not request the `profile` scope, as described
+in the previous section.
 
 * TBD: claims parameter has benefits functionally/security wise, support may be less widespread though
 
 ## Claims Response
 Response to a UserInfo request MUST match the scope and claims requested to
 avoid having a OpenID Provider over-expose a user's identity information.
+Providers MUST NOT provide any personal identifiable information without
+applicable consent.
 
 Claims response MAY also make use of the aggregated and/or distributed claims
 structure to refer to the original source of the subject's claims.
@@ -982,9 +986,9 @@ the OpenID Provider or the trust framework, per claim. Expressing or evaluating 
 confidence is beyond the scope of this profile.
 
 In order to provide a source, including integrity and optionally confidentiality,
-an OpenID Provider SHOULD be able to provide aggregated or distributed claims. The signee of
-such aggregated or distributed claims implies the source and can support in
-assessing the level confidence or quality of the claim.
+an OpenID Provider SHOULD be able to provide aggregated or support distributed
+claims. The signee of such aggregated or distributed claims implies the source
+and can support in assessing the level confidence or quality of the claim.
 
 
 # Relation with 3rd party (Resource Servers)
