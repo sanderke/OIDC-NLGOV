@@ -1005,7 +1005,6 @@ and can support in assessing the level confidence or quality of the claim.
 
 
 # Privacy considerations
-
 Data minimization is an essential concept in trust frameworks and federations
 exchanging user identity information for government applications. The design
 of this profile takes into consideration mechanisms to protect the
@@ -1013,9 +1012,9 @@ user's government identity information and activity from unintentional
 exposure.
 
 Pairwise anonymous identifiers MUST be supported by the OpenID Providers for
-frameworks where subjects should not be traceable across Clients by their
-subject ID. This prevents a situation where a user may inadvertently be
-assigned a universal government identifier.
+frameworks where subjects should not be traceable or linkable across Clients
+by their subject ID. This prevents a situation where a user may inadvertently
+be assigned a universal government identifier.
 
 Request claims MUST be supported by the OpenID Providers to ensure that only
 the data the Client explicitly requests is provided in the UserInfo response
@@ -1023,7 +1022,9 @@ or ID Token.
 This prevents situations where a Client may only require a partial set of
 claims, but receives (and is therefore exposed to) a full set of claims. For
 example, if a Client only needs an identifier and the persons legal age,
-the OpenID Provider MUST NOT send the Client the full user name and birthdate.
+the OpenID Provider MUST NOT send the Client the full user name and birth date.
+Similarly, broad attribute requests through the scope parameter, such as
+`profile` SHOULD NOT be used.
 
 All Relying Parties MUST apply the concept of data minimization. As a result,
 a Client MUST NOT request any more identifiers, attributes or other claims
@@ -1036,9 +1037,9 @@ minimal scope and audience.
 
 Despite the mechanisms enforced by this specification, the operational
 circumstances may allow these controls to be relaxed in a specific context.
-For example, if a bilateral agreement between to agencies legally entitles 
+For example, if a bilateral agreement between two agencies legally entitles 
 usage of citizen identifiers, then the pairwise anonymous identifer requirement
-may be relaxed. In cases where all Clients are entitled to process 
+may be relaxed. In cases where all Clients are entitled to process claims
 associated to a subject at an OpenID Provider, the claims request requirement
 may be relaxed.
 
@@ -1048,9 +1049,9 @@ outside the scope of this specification.
 In order to provide end-to-end security and privacy, identifiers and
 attributes SHOULD be encrypted from the providing source to the ultimate
 intended recipient. This can be accomplished by either encrypting entire
-response and tokens or by utilizing aggregated or distributed claims. applying
-end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burger Service
-Number_, the Dutch citizen ID) and sensative attributes.
+response messages and tokens or by utilizing aggregated or distributed claims.
+Applying end-to-end encryption is strongly RECOMMENDED for both the BSN
+(_Burger Service Number_, the Dutch citizen ID) and sensitive attributes.
 
 ** TODO: check consistency wrt aggregated/distributed claims
 
@@ -1110,7 +1111,6 @@ However, we want to attend readers to these developments and for them to take
 into account that future updates to this profile may incorporate the resulting
 standards and specifications. Furthermore we would like encourage readers to
 follow relevant developments.
-
 
 ## Federations
 This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain. However, no specific support or requirements for federations are included in this version of this profile.
