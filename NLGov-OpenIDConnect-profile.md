@@ -138,7 +138,7 @@ The Authorization Code Flow goes through the following steps:
 
 The flow described by these steps is illustrated as follows:
 
-```
+<pre>
    +----------+
    |   End-   |
    |   User   |
@@ -163,7 +163,7 @@ The flow described by these steps is illustrated as follows:
    |         |                                             |
    |     (6) |<---(5)----- Access Token + ID Token --------'
    +---------+       (w/ Optional Refresh Token)
-```
+</pre>
 
 ## Access Token as JWT Bearer
 This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
