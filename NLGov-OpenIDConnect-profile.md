@@ -121,9 +121,49 @@ To mitigate such risks, end-to-end security is considered throughout this profil
 
 
 # Flow
-This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint.
+OpenID Connect Core specifies three paths via which authentication can can be performed: the Authorization Code Flow, the Implicit Flow, or the Hybrid Flow. The flows determine how the ID Token and Access Token are returned to the Client.
 
-* TODO: elaborate on flow, like in [[OAuth2.NLGov]].
+This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint. The Implicit Flow and Hybrid Flow allow tokens to be obtained from the Authorization endpoint, and thereby omitting the Token endpoint. This  makes them vulnerable to token leakage and token replay and makes it impossible to cryptographically bind tokens to a certain client. Therefore, the Implicit Flow and Hybrid flow MUST NOT be used. Also, the IETF OAuth Working Group is removing support for the Implicit Flow from the OAuth 2.1 specification [[?OAuth2.1]] for the same reasons.
+
+## Authorization Code Flow
+The Authorization Code Flow returns an Authorization Code to the Client, which can then exchange it for an ID Token and an Access Token directly.
+
+The Authorization Code Flow goes through the following steps:
+1. The Client sends an Authorization Request - containing the desired request parameters - to the Authorization Server.
+2. The Authorization Server authenticates the End-User.
+3. The Authorization Server sends the End-User back to the Client with an Authorization Code.
+4. Client requests a response using the Authorization Code at the Token Endpoint.
+5. Client receives a response that contains an ID Token and Access Token in the response body.
+6. Client validates the ID token and retrieves the End-User's Subject Identifier.
+
+The flow described by these steps is illustrated as follows:
+
+```
+   +----------+
+   |   End-   |
+   |   User   |
+   +----------+
+        ^
+        |
+       (2)
+   +----|-----+          Client Identifier      +---------------+
+   |         -+----(1)-- & Redirection URI ---->|               |
+   |  User-   |                                 | Authorization |
+   |  Agent  -+----(2)-- User authenticates --->|     Server    |
+   |          |                                 |               |
+   |         -+----(3)-- Authorization Code ---<|               |
+   +-|----|---+                                 +---------------+
+     |    |                                         ^      v
+    (1)  (3)                                        |      |
+     |    |                                         |      |
+     ^    v                                         |      |
+   +---------+                                      |      |
+   |         |>---(4)-- Authorization Code ---------'      |
+   |  Client |          & Redirection URI                  |
+   |         |                                             |
+   |     (6) |<---(5)----- Access Token + ID Token --------'
+   +---------+       (w/ Optional Refresh Token)
+```
 
 ## Access Token as JWT Bearer
 This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
