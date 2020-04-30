@@ -92,8 +92,8 @@ The service is offered by a (semi)governmental or public Service Provider. The U
 
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target User audiences are diverse, multiple types of identifiers can be supported.
 
-## Representation
-This profile supports several Use Cases for representation, which apply when an End-User intends to consume an online service on behalf of a Natural Person or Legal Entity (the Service Consumer), where authentication and autorisation is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
+## Representation Relationships
+This profile supports several Use Cases for representation relationships, which apply when an End-User intends to consume an online service on behalf of a Natural Person or Legal Entity (the Service Consumer), where authentication and autorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
 
 The service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
@@ -135,9 +135,9 @@ The Authorization Code Flow returns an Authorization Code to the Client, which c
 1. The Client sends an Authorization Request - containing the desired request parameters - to the Authorization Server.
 2. The Authorization Server authenticates the End-User.
 3. The Authorization Server sends the End-User back to the Client with an Authorization Code.
-4. Client requests a response using the Authorization Code at the Token Endpoint.
-5. Client receives a response that contains an ID Token and Access Token in the response body.
-6. Client validates the ID token and retrieves the End-User's Subject Identifier.
+4. The Client requests a response using the Authorization Code at the Token Endpoint.
+5. The Client receives a response that contains an ID Token and Access Token in the response body.
+6. The Client validates the ID token and retrieves Claims and Subject Identifier(s) of the authenticated End-User.
 
 The flow described by these steps is illustrated as follows:
 
@@ -349,8 +349,8 @@ represents
 
 >    in case Representation is applicable, the `represents` Claim provides information about the effective authorization for the acting party.
 
-### Representation
-In Use Cases where Representation is applicable, representation relations are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC8693]].
+### Representation Relationships
+In Use Cases that involve representation relationships, representation relationships are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC8693]].
 
 As such, all Clients MUST process `represents` claims used, in case Representation can be applicable in the context of the Relying Party and OpenID Provider.
 
@@ -358,6 +358,9 @@ This profile specifies representation relations in ID Tokens as follows:
 - The End-User is always identified by the `sub` Claim;
 - The represented Service Consumer is mentioned in the `represents` Claim.
 - In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
+- The claims that make up the `represents` Claim identify and possibly provide additional information about the represented party. 
+For example, the combination of the two Claims `sub`, `sub_id_type`, and `iss` are necessary to uniquely identify the represented party and the source based on which the representation relation is based, while the `email` Claim might be used to provide additional useful information about the represented party.
+- Claims within the `represents` Claim pertain only to the identity of that party and are not relevant to the validity of the containing JWT in the same manner as top-level Claims.  Consequently, claims such as `exp`, `nbf`, and `aud` are not meaningful when used within a `represents` Claim and are therefore not used.
 
 A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: the requested scope also includes the required `openid` scope; claims that do not add to the example are omitted for readability):
 
@@ -366,19 +369,20 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
         /* End user */
         "sub": "RKyLpEVr1L",
         "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+        "iss": "urn:uuid:b556992a-e233-4fdc-915a-e2b52d3cc355",
         "represents": {
           /* Intermediary in representation chain */
           "sub": "q5r5sd8ffY",
           "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+          "iss": "urn:uuid:28e0686f-20ff-41bd-8520-57b9c68cc9a3",
           "represents": {
             /* Service Consumer */
             "sub": "4Yg8u72NxR",
             "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+            "iss": "urn:uuid:55291cc0-fd2a-4eb6-b444-5b2783e62673"
           }
         }
       }
-
-* TODO elaborate on contents of 'represents', in particular 'iss'.
 
 ## Discovery
 Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk 
