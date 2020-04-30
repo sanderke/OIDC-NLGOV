@@ -123,12 +123,15 @@ To mitigate such risks, end-to-end security is considered throughout this profil
 # Flow
 OpenID Connect Core specifies three paths via which authentication can can be performed: the Authorization Code Flow, the Implicit Flow, or the Hybrid Flow. The flows determine how the ID Token and Access Token are returned to the Client.
 
-This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint. The Implicit Flow and Hybrid Flow allow tokens to be obtained from the Authorization endpoint, and thereby omitting the Token endpoint. This  makes them vulnerable to token leakage and token replay and makes it impossible to cryptographically bind tokens to a certain client. Therefore, the Implicit Flow and Hybrid flow MUST NOT be used. Also, the IETF OAuth Working Group is removing support for the Implicit Flow from the OAuth 2.1 specification [[?OAuth2.1]] for the same reasons.
+This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint.
+
+The Implicit Flow and Hybrid Flow allow tokens to be obtained from the Authorization endpoint, and thereby omitting the Token endpoint. This  makes them vulnerable to token leakage and token replay and makes it impossible to cryptographically bind tokens to a certain client.
+
+Therefore, the Implicit Flow and Hybrid flow MUST NOT be used. Also, the IETF OAuth Working Group is removing support for the Implicit Flow from the OAuth 2.1 specification [[?OAuth2.1]] for the same reasons.
 
 ## Authorization Code Flow
-The Authorization Code Flow returns an Authorization Code to the Client, which can then exchange it for an ID Token and an Access Token directly.
+The Authorization Code Flow returns an Authorization Code to the Client, which can then exchange it for an ID Token and an Access Token directly. The flow goes through the following steps:
 
-The Authorization Code Flow goes through the following steps:
 1. The Client sends an Authorization Request - containing the desired request parameters - to the Authorization Server.
 2. The Authorization Server authenticates the End-User.
 3. The Authorization Server sends the End-User back to the Client with an Authorization Code.
