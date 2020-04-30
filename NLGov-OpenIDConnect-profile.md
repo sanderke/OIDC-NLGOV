@@ -1102,6 +1102,8 @@ Administrators and implementations MUST apply industry best practices for key
 management of cryptographic keys. This includes best practices for selection of
 applicable key length, as applicable for the relevant algorithms selected.
 
+* TBD: how to do updates on algorithms
+
 # Future updates
 This profile was creating using published, finalized specifications and
 standards as basis. Some relevant new documents are under development at the
