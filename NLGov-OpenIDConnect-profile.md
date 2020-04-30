@@ -26,17 +26,19 @@ This specification uses the terms "Access Token", "Authorization Code",
 "Client", "Client Authentication", "Client Identifier", "Client Secret", 
 "Grant Type", "Protected Resource", "Redirection URI", "Refresh Token", 
 "Resource Server", "Response Type", and "Token Endpoint" 
-defined by OAuth 2.0, the terms "Claim Name", "Claim Value", and 
-"JSON Web Token (JWT)" defined by JSON Web Token (JWT), 
+defined by 'OAuth 2.0' [[RFC6749]], the terms "Claim Name", "Claim Value", and 
+"JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]], 
 "Browser-based application" defined by 
 [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps),
-"Native application", "Hybrid application" defined by OAuth 2.0 for 
-Native Apps [[RFC8252]], and the terms defined by OpenID Connect Core 1.0.
+"Native application", "Hybrid application" defined by 'OAuth 2.0 for 
+Native Apps' [[RFC8252]], and the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
 
-* TODO functional terminology:
-  - representation
-  - eIDAS
-  - etc.
+In addition to the above terminology, this profile defines the following terms:
+* TODO Representation
+* TODO Representation Relationship
+* TODO eIDAS
+* TODO ...
+
 * TODO abbreviations
 
 ## Conformance
@@ -51,8 +53,8 @@ This specification defines requirements for the following components:
 The specification also defines features for interaction between these components:
 - Relying Party to Identity Provider
 
-This profile is based upon the International Government Assurance Profile (iGov) for 
-OpenID Connect 1.0 [[OpenID.iGov]] as published by the OpenID Foundation 
+This profile is based upon the 'International Government Assurance Profile (iGov) for 
+OpenID Connect 1.0' [[OpenID.iGov]] as published by the OpenID Foundation 
 (https://openid.net/foundation/). It should be considered a fork of this profile, as 
 the iGov profile is geared more towards a United States context and the Netherlands 
 towards a European Union context.
@@ -90,7 +92,7 @@ In case a federation or scheme is being used, an Identity Broker may be applicab
 
 The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers citizen to government (C2G) as well as business to government (B2G) contexts. This profile is not limited to C2G and B2G, nor intended to excluded consumer to business (C2B) and business to business (B2B) contexts, however additional considerations may be applicable in those other contexts.
 
-The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target User audiences are diverse, multiple types of identifiers can be supported.
+The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
 This profile supports several Use Cases for representation, which apply when an End-User intends to consume an online service on behalf of a Natural Person or Legal Entity (the Service Consumer), where authentication and autorisation is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
@@ -149,9 +151,9 @@ The flow described by these steps is illustrated as follows:
 ## Access Token as JWT Bearer
 This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
 
-Using a JWT formatted Access Token allows any Relying Party to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, Userinfo response and introspection response.
+Using a JWT formatted Access Token allows any Relying Party to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, UserInfo response and introspection response.
 
-Note that ID Token and Userinfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
+Note that ID Token and UserInfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
 The Resource Server is normally not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorization Servers. In the case of Service Intermediation this is applicable by definition.
 This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
 
@@ -165,7 +167,7 @@ This profile supports the following types of Client applications to which specif
 **Note:** the iGov profile for OAuth 2.0 utilizes a slightly different segregation of applications into the following types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
-*Web applications* are applications that run on a web server and are consumed through the User-Agent ("browser") by the User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+*Web applications* are applications that run on a web server and are consumed through the User-Agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 
 ### Browser-based Applications
 *Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
@@ -494,7 +496,7 @@ aud
 
 sub
 
->    REQUIRED. The identifier of the authenticated User. OpenID Providers MUST support a pairwise identifier in accordance with "OpenID Connect Core" [[OpenID.Core]] section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
+>    REQUIRED. The identifier of the authenticated End-User. OpenID Providers MUST support a pairwise identifier in accordance with "OpenID Connect Core" [[OpenID.Core]] section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
 
 sub_id_type
 
