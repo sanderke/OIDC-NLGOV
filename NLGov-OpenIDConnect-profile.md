@@ -136,7 +136,34 @@ The Authorization Code Flow goes through the following steps:
 5. Client receives a response that contains an ID Token and Access Token in the response body.
 6. Client validates the ID token and retrieves the End-User's Subject Identifier.
 
+The flow described by these steps is illustrated as follows:
 
+```
+   +----------+
+   |   End-   |
+   |   User   |
+   +----------+
+        ^
+        |
+       (2)
+   +----|-----+          Client Identifier      +---------------+
+   |         -+----(1)-- & Redirection URI ---->|               |
+   |  User-   |                                 | Authorization |
+   |  Agent  -+----(2)-- User authenticates --->|     Server    |
+   |          |                                 |               |
+   |         -+----(3)-- Authorization Code ---<|               |
+   +-|----|---+                                 +---------------+
+     |    |                                         ^      v
+    (1)  (3)                                        |      |
+     |    |                                         |      |
+     ^    v                                         |      |
+   +---------+                                      |      |
+   |         |>---(4)-- Authorization Code ---------'      |
+   |  Client |          & Redirection URI                  |
+   |         |                                             |
+   |     (6) |<---(5)----- Access Token + ID Token --------'
+   +---------+       (w/ Optional Refresh Token)
+```
 
 ## Access Token as JWT Bearer
 This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
