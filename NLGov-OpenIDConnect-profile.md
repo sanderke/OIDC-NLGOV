@@ -139,7 +139,7 @@ The Authorization Code Flow goes through the following steps:
 The flow described by these steps is illustrated as follows:
 
 <figure id='authorization_code_flow'>
-	<img src='media/authorization-code-flow.png' width="479" />
+	<img src='img/authorization-code-flow.png' width="479" />
 	<figcaption>Authorization Code Flow</figcaption>
 </figure>
 
