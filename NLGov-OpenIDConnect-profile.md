@@ -25,7 +25,7 @@ This specification uses the terms "Access Token", "Authorization Code",
 "Authorization Endpoint", "Authorization Grant", "Authorization Server", 
 "Client", "Client Authentication", "Client Identifier", "Client Secret", 
 "Grant Type", "Protected Resource", "Redirection URI", "Refresh Token", 
-"Resource Owner", "Resource Server", "Response Type", and "Token Endpoint" 
+"Resource Server", "Response Type", and "Token Endpoint" 
 defined by OAuth 2.0, the terms "Claim Name", "Claim Value", and 
 "JSON Web Token (JWT)" defined by JSON Web Token (JWT), 
 "Browser-based application" defined by 
@@ -162,7 +162,7 @@ This profile does not directly place any constraints on the placement of claims 
 ## Client types
 This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply:
 
-**Note:** the iGov profile for OAuth 2.0 utilizes a slightly different segregation of applications into the following types: *Full Clients* and *Native Clients* act on behalf of a Resource Owner and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+**Note:** the iGov profile for OAuth 2.0 utilizes a slightly different segregation of applications into the following types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
 *Web applications* are applications that run on a web server and are consumed through the User-Agent ("browser") by the User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
@@ -187,7 +187,7 @@ to verify that external dependencies that they include (e.g. via a content
 delivery network (CDN)) are not unexpectedly manipulated.
 
 ### Native and Hybrid Applications
-*Native applications* are applications installed and executed on the device used by the resource owner (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+*Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 
 *Hybrid applications* are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
