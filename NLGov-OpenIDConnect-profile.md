@@ -44,9 +44,6 @@ eIDAS
 >  eIDAS (Electronic Identification, Authentication and Trust Services) is an EU regulation on electronic identification and trust services for electronic transactions in the European Union.
 
 
-* TODO Representation
-* TODO Representation Relationship
-* TODO eIDAS
 * TODO ...
 
 * TODO abbreviations
