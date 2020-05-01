@@ -164,7 +164,7 @@ This profile does not directly place any constraints on the placement of claims 
 ## Client types
 This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply:
 
-**Note:** the iGov profile for OAuth 2.0 utilizes a slightly different segregation of applications into the following types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+**Note:** this profile utilizes a slightly different segregation of applications than the iGov profile for OAuth 2.0, as it allows for better provision of specific security considerations specific to the different client types and aligns better to the client profiles specified in OAuth 2.0 and related security best practices ([OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) and [[RFC8252]]). The iGov profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
 *Web applications* are applications that run on a web server and are consumed through the User-Agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
@@ -174,7 +174,7 @@ This profile supports the following types of Client applications to which specif
 
 In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients 
 MUST follow the best practices as specified in 
-[OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps)
+[OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps)
 as well as the following:
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
@@ -198,7 +198,7 @@ MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC82
 following:
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
-- The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications.
+- The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure client authentication.
 - Public native applications MUST use PKCE to protect calls to the token endpoint. Confidential
 native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or in-app browser tab to make authorization 
