@@ -94,7 +94,7 @@ The service is offered by a (semi)governmental or public Service Provider. The U
 
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
 
-## Representation Relationships
+## Representation
 This profile supports several Use Cases for representation relationships, which apply when an End-User intends to consume an online service on behalf of a Natural Person or Legal Entity (the Service Consumer), where authentication and autorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
 
 The service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
