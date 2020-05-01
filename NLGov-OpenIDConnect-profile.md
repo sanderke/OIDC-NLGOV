@@ -34,6 +34,16 @@ defined by 'OAuth 2.0' [[RFC6749]], the terms "Claim Name", "Claim Value", and
 Native Apps' [[RFC8252]], and the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
 
 In addition to the above terminology, this profile defines the following terms:
+
+Representation
+
+>  The action of one party acting on behalf of another party through delegated authority, which was given voluntary or based on legal grounds. Both parties can either be natural or juridical persons. The fact that one party is authorized on behalf of another party is named a _representation relationship_.
+
+eIDAS
+
+>  eIDAS (Electronic Identification, Authentication and Trust Services) is an EU regulation on electronic identification and trust services for electronic transactions in the European Union.
+
+
 * TODO Representation
 * TODO Representation Relationship
 * TODO eIDAS
@@ -95,7 +105,7 @@ The service is offered by a (semi)governmental or public Service Provider. The U
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
-This profile supports several Use Cases for representation relationships, which apply when an End-User intends to consume an online service on behalf of a Natural Person or Legal Entity (the Service Consumer), where authentication and autorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
+This profile supports several Use Cases for representation relationships, which apply when an End-User intends to consume an online service on behalf of a Natural or Juridical Person (the Service Consumer), where authentication and autorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
 
 The service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
