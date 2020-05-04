@@ -228,9 +228,7 @@ response_type
 
 scope
 
->  REQUIRED. Indicates the attributes being requested. MUST contain at least the value 'openid' and SHOULD contain a specific scope for which access is requested.
-
-* FIXME: scope not for attributes!
+>  REQUIRED. Indicates the access privileges being requested. MUST contain at least the value 'openid' and SHOULD contain a specific scope for which access is requested.
 
 redirect_uri
 
@@ -248,9 +246,13 @@ vtr
 
 >  OPTIONAL. MUST be set to a value as described in Section 6.1 of Vectors of Trust. `acr_values` takes precedence over `vtr`. 
 
+TODO: Must be aligned with section 5.6
+
 acr_values
 
 >  OPTIONAL. Lists the acceptable LoAs for this authentication. See (below). 
+
+TODO: Align with section 5.7 - Authentication Context
 
 claims
 
@@ -324,11 +326,39 @@ client_id
 
 ### Token Exchange Request
 If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
-then the Token Exchange Request and Response MUST be in accordance with
-that specification (see section 2), using the extension grant type
-*"urn:ietf:params:oauth:grant-type:token-exchange"*.
+then the Token Exchange Request and Response MUST be in accordance with that specification (see section 2).
 
-* TODO elaborate on usage
+The following parameters are specified:
+
+grant_type
+> REQUIRED. MUST contain the value `urn:ietf:params:oauth:grant-type:token-exchange`. Identical as in [[RFC8693]].
+
+resource
+> OPTIONAL. A URI that indicates the target service or resource where the client intends to use the requested security token. Identical as in [[RFC8693]].
+
+audience
+> OPTIONAL. The logical name of the target service where the client intends to use the requested security token. Identical as in [[RFC8693]].
+
+scope
+> OPTIONAL. Indicates the access privileges of the requested security tokens. MUST contain at least the value 'openid' and SHOULD contain a specific scope for which access is requested.
+
+requested_token_type
+> OPTIONAL. An identifier for the type of the requested security token. Identical as in [[RFC8693]].
+
+subject_token
+> REQUIRED. 
+
+subject_token_type
+> REQUIRED. 
+
+
+actor_token
+> OPTIONAL. 
+
+actor_token_type
+> Indicates the type of the security token in the "actor_token" parameter.  This is REQUIRED when 
+the "actor_token" parameter is present in the request but MUST NOT be included otherwise. Identical as in [[RFC8693]].
+
 
 ## ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it
