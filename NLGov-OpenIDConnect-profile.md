@@ -326,7 +326,7 @@ client_id
 
 ### Token Exchange Request
 If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
-then the Token Exchange Request and Response MUST be in accordance with that specification (see section 2).
+then the Token Exchange Request and Response MUST be in accordance with Section 2 of that specification, with some differences due to the fact that the semantics of the claims involved with representations are reversed, as indicated in the remark in [Section 5.3](#representation-relationships), and to support the changing of subjects for representation.
 
 The following parameters are specified:
 
@@ -345,20 +345,24 @@ scope
 requested_token_type
 > OPTIONAL. An identifier for the type of the requested security token. Identical as in [[RFC8693]].
 
+requested_subject
+> OPTIONAL. Indicates the requested subject that the End-User intends to act on behalf of, in case representation relations between the End-User and Service Consumer exist and have been exchanged between the Client and the OpenID Provider. MUST NOT be a token that reveals the identity of the requested subject and MUST be linked to the requesting client to avoid profiling of representation relations. Additional to [[RFC8693]], MUST NOT be included when the `subject_token` is present.
+
 subject_token
-> REQUIRED. 
+> OPTIONAL. A security token that represents the identity of the Service Consumer represented by the End-User.
+Changed in comparison to [[RFC8693]]: MUST NOT be included when the `requested_subject` claim is present.
 
 subject_token_type
-> REQUIRED. 
-
+> Indicates the type of the security token in the `subject_token` parameter. This is REQUIRED when the `subject_token` parameter is present in the request but MUST NOT be included otherwise.
 
 actor_token
-> OPTIONAL. 
+> REQUIRED. A security token that represents the identity of the acting party (i.e. the End-User as per this profile). Typically, this is the Access Token that was earlier issued to the Client for the End-User. Changed in comparison to [[RFC8693]] as this claim holds the identity of the End-User, which is required for the token exchange.
 
 actor_token_type
-> Indicates the type of the security token in the "actor_token" parameter.  This is REQUIRED when 
-the "actor_token" parameter is present in the request but MUST NOT be included otherwise. Identical as in [[RFC8693]].
+> Indicates the type of the security token in the `actor_token` parameter.  This is REQUIRED when 
+the `actor_token` parameter is present in the request but MUST NOT be included otherwise. Identical as in [[RFC8693]].
 
+The response to this request MUST be according to Section 2.2.1 of [[RFC8693]].
 
 ## ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it
@@ -620,6 +624,8 @@ are similarly considered public sectoral identifiers.
 
 ## Representation Relationships
 In Use Cases that involve representation relationships, representation relationships are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC8693]].
+
+**Note:** Whereas [[RFC8693]] lists the End-User in the `act` or `may_act` claims and the represented service consumer in the `sub` claim, this is reversed in this profile: the End-User is listed in the `sub` claim and the represented service consumer is listed in the `represents` claim. Reason for this is to mitigate the risk that a Client that does not explicitly support representation Use Cases cannot recognize the difference between an End-User that authenticates on behalf of himself or on behalf of someone else via representation.
 
 As such, all Clients MUST process `represents` claims used, in case Representation can be applicable in the context of the Relying Party and OpenID Provider.
 
