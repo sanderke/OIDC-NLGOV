@@ -353,7 +353,7 @@ subject_token
 Changed in comparison to [[RFC8693]]: MUST NOT be included when the `requested_subject` claim is present.
 
 subject_token_type
-> Indicates the type of the security token in the `subject_token` parameter. This is REQUIRED when the `subject_token` parameter is present in the request but MUST NOT be included otherwise.
+> Indicates the type of the security token in the `subject_token` parameter. Changed in comparison to [[RFC8693]]: REQUIRED when the `subject_token` parameter is present in the request but MUST NOT be included otherwise.
 
 actor_token
 > REQUIRED. A security token that represents the identity of the acting party (i.e. the End-User as per this profile). Typically, this is the Access Token that was earlier issued to the Client for the End-User. Changed in comparison to [[RFC8693]] as this claim holds the identity of the End-User, which is required for the token exchange.
