@@ -127,8 +127,6 @@ OpenID Connect Core supports self-issued OpenID Connect Providers. As the contex
 As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to Identity Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called privacy hotspot, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
 
-
-
 # Flow
 OpenID Connect Core specifies three paths via which authentication can can be performed: the Authorization Code Flow, the Implicit Flow, or the Hybrid Flow. The flows determine how the ID Token and Access Token are returned to the Client.
 
@@ -228,7 +226,7 @@ response_type
 
 scope
 
->  REQUIRED. Indicates the access privileges being requested. MUST contain at least the value 'openid' and SHOULD contain a specific scope for which access is requested.
+>  REQUIRED. Indicates the access privileges being requested. MUST contain at least the value `openid` and SHOULD contain a specific scope for which access is requested.
 
 redirect_uri
 
@@ -266,7 +264,7 @@ in Use Cases where confidential clients are involved.
 
 code_challenge_method
 
-> REQUIRED, in case `code_challenge` is present. MUST use the value of 'S256'.
+> REQUIRED, in case `code_challenge` is present. MUST use the value of `S256`.
 
 
 A sample request may look like:
@@ -283,29 +281,25 @@ https://idp-p.example.com/authorize?
 
 
 ### Request Objects
-Clients MAY optionally send requests to the authorization endpoint using the
-'request' or 'request_uri' parameter as defined by OpenID Connect
-[[OpenID.Core]], section 6.
+Clients MAY optionally send requests to the authorization endpoint using the `request` or `request_uri` parameter as defined by OpenID Connect [[OpenID.Core]], section 6.
 The use of the `request_uri` is preferred because of browser limits and network latency.
 
-Request objects MUST be signed by the Client's registered key. Request objects MAY be 
-encrypted to the OpenID Provider's public key.
+Request objects MUST be signed by the Client's registered key. Request objects MAY be encrypted to the OpenID Provider's public key.
 
 ## Requests to the Token Endpoint
 
 ### Client Authentication
-Confidential Clients (Web applications and Native Clients with per-instance provisioned secrets) as defined in [Section 5.1](#client-types) MUST authenticate to the authorization server using a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the private\_key\_jwt method defined in [[OpenID.Core]].
-Alternatively, Clients MAY authenticate using mutual authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the 'client_id' parameter MUST be included.
+Confidential Clients, as defined in [Section 4.1](#client-types), MUST authenticate to the Authorization Server using either:
+- a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the private\_key\_jwt method defined in [[OpenID.Core]]; or
+- mutually authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the `client_id` parameter MUST be included.
 
-<!-- 
+Public Clients MAY authenticate to the Authorization Server. However, the Authorization Server MUST NOT rely on public client authentication for the purpose of identifying the client.
 
-TODO: Dit is exact hetzelfde als ook in het NL Gov OAuth 2.0 profiel staat. Is het zinvol om het hier nogmaals op te nemen?
-- In case the Authorization Server, Resource Server and Client are not operated under responsibility of the same organization, each party MUST use PKIoverheid certificates with OIN. The PKIoverheid certificate MUST be included either as a x5c or as x5u parameter, as per [[RFC7517]] §4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as x5c parameter, for maximum interoperability. Parties MAY agree to use x5u, for instance for communication within specific environments.
-
--->
+The client MUST NOT use more than one authentication method in each request.
 
 ### Token Request
-In addition to the requirements specified in Section 2.3.1 of the NL Gov OAuth2 profile, the following claims MUST be included:
+The following describes the supported parameters for the Token Request. Some of these requirements are inherited as specified in Section 2.3.1 of the NL Gov OAuth2 profile.
+
 The following parameters are specified:
 
 grant_type
@@ -318,10 +312,10 @@ client_assertion
 > REQUIRED, in case private_key_jwt is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
 client_assertion_type
-> REQUIRED, in case 'client_assertion' is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
+> REQUIRED, in case `client_assertion` is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
  
 client_id
-> REQUIRED, in case mutual authenticated TLS is used for client authentication.
+> REQUIRED, in case mutually authenticated TLS is used for client authentication.
 
 
 ### Token Exchange Request
@@ -340,7 +334,7 @@ audience
 > OPTIONAL. The logical name of the target service where the client intends to use the requested security token. Identical as in [[RFC8693]].
 
 scope
-> OPTIONAL. Indicates the access privileges of the requested security tokens. MUST contain at least the value 'openid' and SHOULD contain a specific scope for which access is requested.
+> OPTIONAL. Indicates the access privileges of the requested security tokens. MUST contain at least the value `openid` and SHOULD contain a specific scope for which access is requested.
 
 requested_token_type
 > OPTIONAL. An identifier for the type of the requested security token. Identical as in [[RFC8693]].
@@ -398,8 +392,8 @@ of mistakes.
 
 Clients and Resource Servers SHOULD acquire metadata using either the "OpenID
 Connect Discovery 1.0" [[OpenID.Discovery]] method using the
-'/.well-known/openid-configuration' location (section 4), or the "OAuth2 Server
-Metadata" [[RFC8414]] method using the '/.well-known/oauth-authorization-server'
+`/.well-known/openid-configuration` location (section 4), or the "OAuth2 Server
+Metadata" [[RFC8414]] method using the `/.well-known/oauth-authorization-server`
 location (section 3). Methods using WebFinger with (partial) personal
 identifiable information SHOULD NOT be used, to avoid privacy issues such as
 leaking information to unknown locations.
@@ -514,7 +508,7 @@ sub_id_type
 
 acr
 
->    REQUIRED. The LoA the user was authenticated at. MUST be a member of the 'acr_values' list from the authentication request. See Authentication Context for more details.
+>    REQUIRED. The LoA the user was authenticated at. MUST be a member of the `acr_values` list from the authentication request. See Authentication Context for more details.
 
 nonce
 
@@ -591,7 +585,7 @@ Its claims are as follows:
 
 ## Pairwise Identifiers
 Pairwise identifiers specified in OpenID Connect Core [[OpenID.Core]] section 8 help protect
-an end user's privacy by allowing an OpenID Provider to represent a single
+an End-User's privacy by allowing an OpenID Provider to represent a single
 user with a different subject identifier (sub) for every Client the user
 connects to. This technique can help mitigate correlation of a user between
 multiple Clients by preventing the Clients from using the subject identifier
@@ -641,7 +635,7 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
 
       {
         "scope": "openid urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba",
-        /* End user */
+        /* End-User */
         "sub": "RKyLpEVr1L",
         "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
         "iss": "urn:uuid:b556992a-e233-4fdc-915a-e2b52d3cc355",
@@ -723,7 +717,7 @@ accept request objects encrypted to the provider's public key.
 OpenID Providers SHOULD accept request objects by reference using the `request_uri`
 parameter. The request object can be either hosted by the Client or pushed prior to
 the Authentication Request to the OpenID Provider. OpenID Providers MUST verify the
-'request_uri' is referencing a trusted location.
+`request_uri` is referencing a trusted location.
 
 Both of these methods allow for Clients to create a request that is protected
 from tampering through the browser, allowing for a higher security and privacy mode of
