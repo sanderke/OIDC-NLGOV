@@ -53,18 +53,18 @@ As well as sections marked as non-normative, all authoring guidelines, diagrams,
 examples, and notes in this specification are non-normative. Everything else in 
 this specification is normative.
 
+This profile is based upon the 'International Government Assurance Profile (iGov) for 
+OpenID Connect 1.0' [[OpenID.iGov]] as published by the OpenID Foundation 
+(https://openid.net/foundation/). It should be considered a fork of this profile, as 
+the iGov profile is geared more towards a United States context and the Netherlands 
+towards a European Union context.
+
 This specification defines requirements for the following components:
 - OpenID Connect 1.0 Relying Parties (also known as OpenID Clients)
 - OpenID Connect 1.0 Identity Providers (also known as OpenID Providers)
 
 The specification also defines features for interaction between these components:
 - Relying Party to Identity Provider
-
-This profile is based upon the 'International Government Assurance Profile (iGov) for 
-OpenID Connect 1.0' [[OpenID.iGov]] as published by the OpenID Foundation 
-(https://openid.net/foundation/). It should be considered a fork of this profile, as 
-the iGov profile is geared more towards a United States context and the Netherlands 
-towards a European Union context.
 
 When an NL GOV-compliant component is interacting with other NL GOV-compliant 
 components, in any valid combination, all components MUST fully conform to the 
@@ -87,7 +87,7 @@ in this specification. A general-purpose Client library MAY support additional
 features for use with non-NL GOV OpenID Connect Identity Providers.
 
 # Use Case & context
-This profiles supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
+This profile supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
 
 The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
 
@@ -1097,7 +1097,7 @@ Client as well as forwarded access tokens in a Service Intermediation scenario.
 Token Exchange ([[RFC8693]]) SHOULD be used to request access tokens with a
 minimal scope and audience.
 
-Despite the mechanisms enforced by this specification, the operational
+Despite the mechanisms enforced by this profile, the operational
 circumstances may allow these controls to be relaxed in a specific context.
 For example, if a bilateral agreement between two agencies legally entitles 
 usage of citizen identifiers, then the pairwise anonymous identifer requirement
@@ -1106,7 +1106,7 @@ associated to a subject at an OpenID Provider, the claims request requirement
 may be relaxed.
 
 The reasons for relaxing the controls that support data minimalization are
-outside the scope of this specification.
+outside the scope of this profile.
 
 In order to provide end-to-end security and privacy, identifiers and
 attributes SHOULD be encrypted from the providing source to the ultimate
@@ -1178,7 +1178,7 @@ follow relevant developments.
 
 ## Federations
 This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain. However, no specific support or requirements for federations are included in this version of this profile.
-The OpenID Foundation is currently drafting a specification for explicit support of federations using OpenID Connect. Future updates to this profile are likely to adopt this specification once finalized. See [Federation at the OpenID Foundation](https://openid.net/tag/federation/).
+The OpenID Foundation is currently drafting a specification for explicit support of federations using OpenID Connect. Future updates to this profile are likely to adopt this profile once finalized. See [Federation at the OpenID Foundation](https://openid.net/tag/federation/).
 
 ## Other features
 An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF. Future updates to this profile are likely to seek interoperability with such RFC once finalized. See [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/).
