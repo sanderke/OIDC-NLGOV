@@ -269,6 +269,8 @@ code_challenge_method
 
 > REQUIRED, in case `code_challenge` is present. MUST use the value of `S256`.
 
+max_age
+> FIXME: see issue #6
 
 A sample request may look like:
 ```
@@ -387,7 +389,7 @@ acr
 
 represents
 
->    The `represents` Claim, if applicable, identifies the represented Service Consumer on behalf of which the End-User intends to authenticate.
+>    The `represents` Claim, if applicable, identifies the represented Service Consumer on behalf of which the End-User intends to authenticate. Any Client MUST be able to process `represents` Claims. As an exceptions a `represents` Claims MAY be ignored, if and only if the explicitly agreed upon before hand that no Representation will be provided.
 
 ## Discovery
 Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk 
@@ -532,9 +534,12 @@ vot
 vtm
 > REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See Vectors of Trust for more details.
 
-Other Claims MAY be included. See Claims Request below on how such Claims SHOULD be requested by the Client to be provided by the OpenID Provider.
+auth_time
+> FIXME: see issue #6
 
-Any Relying Party MUST be able to process `represents` Claims. As an exceptions a `represents` Claims MAY be ignored, if and only if the explicitly agreed upon before hand that no Representation will be provided.
+
+
+Other Claims MAY be included. See Claims Request below on how such Claims SHOULD be requested by the Client to be provided by the OpenID Provider.
 
 This example ID Token has been signed using the server's RSA key:
 
