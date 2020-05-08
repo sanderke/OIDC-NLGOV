@@ -66,27 +66,25 @@ OpenID Connect 1.0' [[OpenID.iGov]] as published by the OpenID Foundation
 the iGov profile is geared more towards a United States context and the Netherlands 
 towards a European Union context.
 
-When an iGov-NL-compliant component is interacting with other iGov-NL-compliant 
+When an NL GOV-compliant component is interacting with other NL GOV-compliant 
 components, in any valid combination, all components MUST fully conform to the 
 features and requirements of this specification. All interaction with 
-non-iGov-NL components is outside the scope of this specification.
+non-NL GOV components is outside the scope of this specification.
 
-An iGov-NL-compliant OpenID Connect Identity Provider MUST support all features as described 
+An NL GOV-compliant OpenID Connect Identity Provider MUST support all features as described 
 in this specification. A general-purpose Identity Provider MAY support additional features 
-for use with non-iGov-NL Clients.
+for use with non-NL GOV Clients.
 
-An iGov-NL-compliant OpenID Connect Identity Provider MAY also provide iGov-NL-compliant 
+An NL GOV-compliant OpenID Connect Identity Provider MAY also provide NL GOV-compliant 
 OAuth 2.0 authorization server functionality. In such cases, the authorization 
-server MUST fully implement the OAuth 2.0 iGov-NL profile [[OAuth2.NLGov]]. If an 
-iGov-NL-compliant OpenID Connect Identity Provider does not provide iGov-NL-compliant 
+server MUST fully implement the NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]]. If an 
+NL GOV-compliant OpenID Connect Identity Provider does not provide NL GOV-compliant 
 OAuth 2.0 authorization server services, all features related to interaction 
 between the authorization server and protected resource are therefore OPTIONAL.
 
-An iGov-NL-compliant OpenID Connect Client MUST use all functions as described 
+An NL GOV-compliant OpenID Connect Client MUST use all functions as described 
 in this specification. A general-purpose Client library MAY support additional 
-features for use with non-iGov-NL OpenID Connect Identity Providers.
-
-
+features for use with non-NL GOV OpenID Connect Identity Providers.
 
 # Use Case & context
 This profiles supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
@@ -169,7 +167,7 @@ This profile does not directly place any constraints on the placement of claims 
 ## Client types
 This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply:
 
-**Note:** this profile utilizes a slightly different segregation of applications than the iGov profile for OAuth 2.0, as it allows for better provision of specific security considerations specific to the different client types and aligns better to the client profiles specified in OAuth 2.0 and related security best practices ([OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) and [[RFC8252]]). The iGov profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+**Note:** this profile utilizes a slightly different segregation of applications than the NL GOV Assurance profile for OAuth 2.0, as it allows for better provision of specific security considerations specific to the different client types and aligns better to the client profiles specified in OAuth 2.0 and related security best practices ([OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) and [[RFC8252]]). The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
 *Web applications* are applications that run on a web server and are consumed through the User-Agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
