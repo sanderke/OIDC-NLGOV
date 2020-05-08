@@ -28,10 +28,13 @@ This specification uses the terms "Access Token", "Authorization Code",
 "Resource Server", "Response Type", and "Token Endpoint" 
 defined by 'OAuth 2.0' [[RFC6749]], the terms "Claim Name", "Claim Value", and 
 "JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]], 
-"Browser-based application" defined by 
+the term "Browser-based application" defined by 
 [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps),
-"Native application", "Hybrid application" defined by 'OAuth 2.0 for 
-Native Apps' [[RFC8252]], and the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
+the terms "Native app", "Hybrid app", "External user-agent", "Embedded user-agent",
+"In-app browser tab", "Web-view", "Claimed 'https' scheme URI", 
+"Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]], 
+the term "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]],
+and the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
 
 In addition to the above terminology, this profile defines the following terms:
 
@@ -170,7 +173,7 @@ This profile supports the following types of Client applications to which specif
 **Note:** this profile utilizes a slightly different segregation of applications than the NL GOV Assurance profile for OAuth 2.0, as it allows for better provision of specific security considerations specific to the different client types and aligns better to the client profiles specified in OAuth 2.0 and related security best practices ([OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) and [[RFC8252]]). The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
-*Web applications* are applications that run on a web server and are consumed through the User-Agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+*Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 
 ### Browser-based Applications
 *Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
