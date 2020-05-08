@@ -35,8 +35,8 @@ defined by 'OAuth 2.0' [[RFC6749]];
 - "Native app", "Hybrid app", "External user-agent", "Embedded user-agent",
 "In-app browser tab", "Web-view", "Claimed 'https' scheme URI", 
 "Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]];
-- "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]];
-- and the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
+- "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]]; and
+- the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
 
 In addition to the above terminology, this profile defines the following terms:
 
