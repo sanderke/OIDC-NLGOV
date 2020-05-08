@@ -1058,10 +1058,12 @@ and can support in assessing the level confidence or quality of the claim.
 * requires registration of resource servers, for introspection (move up to OAuth profile?)
 
 
+<!--
 # Special usage
 ## offline
 * not part of iGov
 * TBD: VWS, RvIG: input!
+-->
 
 
 # Privacy considerations
