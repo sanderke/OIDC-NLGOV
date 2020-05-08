@@ -1058,14 +1058,6 @@ and can support in assessing the level confidence or quality of the claim.
 * requires registration of resource servers, for introspection (move up to OAuth profile?)
 
 
-<!--
-# Special usage
-## offline
-* not part of iGov
-* TBD: VWS, RvIG: input!
--->
-
-
 # Privacy considerations
 Data minimization is an essential concept in trust frameworks and federations
 exchanging End-User identity information for government applications. The design
