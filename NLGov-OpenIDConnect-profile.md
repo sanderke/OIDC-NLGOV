@@ -152,8 +152,8 @@ The Authorization Code Flow returns an Authorization Code to the Client, which c
 The flow described by these steps is illustrated as follows:
 
 <figure id='authorization_code_flow'>
-	<img src='img/authorization-code-flow.png' width="479" />
-	<figcaption>Authorization Code Flow</figcaption>
+  <img src='img/authorization-code-flow.png' width="479" />
+  <figcaption>Authorization Code Flow</figcaption>
 </figure>
 
 ## Access Token as JWT Bearer
@@ -494,52 +494,43 @@ UserInfo request) and ID Token (a signed and optionally encrypted JSON Web
 Token). ID Token values have the following meanings:
 
 iss
-
->    REQUIRED. The `issuer` field is the Uniform Resource Locater (URL) of the expected issuer.
+> REQUIRED. The `issuer` field is the Uniform Resource Locater (URL) of the expected issuer.
 
 aud
-
->    REQUIRED. The `audience` field contains the client ID of the Client.
+> REQUIRED. The `audience` field contains the client ID of the Client.
 
 sub
-
->    REQUIRED. The identifier of the authenticated End-User. OpenID Providers MUST support a pairwise identifier in accordance with "OpenID Connect Core" [[OpenID.Core]] section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
+> REQUIRED. The identifier of the authenticated End-User. OpenID Providers MUST support a pairwise identifier in accordance with "OpenID Connect Core" [[OpenID.Core]] section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
 
 sub_id_type
-
->    REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the `sub\_id\_type` MUST be a URI.
+> REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the `sub_id_type` MUST be a URI.
 
 acr
-
->    REQUIRED. The LoA the user was authenticated at. MUST be a member of the `acr_values` list from the authentication request. See Authentication Context for more details.
+> REQUIRED. The LoA the user was authenticated at. MUST be a member of the `acr_values` list from the authentication request. See Authentication Context for more details.
 
 nonce
-
->    REQUIRED. MUST match the `nonce` value that was provided in the Authentication Request.
+> REQUIRED. MUST match the `nonce` value that was provided in the Authentication Request.
 
 jti
-
->    REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identify the ID Token between sender and receiver for at least 12 months.
+> REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identify the ID Token between sender and receiver for at least 12 months.
 
 auth_time
-
->    RECOMMENDED. This SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
+> RECOMMENDED. This SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
 
 exp, iat, nbf
-
->    REQUIRED. The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from `1970-01-01T00:00:00Z UTC`) within acceptable ranges.
+> REQUIRED. The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from `1970-01-01T00:00:00Z UTC`) within acceptable ranges.
 
 represents
+> REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a representation relationship for the acting party.
 
->    REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a representation relationship for the acting party.
+alt_sub
+> OPTIONAL. Describes alternative subject identifiers for the authenticated End-User in the context of a specific audience. The value of `alt_sub` is an array of objects, each of which MUST contain `sub`, `sub_id_type`, and `aud` Claims to uniquely identify the authenticated End-User and the audience for the alternative subject identifier.
 
 vot
-
->    OPTIONAL. The vector value as specified in Vectors of Trust. See Vectors of Trust for more details. As eIDAS is leading in most scenarios targeted by this profile, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust.
+> OPTIONAL. The vector value as specified in Vectors of Trust. See Vectors of Trust for more details. As eIDAS is leading in most scenarios targeted by this profile, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust.
 
 vtm
-
->    REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See Vectors of Trust for more details.
+> REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See Vectors of Trust for more details.
 
 Other Claims MAY be included. See Claims Request below on how such Claims SHOULD be requested by the Client to be provided by the OpenID Provider.
 
@@ -547,41 +538,43 @@ Any Relying Party MUST be able to process `represents` Claims. As an exceptions 
 
 This example ID Token has been signed using the server's RSA key:
 
-
-
-    eyJhbGciOiJSUzI1NiJ9.eyJhdXRoX3RpbWUiOjE0
-            MTg2OTg3ODIsImV4cCI6MTQxODY5OTQxMiwic3ViI
-            joiNldaUVBwblF4ViIsIm5vbmNlIjoiMTg4NjM3Yj
-            NhZjE0YSIsImF1ZCI6WyJjMWJjODRlNC00N2VlLTR
-            iNjQtYmI1Mi01Y2RhNmM4MWY3ODgiXSwiaXNzIjoi
-            aHR0cHM6XC9cL2lkcC1wLmV4YW1wbGUuY29tXC8iL
-            CJpYXQiOjE0MTg2OTg4MTJ9mQc0rtL56dnJ7_zO_f
-            x8-qObsQhXcn-qN-FC3JIDBuNmP8i11LRA_sgh_om
-            RRfQAUhZD5qTRPAKbLuCD451lf7ALAUwoGg8zAASI
-            5QNGXoBVVn7buxPd2SElbSnHxu0o8ZsUZZwNpircW
-            NUlYLje6APJf0kre9ztTj-5J1hRKFbbHodR2I1m5q
-            8zQR0ql-FoFlOfPhvfurXxCRGqP1xpvLLBUi0JAw3
-            F8hZt_i1RUYWMqLQZV4VU3eVNeIPAD38qD1fxTXGV
-            Ed2XDJpmlcxjrWxzJ8fGfJrbsiHCzmCjflhv34O22
-            zb0lJpC0d0VScqxXjNTa2-ULyCoehLcezmssg
+    eyJhbGciOiJSUzI1NiJ9.eyJleHAiOjE0MTg2OTk0
+            MTIsInN1YiI6IjZXWlFQcG5ReFYiLCJzdWJfaWRfd
+            HlwZSI6InVybjpubC1laWQtZ2RpOjEuMDppZDpwc2
+            V1ZG9ueW0iLCJub25jZSI6IjE4ODYzN2IzYWYxNGE
+            iLCJhdWQiOlsiYzFiYzg0ZTQtNDdlZS00YjY0LWJi
+            NTItNWNkYTZjODFmNzg4Il0sImFsdF9zdWIiOlt7I
+            mF1ZCI6IjM3OWIwMjJkLWQ5ZDAtNGM0My1iN2RlLT
+            I5MGEwMjNlYjQ2MSIsInN1YiI6InhTSENyRm05Qkc
+            iLCJzdWJfaWRfdHlwZSI6InVybjpubC1laWQtZ2Rp
+            OjEuMDppZDpwc2V1ZG9ueW0ifV0sImlzcyI6Imh0d
+            HBzOi8vaWRwLXAuZXhhbXBsZS5jb20vIiwiYWNyIj
+            oiaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9Mb0Evc3V
+            ic3RhbnRpYWwiLCJpYXQiOjE0MTg2OTg4MTIsImp0
+            aSI6ImE2NWM1NjBkLTA4NWMtNDY2ZS05N2M1LWY4N
+            jM5ZmNhNWVhNyIsIm5iZiI6MTQxODY5OTExMn0
 
 Its claims are as follows:
-
 
 
      {
             "auth_time": 1418698782,
             "exp": 1418699412,
             "sub": "6WZQPpnQxV",
-			"sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+            "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
             "nonce": "188637b3af14a",
             "aud": [
               "c1bc84e4-47ee-4b64-bb52-5cda6c81f788"
             ],
+            "alt_sub": [{
+              "aud": "379b022d-d9d0-4c43-b7de-290a023eb461",
+              "sub": "xSHCrFm9BG",
+              "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym"
+            }],
             "iss": "https://idp-p.example.com/",
             "acr": "http://eidas.europa.eu/LoA/substantial",
             "iat": 1418698812,
-			"jti": "a65c560d-085c-466e-97c5-f8639fca5ea7",
+            "jti": "a65c560d-085c-466e-97c5-f8639fca5ea7",
             "nbf": 1418699112,
       }
 
