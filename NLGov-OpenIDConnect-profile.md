@@ -506,7 +506,7 @@ sub_id_type
 > REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the `sub_id_type` MUST be a URI.
 
 acr
-> REQUIRED. The LoA the user was authenticated at. MUST be a member of the `acr_values` list from the authentication request. See Authentication Context for more details.
+> REQUIRED. The LoA the End-User was authenticated at. MUST be a member of the `acr_values` list from the authentication request. See Authentication Context for more details.
 
 nonce
 > REQUIRED. MUST match the `nonce` value that was provided in the Authentication Request.
@@ -515,7 +515,7 @@ jti
 > REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identify the ID Token between sender and receiver for at least 12 months.
 
 auth_time
-> RECOMMENDED. This SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the user took some action to authenticate.
+> RECOMMENDED. This SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate.
 
 exp, iat, nbf
 > REQUIRED. The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from `1970-01-01T00:00:00Z UTC`) within acceptable ranges.
@@ -582,16 +582,16 @@ Its claims are as follows:
 ## Pairwise Identifiers
 Pairwise identifiers specified in OpenID Connect Core [[OpenID.Core]] section 8 help protect
 an End-User's privacy by allowing an OpenID Provider to represent a single
-user with a different subject identifier (sub) for every Client the user
-connects to. This technique can help mitigate correlation of a user between
+End-User with a different subject identifier (`sub`) for every Client the End-User
+connects to. This technique can help mitigate correlation of an End-User between
 multiple Clients by preventing the Clients from using the subject identifier
-(the sub claim) to track a user between different sites and applications. Use
+(the sub claim) to track an End-User between different sites and applications. Use
 of pairwise identifiers does not prevent Clients from correlating data based
 on other identifying attributes such as names, phone numbers, email addresses,
 document numbers, or other attributes. However, since not all transactions
 require access to these attributes, but a subject identifier is always
-required, a pairwise identifier will aid in protecting the privacy of end
-users as they navigate the system.
+required, a pairwise identifier will aid in protecting the privacy of End-Users 
+as they navigate the system.
 
 OpenID Providers MUST support pairwise identifiers for cases where Clients
 require this functionality. OpenID Providers MAY support public identifiers
@@ -655,7 +655,7 @@ OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the sub
 Use Cases where obtaining personal information is not needed.
 
 Support for a UserInfo Endpoint is important for maximum Client implementation
-interoperability even if no additional user information is returned. Clients
+interoperability even if no additional End-User information is returned. Clients
 are not required to call the UserInfo Endpoint, but should not receive an
 error if they do.
 
@@ -974,8 +974,8 @@ RECOMMENDED.
 Discovery mandates the inclusion of the `claims_supported` field that defines
 the claims a Client MAY expect to receive for the supported scopes. OpenID
 Providers MUST return claims on a best effort basis. However, a Provider
-asserting it can provide a user claim does not imply that this data is
-available for all its users: Clients MUST be prepared to receive partial data.
+asserting it can provide an End-User Claim does not imply that this data is
+available for all its End-Users: Clients MUST be prepared to receive partial data.
 Providers MAY return claims outside of the `claims_supported` list, but they
 MUST still ensure that the extra claims to not violate the privacy policies
 set out by the trust framework the Provider supports. The Provider MUST ensure
@@ -1028,7 +1028,7 @@ in the previous section.
 
 ## Claims Response
 Response to a UserInfo request MUST match the scope and claims requested to
-avoid having a OpenID Provider over-expose a user's identity information.
+avoid having a OpenID Provider over-expose an End-User's identity information.
 Providers MUST NOT provide any personal identifiable information without
 applicable consent.
 
@@ -1037,7 +1037,7 @@ structure to refer to the original source of the subject's claims.
 
 ## Claims Metadata
 Claims Metadata (such as locale or the confidence level the OpenID Provider
-has in the Claim for the user) can be expressed as attributes within the
+has in the Claim for the End-User) can be expressed as attributes within the
 UserInfo object, but are outside the scope of this document. These types of
 claims are best described by the trust framework the Clients and OpenID
 Providers operate within.
@@ -1066,14 +1066,14 @@ and can support in assessing the level confidence or quality of the claim.
 
 # Privacy considerations
 Data minimization is an essential concept in trust frameworks and federations
-exchanging user identity information for government applications. The design
+exchanging End-User identity information for government applications. The design
 of this profile takes into consideration mechanisms to protect the
-user's government identity information and activity from unintentional
+End-User's government identity information and activity from unintentional
 exposure.
 
 Pairwise anonymous identifiers MUST be supported by the OpenID Providers for
 frameworks where subjects should not be traceable or linkable across Clients
-by their subject ID. This prevents a situation where a user may inadvertently
+by their subject ID. This prevents a situation where an End-User may inadvertently
 be assigned a universal government identifier.
 
 Request claims MUST be supported by the OpenID Providers to ensure that only
