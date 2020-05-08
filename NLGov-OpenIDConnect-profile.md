@@ -21,20 +21,22 @@ Compact Serialization or the JWE Compact Serialization; the JWS JSON
 Serialization and the JWE JSON Serialization are not used.
 
 ## Terminology
-This specification uses the terms "Access Token", "Authorization Code", 
+This specification uses the following terms: 
+- "Access Token", "Authorization Code", 
 "Authorization Endpoint", "Authorization Grant", "Authorization Server", 
 "Client", "Client Authentication", "Client Identifier", "Client Secret", 
 "Grant Type", "Protected Resource", "Redirection URI", "Refresh Token", 
 "Resource Server", "Response Type", and "Token Endpoint" 
-defined by 'OAuth 2.0' [[RFC6749]], the terms "Claim Name", "Claim Value", and 
-"JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]], 
-the term "Browser-based application" defined by 
-[OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps),
-the terms "Native app", "Hybrid app", "External user-agent", "Embedded user-agent",
+defined by 'OAuth 2.0' [[RFC6749]];
+- "Claim Name", "Claim Value", and 
+"JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]];
+- "Browser-based application" defined by 
+[OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps);
+- "Native app", "Hybrid app", "External user-agent", "Embedded user-agent",
 "In-app browser tab", "Web-view", "Claimed 'https' scheme URI", 
-"Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]], 
-the term "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]],
-and the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
+"Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]];
+- "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]];
+- and the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
 
 In addition to the above terminology, this profile defines the following terms:
 
