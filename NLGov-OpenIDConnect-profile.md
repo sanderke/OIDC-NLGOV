@@ -234,15 +234,11 @@ nonce
 
 vtr
 
->  OPTIONAL. MUST be set to a value as described in Section 6.1 of Vectors of Trust. `acr_values` takes precedence over `vtr`. 
-
-TODO: Must be aligned with section 5.6
+>  OPTIONAL. MUST be set to a value as described in Section 6.1 of Vectors of Trust [[RFC8485]]. MUST NOT be used when `acr_values` is set or when the `acr` claim is requested via the `claims` parameter. See also [Section 5.8](#vectors-of-trust).
 
 acr_values
 
->  OPTIONAL. Lists the acceptable LoAs for this authentication. See (below). 
-
-TODO: Align with section 5.7 - Authentication Context
+>  OPTIONAL. Lists the acceptable LoAs for this authentication. `acr_values` takes precedence over `vtr`. See also [Section 5.7](#authentication-context).
 
 claims
 
@@ -397,7 +393,7 @@ OpenID Provider has been discovered and used by the Client. Clients and
 Resource Servers SHOULD utilize the HTTP headers provided by the server
 for caching [[RFC7234]].
 
-Clients SHOULD support `signed_metadata` as specified in [[rfc8414]] section 2.1.
+Clients SHOULD support `signed_metadata` as specified in [[RFC8414]] section 2.1.
 In case signed metadata is available, this MUST be used over non-signed metadata
 and the signature MUST be verified  prior to further utilizing it contents.
 
