@@ -51,7 +51,19 @@ eIDAS
 
 * TODO ...
 
-* TODO abbreviations
+### Abbreviations used
+
+CSRF
+> Cross Site Request Forgery
+
+IdP
+> Identity Provider
+
+PKCE
+> Proof Key for Code Exchange
+
+XSS
+> Cross Site Scripting
 
 ## Conformance
 As well as sections marked as non-normative, all authoring guidelines, diagrams, 
@@ -167,7 +179,7 @@ This profile supports the following types of Client applications to which specif
 *Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 
 ### Browser-based Applications
-*Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including XSS, CSRF and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+*Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including Cross-Site Scripting (XSS), Cross Site Request Forgery (CSRF) and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
 
 In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients 
 MUST follow the best practices as specified in 
@@ -176,12 +188,12 @@ as well as the following:
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
 - OpenID Providers MUST support the necessary 
-"Cross-Origin Resource Sharing (CORS)"[[cors]] headers to allow browsers to make requests
+"Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to make requests
 to its endpoints and SHOULD NOT use wildcard origins.
 - Browser-based applications MUST use PKCE [[RFC7636]] to protect calls to the token endpoint.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically
-hosted scripts via a "Content Security Policy (CSP)"[[CSP]].
-- Browser-based applications SHOULD use "Subresource Integrity (SRI)" [[SRI]]
+hosted scripts via a "Content Security Policy ([[CSP]])".
+- Browser-based applications SHOULD use "Subresource Integrity ([[SRI]])".
 to verify that external dependencies that they include (e.g. via a content
 delivery network (CDN)) are not unexpectedly manipulated.
 
@@ -254,8 +266,20 @@ code_challenge_method
 
 > REQUIRED, in case `code_challenge` is present. MUST use the value of `S256`.
 
+prompt
+> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
+
+display
+> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
+
+ui_locales
+> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
+
+claims_locales
+> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
+
 max_age
-> FIXME: see issue #6
+> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
 
 A sample request may look like:
 ```
@@ -520,7 +544,7 @@ vtm
 > REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See also [Section 5.8](#vectors-of-trust).
 
 auth_time
-> FIXME: see issue #6
+> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
 
 
 
