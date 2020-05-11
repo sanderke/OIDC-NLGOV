@@ -156,17 +156,6 @@ The flow described by these steps is illustrated as follows:
   <figcaption>Authorization Code Flow</figcaption>
 </figure>
 
-## Access Token as JWT Bearer
-This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
-
-Using a JWT formatted Access Token allows any Relying Party to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, UserInfo response and introspection response.
-
-Note that ID Token and UserInfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
-The Resource Server is normally not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorization Servers. In the case of Service Intermediation this is applicable by definition.
-This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
-
-
-
 # OpenID Client profile
 
 ## Client types
@@ -479,8 +468,6 @@ cryptographic methods and keys that can be used when registering a Client.
 
 
 # OpenID Provider profile
-* TBD: add section on access token? (on top of / in relation to OAuth2)
-
 OpenID Providers MUST follow the security guidelines and best-practices listed
 in [Section 5.1](#client-types) for the Client types they support.
 
@@ -656,6 +643,15 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
         }
       }
 
+## Access Token as JWT Bearer
+This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
+
+Using a JWT formatted Access Token allows any Relying Party to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, UserInfo response and introspection response.
+
+Note that ID Token and UserInfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
+The Resource Server is normally not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorization Servers. In the case of Service Intermediation this is applicable by definition.
+This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
+
 ## UserInfo Endpoint
 OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the sub
 (subject) claim. It is expected that the sub claim will remain pseudonymous in
@@ -730,17 +726,31 @@ requests using them.
 
 * TODO: contrary to OIDC core, use unique requests and no overrides in CGI parameters. That is in line with PAR (still under development).
 
-## Vectors of Trust
-* iGov: not well suited
-* Not to be used, eIDAS, LoA preferred
-
 ## Authentication Context
-* iGov: somewhat usable
-* recommended: use eIDAS values when applicable
-* allow other forms where eIDAS not applicable
+Whereas the OpenID Connect iGov profile recommends the use of Vectors of Trust (`vot`) to determine 
+the amount of trust to be placed digital transactions, using Authentication Context Class 
+References (`acr`) instead is RECOMMENDED by this profile, due to their better alignment to the
+Levels of Assurance (`LoA`) defined by the `eIDAS` standards that are used in the European Union.
+
+OpenID Providers SHOULD use eIDAS Level of Assurance (`LoA`) values for the `acr` Claim, 
+but MAY use different values if eIDAS is not applicable.
+
+OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested 
+Level of Assurance value requested by the Client.
+
+OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but MUST use 
+`Authentication Context Class References` instead.
+
+Clients MAY send an `vtr` (Vectors of Trust Request) parameter. If both the `vtr` and `acr_values` 
+are in the request, the `acr_values` MUST take precedence and the `vtr` MUST be ignored.
+
 * add note on RBA part of LoA; risk based authentication should be integral part of LoA framework
 ** Context based authentication = DV requested LoA
-* avoid amr, use acr instead
+
+## Vectors of Trust
+OpenID Providers MAY provide `vot` (Vectors of Trust) and `vtm` (Vectors of Trust Mark) values 
+in ID Tokens only if the `acr` claim is not requested by the Client (either via the `acr_values` 
+or `claims` parameters).
 
 ## Discovery
 The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programatic way for
