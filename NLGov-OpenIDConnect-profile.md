@@ -441,7 +441,9 @@ Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual
 labor and the risks of configuration errors. Dynamic Client Registration
 Management Protocol [[RFC7592]] MAY be used by Clients.
 An initial access token is REQUIRED for making the Client registration request. 
-The Client metadata MUST use the `authorization_code` and SHOULD use `jwks_uri` values.
+The Client metadata MUST use the `authorization_code` value for the `grant_type` setting 
+and SHOULD use the `jwks_uri` setting rather than passing a JSON Web Key Set document
+by value using the `jwks` setting.
 The use of `subject_type` `pairwise` is highly recommended(?)
 
 An example of a Client registration request:
