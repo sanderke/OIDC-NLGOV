@@ -65,6 +65,8 @@ PKCE
 XSS
 > Cross Site Scripting
 
+TODO: Remove or move to appendix?
+
 ## Conformance
 As well as sections marked as non-normative, all authoring guidelines, diagrams, 
 examples, and notes in this specification are non-normative. Everything else in 
