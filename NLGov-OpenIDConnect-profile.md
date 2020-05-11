@@ -1226,7 +1226,3 @@ Future updates to this profile are likely to seek interoperability with these RF
 * Browser based apps, work in progress @ IETF (OAuth2 WG)
 
 * OAuth 2.1 requires authorization servers to support PKCE - OIDC clients MAY use nonce instead.
-
-
-#  Appendix Notices
-* (C) copyright OIDF (!), ... TODO
