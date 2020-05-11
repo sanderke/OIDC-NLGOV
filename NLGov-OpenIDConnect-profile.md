@@ -370,7 +370,7 @@ exp, iat, nbf
 
 acr
 
->    The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See "Authentication Context" for applicable values.
+>    The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See also [Section 5.7](#authentication-context).
 
 represents
 
@@ -493,7 +493,7 @@ sub_id_type
 > REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the `sub_id_type` MUST be a URI.
 
 acr
-> REQUIRED. The LoA the End-User was authenticated at. MUST be a member of the `acr_values` list from the authentication request. See Authentication Context for more details.
+> REQUIRED. The LoA the End-User was authenticated at. MUST be a member of the `acr_values` list from the authentication request. See also [Section 5.7](#authentication-context).
 
 nonce
 > REQUIRED. MUST match the `nonce` value that was provided in the Authentication Request.
@@ -514,10 +514,10 @@ alt_sub
 > OPTIONAL. Describes alternative subject identifiers for the authenticated End-User in the context of a specific audience. The value of `alt_sub` is an array of objects, each of which MUST contain `sub`, `sub_id_type`, and `aud` Claims to uniquely identify the authenticated End-User and the audience for the alternative subject identifier.
 
 vot
-> OPTIONAL. The vector value as specified in Vectors of Trust. See Vectors of Trust for more details. As eIDAS is leading in most scenarios targeted by this profile, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust.
+> OPTIONAL. The vector value as specified in Vectors of Trust. As eIDAS is leading in most scenarios targeted by this profile, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust. See also [Section 5.8](#vectors-of-trust).
 
 vtm
-> REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See Vectors of Trust for more details.
+> REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See also [Section 5.8](#vectors-of-trust).
 
 auth_time
 > FIXME: see issue #6
