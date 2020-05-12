@@ -299,7 +299,7 @@ Confidential Clients, as defined in [Section 4.1](#client-types), MUST authentic
 
 Public Clients MAY authenticate to the Authorization Server. However, the Authorization Server MUST NOT rely on public client authentication for the purpose of identifying the client.
 
-The client MUST NOT use more than one authentication method in each request.
+Clients MUST NOT use more than one authentication method in each request.
 
 ### Token Request
 The following describes the supported parameters for the Token Request. Some of these requirements are inherited as specified in Section 2.3.1 of the NL Gov OAuth2 profile.
@@ -313,7 +313,7 @@ code
 > REQUIRED. The value of the code parameter returned in the Authorization Response. Identical as in [[OAuth2.NLGov]].
 
 client_assertion
-> REQUIRED, in case private_key_jwt is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
+> REQUIRED, in case `private_key_jwt` is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
 client_assertion_type
 > REQUIRED, in case `client_assertion` is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
@@ -705,16 +705,14 @@ OpenID Providers SHOULD use eIDAS Level of Assurance (`LoA`) values for the `acr
 but MAY use different values if eIDAS is not applicable.
 
 OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested 
-Level of Assurance value requested by the Client.
+Level of Assurance value requested by the Client (either via the `acr_values` 
+or `claims` parameters).
 
 OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but MUST use 
-`Authentication Context Class References` instead.
+Authentication Context Class References (`acr`) instead.
 
 Clients MAY send an `vtr` (Vectors of Trust Request) parameter. If both the `vtr` and `acr_values` 
 are in the request, the `acr_values` MUST take precedence and the `vtr` MUST be ignored.
-
-* add note on RBA part of LoA; risk based authentication should be integral part of LoA framework
-** Context based authentication = DV requested LoA
 
 ## Vectors of Trust
 OpenID Providers MAY provide `vot` (Vectors of Trust) and `vtm` (Vectors of Trust Mark) values 
