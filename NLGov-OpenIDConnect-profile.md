@@ -126,18 +126,6 @@ The service is offered by a (semi)governmental or public Service Provider; examp
 ## Service Intermediation
 * TODO FdK
 
-## Token Exchange
-This profile supports the exchanging of security tokens as specified in [[RFC8693]]. This involves 
-exchanging an earlier obtained token into a differently scoped token or an entirely different kind 
-of token.
-
-Use Cases include, but are not limited by:
-- Exchanging a token with a specific audience or represented Service Consumer into a token with a
-different audience or represented Service Consumer;
-- A Service Intermediary exchanging a token that it obtained earlier into a token specific to a service that it intermediates; and
-- An OAuth 2.0 Resource Server exchanging an earlier obtained access token into a new token that
-is appropriate to include in a call to a backend service.
-
 ## Misc
 OpenID Connect Core supports self-issued OpenID Connect Providers. As the context of this profile is centered around (semi-)governemental and public domain Use Cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
 
@@ -332,47 +320,6 @@ client_assertion_type
  
 client_id
 > REQUIRED, in case mutually authenticated TLS is used for client authentication.
-
-
-### Token Exchange Request
-If the OpenID Provider is acting as an Security Token Service (STS) as specified in [[RFC8693]],
-then the Token Exchange Request and Response MUST be in accordance with Section 2 of that specification, with some differences due to the fact that the semantics of the claims involved with representations are reversed, as indicated in the remark in [Section 5.3](#representation-relationships), and to support the changing of subjects for representation.
-
-The following parameters are specified:
-
-grant_type
-> REQUIRED. MUST contain the value `urn:ietf:params:oauth:grant-type:token-exchange`. Identical as in [[RFC8693]].
-
-resource
-> OPTIONAL. A URI that indicates the target service or resource where the client intends to use the requested security token. Identical as in [[RFC8693]].
-
-audience
-> OPTIONAL. The logical name of the target service where the client intends to use the requested security token. Identical as in [[RFC8693]].
-
-scope
-> OPTIONAL. Indicates the access privileges of the requested security tokens. MUST contain at least the value `openid` and SHOULD contain a specific scope for which access is requested.
-
-requested_token_type
-> OPTIONAL. An identifier for the type of the requested security token. Identical as in [[RFC8693]].
-
-requested_subject
-> OPTIONAL. Indicates the requested subject that the End-User intends to act on behalf of, in case representation relations between the End-User and Service Consumer exist and have been exchanged between the Client and the OpenID Provider. MUST NOT be a token that reveals the identity of the requested subject and MUST be linked to the requesting client to avoid profiling of representation relations. Additional to [[RFC8693]], MUST NOT be included when the `subject_token` is present.
-
-subject_token
-> OPTIONAL. A security token that represents the identity of the Service Consumer represented by the End-User.
-Changed in comparison to [[RFC8693]]: MUST NOT be included when the `requested_subject` claim is present.
-
-subject_token_type
-> Indicates the type of the security token in the `subject_token` parameter. Changed in comparison to [[RFC8693]]: REQUIRED when the `subject_token` parameter is present in the request but MUST NOT be included otherwise.
-
-actor_token
-> REQUIRED. A security token that represents the identity of the acting party (i.e. the End-User as per this profile). Typically, this is the Access Token that was earlier issued to the Client for the End-User. Changed in comparison to [[RFC8693]] as this claim holds the identity of the End-User, which is required for the token exchange.
-
-actor_token_type
-> Indicates the type of the security token in the `actor_token` parameter.  This is REQUIRED when 
-the `actor_token` parameter is present in the request but MUST NOT be included otherwise. Identical as in [[RFC8693]].
-
-The response to this request MUST be according to Section 2.2.1 of [[RFC8693]].
 
 ## ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it
