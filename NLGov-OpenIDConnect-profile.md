@@ -1117,11 +1117,17 @@ The following overview lists RFC and BCP documents being drafted by the OAuth2 w
 [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/)
 > An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF.
 
+[OAuth 2.0 JWT Secured Authorization Request (JAR)](https://tools.ietf.org/html/draft-ietf-oauth-jwsreq)
+An RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the 
+OAuth2 working group at IETF. The practices described in this RFC are already part of the OpenID Connect 
+Core specification.
+
 [OAuth 2.0 Rich Authorization Requests (RAR)](https://tools.ietf.org/html/draft-lodderstedt-oauth-rar)
 > An RFC that introduces a request parameter `authorization_details`, which allows for more expressive authentication requests than those possible with the `scope` parameter, is being drafted in the OAuth2 working group at IETF.
 
 [OAuth 2.0 Pushed Authorization Requests (PAR)](https://tools.ietf.org/html/draft-lodderstedt-oauth-par)
 > An RFC that introduces an endpoint to which Clients can send authorization requests via a direct POST request rather than sending it through the browser via a redirect is being drafted in the OAuth2 working group at IETF.
+The practices described in this RFC are already part of the OpenID Connect Core specification.
 
 [OAuth2 Security Best Practices](https://tools.ietf.org/html/draft-ietf-oauth-security-topics)
 > A Best Current Practice document that extends the OAuth 2.0 Security Threat Model and provides
