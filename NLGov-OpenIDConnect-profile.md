@@ -232,21 +232,6 @@ code_challenge_method
 
 > REQUIRED, in case `code_challenge` is present. MUST use the value of `S256`.
 
-prompt
-> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
-
-display
-> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
-
-ui_locales
-> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
-
-claims_locales
-> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
-
-max_age
-> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
-
 A sample request may look like:
 ```
 https://idp-p.example.com/authorize?
@@ -413,6 +398,10 @@ cryptographic methods and keys that can be used when registering a Client.
 
 
 # OpenID Provider profile
+OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* 
+(Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) 
+of [[OpenID.Core]].
+
 OpenID Providers MUST follow the security guidelines and best-practices listed
 in [Section 5.1](#client-types) for the Client types they support.
 
@@ -469,9 +458,8 @@ vtm
 > REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See also [Section 5.8](#vectors-of-trust).
 
 auth_time
-> FIXME: see issue #6 and https://openid.net/specs/openid-connect-core-1_0.html#ServerMTI
-
-
+> REQUIRED if `max-age` was specified in the request or when `auth-time` was requested as an Essential Claim, 
+otherwise it is OPTIONAL. See also Section 15.1 of [[OpenID.Core]].
 
 Other Claims MAY be included. See Claims Request below on how such Claims SHOULD be requested by the Client to be provided by the OpenID Provider.
 
