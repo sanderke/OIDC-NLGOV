@@ -139,7 +139,7 @@ The flow described by these steps is illustrated as follows:
 ## Client types
 This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply:
 
-**Note:** this profile utilizes a slightly different segregation of applications than the NL GOV Assurance profile for OAuth 2.0, as it allows for better provision of specific security considerations specific to the different client types and aligns better to the client profiles specified in OAuth 2.0 and related security best practices ([OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) and [[RFC8252]]). The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+**Note:** this profile utilizes a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) and [[RFC8252]]) instead, as it allows for better provision of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
 *Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
@@ -510,37 +510,32 @@ Its claims are as follows:
 
 
 ## Pairwise Identifiers
-Pairwise identifiers specified in OpenID Connect Core [[OpenID.Core]] section 8 help protect
-an End-User's privacy by allowing an OpenID Provider to represent a single
+Pairwise Subject identifiers specified in OpenID Connect Core [[OpenID.Core]] section 8 help 
+protect an End-User's privacy by allowing an OpenID Provider to represent a single
 End-User with a different subject identifier (`sub`) for every Client the End-User
 connects to. This technique can help mitigate correlation of an End-User between
-multiple Clients by preventing the Clients from using the subject identifier
-(the sub claim) to track an End-User between different sites and applications. Use
-of pairwise identifiers does not prevent Clients from correlating data based
-on other identifying attributes such as names, phone numbers, email addresses,
-document numbers, or other attributes. However, since not all transactions
-require access to these attributes, but a subject identifier is always
+multiple Clients and therewith tracking of End-Users between different sites and 
+applications. Use of pairwise identifiers does not prevent Clients from correlating 
+data based on other identifying attributes such as names, phone numbers, email 
+addresses, document numbers, or other attributes. However, since not all 
+transactions require access to these attributes, but a subject identifier is always
 required, a pairwise identifier will aid in protecting the privacy of End-Users 
 as they navigate the system.
 
-OpenID Providers MUST support pairwise identifiers for cases where Clients
-require this functionality. OpenID Providers MAY support public identifiers
+OpenID Providers MUST support pairwise identifiers for cases where correlation of End-User's
+activities across Clients is not appropriate. OpenID Providers MAY support public identifiers
 for frameworks where public identifiers are required, or for cases where
 public identifiers are shared as attributes and the framework does not have a
 requirement for subject anonymity.
 
-The _Burgerservicenummer_ (citizen service number, or _BSN_) is often used
-in the Netherlands as identifier for citizens or natural persons, in particular in governmental contexts. The BSN is
-considered a public sectoral identifier in this profile.
-Note that the BSN MUST only be used by Relying Parties for Service eligible
-for using the BSN and the BSN, or token containing it, SHOULD be encrypted.
+Polymorphic Pseudonyms and Polymorphic Identities, which are used as Subject Identifiers
+as part of eIDAS, are examples of Pairwise Subject identifiers. *Burgerservicenummers (BSN)*,
+*Rechtspersonen en Samenwerkingsverbanden Identificatienummers (RSIN)* and *Kamer van Koophandel 
+(KvK) nummers" are considered public sectoral identifiers and therefore MUST NOT be used as
+Subject Identifiers in case correlation of End-User's activities across Clients is not appropriate.
 
-Other public identifiers, such as the 
-_Rechtspersonen en Samenwerkingsverbanden Identificatienummer_ (RSIN) or 
-_Kamer van Koophandel_ (KvK) number for legal entities,
-are similarly considered public sectoral identifiers.
-
-* TBD: include PP-pseudonyms as pairwise?
+Note that BSNs MUST only be used by Relying Parties for Service eligible
+for using the BSN and that the BSN, or token containing it, SHOULD be encrypted.
 
 ## Representation Relationships
 In Use Cases that involve representation relationships, representation relationships are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC8693]].
@@ -640,8 +635,6 @@ be signed by the OpenID Provider's key, and encrypted responses MUST be
 encrypted with the authorized Client's public key. Please refer to
 [Algorithms](#algorithms) for more information on cryptographic algorithms
 and keys.
-
-* TBD: drop support for unsigned UserInfo?
 
 ## Request Objects
 OpenID Providers MUST accept requests containing a request object signed by
@@ -754,19 +747,18 @@ scopes_supported
 
 claims_supported
 
->    REQUIRED. The list of claims available in the supported scopes. See below.
+>    REQUIRED. JSON array containing the list of claims available in the supported scopes. See [Claims Supported](#claims-supported).
 
 vot
 
->    OPTIONAL. The vectors of trust supported.
+>    OPTIONAL. JSON array containing the list of supported Vectors of Trust. See [Vectors of Trust](#vectors-of-trust).
 
-acr_values
+acr_values_supported
 
->    OPTIONAL. The Levels of Assurance supported. See Level of Assurance.
+>    OPTIONAL. JSON array containing the list of supported Levels of Assurance. See [Authentication Context](#authentication-context).
 
 The following example shows the JSON document found at a discovery endpoint
 for an authorization server:
-
 
 
     {
@@ -841,7 +833,10 @@ for an authorization server:
       "claims_supported": [
         "sub", "name", "vot", "acr"
       ],
-      "acr" " ??? "
+      "acr_values_supported" [
+        "http://eidas.europa.eu/LoA/substantial", 
+        "http://eidas.europa.eu/LoA/high"
+      ]
     }
 
 
@@ -895,8 +890,6 @@ In other cases, particularly when dealing with Browser-based applications or
 Native Apps, Dynamic Registration SHOULD be supported in accordance with the
 NL-Gov OAuth2 profile.
 
-
-
 # User Info
 The availability, quality, and reliability of an individual's identity
 attributes will vary greatly across jurisdictions and Provider systems. The
@@ -916,11 +909,6 @@ governmental context, attribute Claims are commonly registred in the BRP
 Usage of, or interoperability with, the ISA<sup>2</sup> core vocabularies is
 RECOMMENDED.
 
-* TBD: add default/recommended mapping OIDC <-> BRP?
-** usable: name, given_name (probably), family_name (possibly), gender, email, phone, locale
-** unusable: middle_name (ambiguous), birthdate (unknown day not in OIDC), address (insufficient detail split out, no address type)
-** inapplicable: nickname, profile, preferred_username, website, zoneinfo
-
 ## Claims Supported
 Discovery mandates the inclusion of the `claims_supported` field that defines
 the claims a Client MAY expect to receive for the supported scopes. OpenID
@@ -933,7 +921,9 @@ set out by the trust framework the Provider supports. The Provider MUST ensure
 to comply with applicable privacy legislation (e.g. informed consent as per
 GDPR) at all times.
 
-* TODO: applicable (recursively) when dealing with representation (act / may\_act\_on\_behalf alike) as well
+Note that when Representation is applicable, the OpenID Provider MUST include
+`represents` in the list of supported Claims and MAY include nested Claims inside
+the `represents` Claim.
 
 ## Scope Profiles
 In the interests of data minimization balanced with the requirement to
@@ -972,10 +962,8 @@ Clients requesting the `profile` scope MAY provide a claims request parameter.
 If the claims request is omitted, the OpenID Provider SHOULD provide a default
 claims set that it has available for the subject, in accordance with any
 policies set out by the trust framework the Provider supports.
-NOTE that clients SHOULD not request the `profile` scope, as described
+**Note:** clients SHOULD NOT request the `profile` scope, as described
 in the previous section.
-
-* TBD: claims parameter has benefits functionally/security wise, support may be less widespread though
 
 ## Claims Response
 Response to a UserInfo request MUST match the scope and claims requested to
@@ -1016,7 +1004,7 @@ of this profile takes into consideration mechanisms to protect the
 End-User's government identity information and activity from unintentional
 exposure.
 
-Pairwise anonymous identifiers MUST be supported by the OpenID Providers for
+Pairwise Subject identifiers MUST be supported by the OpenID Providers for
 frameworks where subjects should not be traceable or linkable across Clients
 by their subject ID. This prevents a situation where an End-User may inadvertently
 be assigned a universal government identifier.
@@ -1056,7 +1044,7 @@ attributes SHOULD be encrypted from the providing source to the ultimate
 intended recipient. This can be accomplished by either encrypting entire
 response messages and tokens or by utilizing aggregated or distributed claims.
 Applying end-to-end encryption is strongly RECOMMENDED for both the BSN
-(_Burger Service Number_, the Dutch citizen ID) and sensitive attributes.
+(_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
 
 ** TODO: check consistency wrt aggregated/distributed claims
 
@@ -1124,7 +1112,8 @@ This profile acknowledges that federations are widely in use, in particular amon
 The OpenID Foundation is currently drafting a specification for explicit support of federations using OpenID Connect. Future updates to this profile are likely to adopt this profile once finalized. See [Federation at the OpenID Foundation](https://openid.net/tag/federation/).
 
 ## Other features
-An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF. Future updates to this profile are likely to seek interoperability with such RFC once finalized. See [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/).
+[JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/)
+> An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF. Future updates to this profile are likely to seek interoperability with such RFC once finalized.
 
 An RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the OAuth2 working group at IETF.
 Similarly, an RFC for pushing Authorization Requests to relieve Clients from hosting `request_uri` based requests is being drafted in the OAuth2 working group at IETF.

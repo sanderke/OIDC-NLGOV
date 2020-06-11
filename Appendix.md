@@ -14,14 +14,23 @@ eIDAS
 ## Abbreviations
 The following abbreviations were used throughout this specification:
 
+BSN
+> Burgerservicenummer, the identification number for citizen in The Netherlands
+
 CSRF
 > Cross Site Request Forgery
 
 IdP
 > Identity Provider
 
+KVK
+> Kamer van Koophandel, the Dutch Chamber of Commerce
+
 PKCE
 > Proof Key for Code Exchange
+
+RSIN
+> Rechtspersonen en Samenwerkingsverbanden Identificatienummer, the identification number for legal entities and associations in The Netherlands
 
 XSS
 > Cross Site Scripting
