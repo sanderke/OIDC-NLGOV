@@ -1118,7 +1118,7 @@ The following overview lists RFC and BCP documents being drafted by the OAuth2 w
 > An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF.
 
 [OAuth 2.0 JWT Secured Authorization Request (JAR)](https://tools.ietf.org/html/draft-ietf-oauth-jwsreq)
-An RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the 
+> An RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the 
 OAuth2 working group at IETF. The practices described in this RFC are already part of the OpenID Connect 
 Core specification.
 
