@@ -1135,7 +1135,7 @@ security recommendations to address security challenges in OAuth 2.0 is being dr
 working group at IETF.
 
 [OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps)
-* A Best Current Practice document that details security considerations and best practices to be taken 
+> A Best Current Practice document that details security considerations and best practices to be taken 
 into account when implementing browser-based applications that use OAuth 2.0 is being drafted in the OAuth2 
 working group at IETF.
 
