@@ -1114,7 +1114,7 @@ The OpenID Foundation is currently drafting a specification for explicit support
 ## Other features
 The following overview lists RFC and BCP documents being drafted by the OAuth2 work group of the Internet Engineering Task Force (IETF) and the OpenID Foundation. Future updates to this profile are likely to seek interoperability with these RFCs and BCPs once finalized.
 
-[JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/)
+[JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://tools.ietf.org/html/draft-ietf-oauth-access-token-jwt)
 > An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF.
 
 [OAuth 2.0 JWT Secured Authorization Request (JAR)](https://tools.ietf.org/html/draft-ietf-oauth-jwsreq)
