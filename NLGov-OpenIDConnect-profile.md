@@ -39,6 +39,7 @@ defined by 'OAuth 2.0' [[RFC6749]];
 - the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
 
 In addition to the above terminology, this profile defines the following terms:
+- "Representation", "eIDAS".
 
 Definitions for these terms as well as for the abbreviations used throughout this specification are listed in the [Glossary](#a-glossary).
 
