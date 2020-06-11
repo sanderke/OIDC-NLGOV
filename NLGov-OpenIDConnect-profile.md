@@ -40,7 +40,7 @@ defined by 'OAuth 2.0' [[RFC6749]];
 
 In addition to the above terminology, this profile defines the following terms:
 
-Definitions for these terms as well as for the abbreviations used throughout this specification are listed in the Glossary.
+Definitions for these terms as well as for the abbreviations used throughout this specification are listed in the [Glossary](#a-glossary).
 
 ## Conformance
 As well as sections marked as non-normative, all authoring guidelines, diagrams, 

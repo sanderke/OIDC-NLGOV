@@ -11,9 +11,6 @@ eIDAS
 
 >  eIDAS (Electronic Identification, Authentication and Trust Services) is an EU regulation on electronic identification and trust services for electronic transactions in the European Union.
 
-
-* TODO ...
-
 ## Abbreviations
 The following abbreviations were used throughout this specification:
 
@@ -29,5 +26,5 @@ PKCE
 XSS
 > Cross Site Scripting
 
-#  Appendix Notices
+# Notices
 * (C) copyright OIDF (!), ... TODO
