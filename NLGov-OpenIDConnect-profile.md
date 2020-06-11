@@ -109,7 +109,7 @@ As the Dutch identity eco-system supports multiple Identity Providers (OpenID Pr
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
 
 # Flow
-OpenID Connect Core specifies three paths via which authentication can can be performed: the Authorization Code Flow, the Implicit Flow, or the Hybrid Flow. The flows determine how the ID Token and Access Token are returned to the Client.
+OpenID Connect Core specifies three paths via which authentication can can be performed: the *Authorization Code Flow*, the *Implicit Flow* and the *Hybrid Flow*. The flows determine how the ID Token and Access Token are returned to the Client.
 
 This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint.
 
@@ -400,7 +400,10 @@ cryptographic methods and keys that can be used when registering a Client.
 # OpenID Provider profile
 OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* 
 (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) 
-of [[OpenID.Core]].
+of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for
+the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile
+deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see
+also [Chapter 3](#flow)).
 
 OpenID Providers MUST follow the security guidelines and best-practices listed
 in [Section 5.1](#client-types) for the Client types they support.
