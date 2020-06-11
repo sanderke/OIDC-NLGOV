@@ -1112,18 +1112,27 @@ This profile acknowledges that federations are widely in use, in particular amon
 The OpenID Foundation is currently drafting a specification for explicit support of federations using OpenID Connect. Future updates to this profile are likely to adopt this profile once finalized. See [Federation at the OpenID Foundation](https://openid.net/tag/federation/).
 
 ## Other features
+The following overview lists RFC and BCP documents being drafted by the OAuth2 work group of the Internet Engineering Task Force (IETF) and the OpenID Foundation. Future updates to this profile are likely to seek interoperability with these RFCs and BCPs once finalized.
+
 [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/draft-ietf-oauth-access-token-jwt/)
-> An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF. Future updates to this profile are likely to seek interoperability with such RFC once finalized.
+> An RFC for Access Tokens in JWT format is being drafted in the OAuth2 working group at IETF.
 
-An RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the OAuth2 working group at IETF.
-Similarly, an RFC for pushing Authorization Requests to relieve Clients from hosting `request_uri` based requests is being drafted in the OAuth2 working group at IETF.
-Both practices are already part of the OpenID Connect Core specifications.
-Future updates to this profile are likely to seek interoperability with these RFCs once finalized.
+[OAuth 2.0 Rich Authorization Requests (RAR)](https://tools.ietf.org/html/draft-lodderstedt-oauth-rar)
+> An RFC that introduces a request parameter `authorization_details`, which allows for more expressive authentication requests than those possible with the `scope` parameter, is being drafted in the OAuth2 working group at IETF.
 
-* rar; work in progress @ IETF (OAuth2 WG)
+[OAuth 2.0 Pushed Authorization Requests (PAR)](https://tools.ietf.org/html/draft-lodderstedt-oauth-par)
+> An RFC that introduces an endpoint to which Clients can send authorization requests via a direct POST request rather than sending it through the browser via a redirect is being drafted in the OAuth2 working group at IETF.
 
-* OAuth2 Security Best Practices, currently in draft / work in progress @ IETF (OAuth2 WG).
+[OAuth2 Security Best Practices](https://tools.ietf.org/html/draft-ietf-oauth-security-topics)
+> A Best Current Practice document that extends the OAuth 2.0 Security Threat Model and provides
+security recommendations to address security challenges in OAuth 2.0 is being drafted in the OAuth2 
+working group at IETF.
 
-* Browser based apps, work in progress @ IETF (OAuth2 WG)
+[OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps)
+* A Best Current Practice document that details security considerations and best practices to be taken 
+into account when implementing browser-based applications that use OAuth 2.0 is being drafted in the OAuth2 
+working group at IETF.
 
-* OAuth 2.1 requires authorization servers to support PKCE - OIDC clients MAY use nonce instead.
+[[OAuth2.1]]
+> An effort to consolidate and simplify OAuth 2.0 by adding and removing functionality of the core OAuth 2.0
+specification and by incorporating several RFCs and BCPs that were built upon OAuth 2.0.
