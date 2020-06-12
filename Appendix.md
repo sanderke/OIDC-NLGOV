@@ -14,6 +14,9 @@ eIDAS
 ## Abbreviations
 The following abbreviations were used throughout this specification:
 
+BRP
+> Basis Registratie Personen, the Dutch citizen registry
+
 BSN
 > Burgerservicenummer, the identification number for citizen in The Netherlands
 
@@ -23,7 +26,7 @@ CSRF
 IdP
 > Identity Provider
 
-KVK
+KvK
 > Kamer van Koophandel, the Dutch Chamber of Commerce
 
 PKCE

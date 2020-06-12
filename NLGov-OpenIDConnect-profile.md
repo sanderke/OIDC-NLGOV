@@ -515,7 +515,9 @@ protect an End-User's privacy by allowing an OpenID Provider to represent a sing
 End-User with a different subject identifier (`sub`) for every Client the End-User
 connects to. This technique can help mitigate correlation of an End-User between
 multiple Clients and therewith tracking of End-Users between different sites and 
-applications. Use of pairwise identifiers does not prevent Clients from correlating 
+applications.
+
+Use of pairwise identifiers does not prevent Clients from correlating 
 data based on other identifying attributes such as names, phone numbers, email 
 addresses, document numbers, or other attributes. However, since not all 
 transactions require access to these attributes, but a subject identifier is always
