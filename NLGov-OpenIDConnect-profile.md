@@ -265,7 +265,7 @@ The following parameters are specified:
 `client_assertion`
 > REQUIRED, in case `private_key_jwt` is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
 
-client_assertion_type
+`client_assertion_type`
 > REQUIRED, in case `client_assertion` is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
  
 `client_id`
