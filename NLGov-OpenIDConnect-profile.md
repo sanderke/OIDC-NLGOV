@@ -363,10 +363,20 @@ Management Protocol [[RFC7592]] MAY be used by Clients.
 This profile imposes the following requirements upon the Client Registration request:
 
 Initial access tokens
-> The use of an initial access token is REQUIRED for making Client Registration requests.
+> In cases where the OpenID Provider limits the parties that are allowed to register clients
+using Dynamic Registration (i.e. when open registration is not applicable), the use of an 
+initial access token is REQUIRED for making Client Registration requests.
+
+`redirect_uris`
+> REQUIRED. Array of Redirection URI values used by the Client. MUST be absolute HTTPS URLs
+and one of these registered Redirection URI values MUST exactly match the redirect_uri 
+parameter value used in each Authorization Request.
+
+`application_type`
+> TODO
 
 `grant_types`
-> When specified, the parameter `grant_types` MUST have value `authorization_code`.
+> OPTIONAL. When specified, the parameter `grant_types` MUST contain the value `authorization_code`.
 
 `jwks_uri` and `jwks`
 > Clients SHOULD referencing their JSON Web Key (JWK) Set via the `jwks_uri` parameter 
@@ -378,6 +388,14 @@ MUST NOT both be present in the same request.
 > For cases where correlation of End-User's activities across Clients is not appropriate,
 the `subject_type` parameter MUST be set to `pairwise`. In other cases, the use of
 `pairwise` is RECOMMENDED unless the use of public identifiers is required.
+
+`userinfo_signed_response_alg`
+> REQUIRED when the Client wishes to receive signed UserInfo responses. If this parameter
+is specified, the UserInfo endpoint responses will be JWT signed using JWS. If this
+parameter is omitted, the UserInfo endpoint will respond unsigned JSON objects.
+
+`sector_identifier_uri`
+> TODO - https://openid.net/specs/openid-connect-core-1_0.html#PairwiseAlg
 
 An example of a Client registration request:
   
