@@ -858,9 +858,9 @@ MUST NOT both be present in the same request.
 the `subject_type` parameter MUST be set to `pairwise`. In other cases, the use of
 `pairwise` is RECOMMENDED unless the use of public identifiers is required.
 
-[[OpenID.Dynamic-Registration]] 
 ([Section 2](https://openid.net/specs/openid-connect-registration-1_0.html#ClientMetadata))
-lists all Client Metadata values that are used by OpenID Connect.
+of [[OpenID.Dynamic-Registration]] lists all Client Metadata values that are used by OpenID 
+Connect.
 
 An example of a Client registration request:
   
