@@ -886,9 +886,6 @@ An example of a Client registration request:
       "contacts": ["mary@example.org"],
     }
 
-* TBD: details of minimal registraton parameters?
-* TBD: is an initial access token (always) required? for native app instances as well?
-
 Please refer to [Algorithms](#algorithms) for more information on eligable
 cryptographic methods and keys that can be used when registering a Client.
 
