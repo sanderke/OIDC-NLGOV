@@ -344,73 +344,6 @@ Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual
 labor and the risks of configuration errors. Dynamic Client Registration
 Management Protocol [[RFC7592]] MAY be used by Clients.
 
-This profile imposes the following requirements upon the Client Registration request:
-
-Initial access tokens
-> In cases where the OpenID Provider limits the parties that are allowed to register clients
-using Dynamic Registration (i.e. when open registration is not applicable), the use of an 
-initial access token is REQUIRED for making Client Registration requests.
-
-`redirect_uris`
-> REQUIRED. Array of Redirection URI values used by the Client. MUST be absolute HTTPS URLs
-and one of these registered Redirection URI values MUST exactly match the redirect_uri 
-parameter value used in each Authorization Request.
-
-`application_type`
-> TODO
-
-`grant_types`
-> OPTIONAL. When specified, the parameter `grant_types` MUST contain the value `authorization_code`.
-
-`jwks_uri` and `jwks`
-> Clients SHOULD referencing their JSON Web Key (JWK) Set via the `jwks_uri` parameter 
-rather than passing their JWK Set document by value using the `jwks` parameter,
-as it allows for easier key rotation. Also, the `jwks` and `jwks_uri` parameters
-MUST NOT both be present in the same request.
-
-`subject_type`
-> For cases where correlation of End-User's activities across Clients is not appropriate,
-the `subject_type` parameter MUST be set to `pairwise`. In other cases, the use of
-`pairwise` is RECOMMENDED unless the use of public identifiers is required.
-
-`userinfo_signed_response_alg`
-> REQUIRED when the Client wishes to receive signed UserInfo responses. If this parameter
-is specified, the UserInfo endpoint responses will be JWT signed using JWS. If this
-parameter is omitted, the UserInfo endpoint will respond unsigned JSON objects.
-
-`sector_identifier_uri`
-> TODO - https://openid.net/specs/openid-connect-core-1_0.html#PairwiseAlg
-
-An example of a Client registration request:
-  
-    POST /connect/register HTTP/1.1
-    Content-Type: application/json
-    Accept: application/json
-    Host: server.example.com
-    Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJ ...
-
-    {
-      "application_type": "web",
-      "redirect_uris":
-        ["https://client.example.org/callback",
-        "https://client.example.org/callback2"],
-      "client_name": "My Example",
-      "subject_type": "pairwise",
-      "sector_identifier_uri":
-        "https://other.example.net/file_of_redirect_uris.json",
-      "token_endpoint_auth_method": "client_secret_basic",
-      "jwks_uri": "https://client.example.org/my_public_keys.jwks",
-      "userinfo_encrypted_response_alg": "RSA1_5",
-      "userinfo_encrypted_response_enc": "A128CBC-HS256",
-      "contacts": ["mary@example.org"],
-    }
-
-* TBD: details of minimal registraton parameters?
-* TBD: is an initial access token (always) required? for native app instances as well?
-
-Please refer to [Algorithms](#algorithms) for more information on eligable
-cryptographic methods and keys that can be used when registering a Client.
-
 
 
 # OpenID Provider profile
@@ -648,7 +581,10 @@ And receives a document in response like the following:
 
 
 OpenID Providers MUST support the generation of JWT encoded responses from the
-UserInfo Endpoint in addition to unsigned JSON objects. Signed responses MUST
+UserInfo Endpoint. Responding unsigned JSON objects when neither signing nor encryption
+are requested by the Client as part of the `userinfo_signed_response_alg` and 
+`userinfo_encrypted_response_alg` Client metadata parameters registered
+as part of Client Registration is OPTIONAL. Signed responses MUST
 be signed by the OpenID Provider's key, and encrypted responses MUST be
 encrypted with the authorized Client's public key. Please refer to
 [Algorithms](#algorithms) for more information on cryptographic algorithms
@@ -889,7 +825,7 @@ cryptographic methods and keys that can be used by OpenID Providers.
 ## Dynamic Registration
 If the OpenID Provider is acting as an NL-Gov OAuth Authorization Server (NL-Gov OAuth2
 profile), then Dynamic Registration MUST be supported in accordance with that
-specification ([[OAuth2.NLGov]], see section 3.1.3).
+specification ([[OAuth2.NLGov]], see Section 3.1.3).
 
 Dynamic Registration MUST also be supported in combination with per-instance provisioning 
 of secrets when registering Native Applications as confidential Clients.
@@ -897,6 +833,64 @@ of secrets when registering Native Applications as confidential Clients.
 In other cases, particularly when dealing with Browser-based applications or
 Native Apps, Dynamic Registration SHOULD be supported in accordance with the
 NL-Gov OAuth2 profile.
+
+This profile imposes the following requirements upon the Client Registration request:
+
+Initial access tokens
+> In cases where the OpenID Provider limits the parties that are allowed to register clients
+using Dynamic Registration (i.e. when open registration is not applicable), the use of an 
+initial access token is REQUIRED for making Client Registration requests. In cases where
+open registration is applicable, the use of an initial access token is OPTIONAL.
+
+`redirect_uris`
+> REQUIRED. Array of Redirection URI values used by the Client. MUST be absolute HTTPS URLs
+and one of these registered Redirection URI values MUST exactly match the redirect_uri 
+parameter value used in each Authorization Request.
+
+`jwks_uri` and `jwks`
+> Clients SHOULD referencing their JSON Web Key (JWK) Set via the `jwks_uri` parameter 
+rather than passing their JWK Set document by value using the `jwks` parameter,
+as it allows for easier key rotation. Also, the `jwks` and `jwks_uri` parameters
+MUST NOT both be present in the same request.
+
+`subject_type`
+> For cases where correlation of End-User's activities across Clients is not appropriate,
+the `subject_type` parameter MUST be set to `pairwise`. In other cases, the use of
+`pairwise` is RECOMMENDED unless the use of public identifiers is required.
+
+[[OpenID.Dynamic-Registration]] 
+([Section 2](https://openid.net/specs/openid-connect-registration-1_0.html#ClientMetadata))
+lists all Client Metadata values that are used by OpenID Connect.
+
+An example of a Client registration request:
+  
+    POST /connect/register HTTP/1.1
+    Content-Type: application/json
+    Accept: application/json
+    Host: server.example.com
+    Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJ ...
+
+    {
+      "application_type": "web",
+      "redirect_uris":
+        ["https://client.example.org/callback",
+        "https://client.example.org/callback2"],
+      "client_name": "My Example",
+      "subject_type": "pairwise",
+      "sector_identifier_uri":
+        "https://other.example.net/file_of_redirect_uris.json",
+      "token_endpoint_auth_method": "client_secret_basic",
+      "jwks_uri": "https://client.example.org/my_public_keys.jwks",
+      "userinfo_encrypted_response_alg": "RSA1_5",
+      "userinfo_encrypted_response_enc": "A128CBC-HS256",
+      "contacts": ["mary@example.org"],
+    }
+
+* TBD: details of minimal registraton parameters?
+* TBD: is an initial access token (always) required? for native app instances as well?
+
+Please refer to [Algorithms](#algorithms) for more information on eligable
+cryptographic methods and keys that can be used when registering a Client.
 
 # User Info
 The availability, quality, and reliability of an individual's identity
