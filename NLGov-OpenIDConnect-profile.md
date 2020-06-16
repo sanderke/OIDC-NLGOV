@@ -25,8 +25,7 @@ Definitions for these terms as well as for the abbreviations used throughout thi
 ## Conformance
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
-This profile is based upon the 'International Government Assurance Profile (iGov) for OpenID Connect 1.0' [[OpenID.iGov]] as published by the OpenID Foundation (https://openid.net/foundation/). It should be considered a fork of this profile, as 
-the iGov profile is geared more towards a United States context and the Netherlands towards a European Union context.
+This profile is based upon the 'International Government Assurance Profile (iGov) for OpenID Connect 1.0' [[OpenID.iGov]] as published by the OpenID Foundation (https://openid.net/foundation/). It should be considered a fork of this profile, as the iGov profile is geared more towards a United States context and the Netherlands towards a European Union context.
 
 This specification defines requirements for the following components:
 - OpenID Connect 1.0 Relying Parties (also known as OpenID Clients)
@@ -250,8 +249,7 @@ In case signed metadata is available, this MUST be used over non-signed metadata
 
 Clients use the public keys made available from the jwks endpoint to validate the signature on tokens. The OpenID Connect spec recommends using the HTTP `Cache-Control` Header option and the `max-age` directive to inform Clients how long they can cache the public keys for before returning to the `jwks_uri` location to retrieve replacement keys from the Identity Provider.
 
-To rotate keys, the decrypting party can publish new keys at its `jwks_uri` location and remove from the JWK Set those that are being decommissioned. The `jwks_uri` SHOULD include a 
-`Cache-Control` header in the response that contains a `max-age` directive, which enables the encrypting party to safely cache the JWK Set and not have to re-retrieve the document for every encryption event. 
+To rotate keys, the decrypting party can publish new keys at its `jwks_uri` location and remove from the JWK Set those that are being decommissioned. The `jwks_uri` SHOULD include a `Cache-Control` header in the response that contains a `max-age` directive, which enables the encrypting party to safely cache the JWK Set and not have to re-retrieve the document for every encryption event. 
 The decrypting party SHOULD remove decommissioned keys from the JWK Set referenced by `jwks_uri` but retain them internally for some reasonable period of time, coordinated with the cache duration, to facilitate a smooth transition between keys by allowing the encrypting party some time to obtain the new keys. The cache duration SHOULD also be coordinated with the issuance of new signing keys.
 Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
 
@@ -367,8 +365,7 @@ Use of pairwise identifiers does not prevent Clients from correlating data based
 
 OpenID Providers MUST support pairwise identifiers for cases where correlation of End-User's activities across Clients is not appropriate. OpenID Providers MAY support public identifiers for frameworks where public identifiers are required, or for cases where public identifiers are shared as attributes and the framework does not have a requirement for subject anonymity.
 
-Polymorphic Pseudonyms and Polymorphic Identities, which are used as Subject Identifiers as part of eIDAS, are examples of Pairwise Subject identifiers. *Burgerservicenummers (BSN)*,
-*Rechtspersonen en Samenwerkingsverbanden Identificatienummers (RSIN)* and *Kamer van Koophandel (KvK) nummers" are considered public sectoral identifiers and therefore MUST NOT be used as Subject Identifiers in case correlation of End-User's activities across Clients is not appropriate.
+Polymorphic Pseudonyms and Polymorphic Identities, which are used as Subject Identifiers as part of eIDAS, are examples of Pairwise Subject identifiers. *Burgerservicenummers (BSN)*, *Rechtspersonen en Samenwerkingsverbanden Identificatienummers (RSIN)* and *Kamer van Koophandel (KvK) nummers" are considered public sectoral identifiers and therefore MUST NOT be used as Subject Identifiers in case correlation of End-User's activities across Clients is not appropriate.
 
 Note that BSNs MUST only be used by Relying Parties for Service eligible for using the BSN and that the BSN, or token containing it, SHOULD be encrypted.
 
@@ -475,8 +472,7 @@ Whereas the OpenID Connect iGov profile recommends the use of Vectors of Trust (
 
 OpenID Providers SHOULD use eIDAS Level of Assurance (`LoA`) values for the `acr` Claim, but MAY use different values if eIDAS is not applicable.
 
-OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` 
-or `claims` parameters).
+OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters).
 
 OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but MUST use Authentication Context Class References (`acr`) instead.
 
