@@ -469,9 +469,9 @@ Both of these methods allow for Clients to create a request that is protected fr
 * TODO: contrary to OIDC core, use unique requests and no overrides in CGI parameters. That is in line with PAR (still under development).
 
 ## Authentication Context
-Whereas the OpenID Connect iGov profile recommends the use of Vectors of Trust (`vot`) to determine the amount of trust to be placed digital transactions, using Authentication Context Class References (`acr`) instead is RECOMMENDED by this profile, due to their better alignment to the Levels of Assurance (`LoA`) defined by the `eIDAS` standards that are used in the European Union.
+Whereas the OpenID Connect iGov profile recommends the use of Vectors of Trust (`vot`) to determine the amount of trust to be placed digital transactions, using Authentication Context Class References (`acr`) instead is RECOMMENDED by this profile, due to their better alignment to the Levels of Assurance (LoA) defined by the `eIDAS` standards that are used in the European Union.
 
-OpenID Providers SHOULD use eIDAS Level of Assurance (`LoA`) values for the `acr` Claim, but MAY use different values if eIDAS is not applicable.
+OpenID Providers SHOULD use eIDAS Level of Assurance (LoA) values for the `acr` Claim, but MAY use different values if eIDAS is not applicable.
 
 OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters).
 

@@ -12,14 +12,23 @@ Representation
 
 
 <!-- Add abbreviations below, so they are highlighted in the text -->
-<div style="display:hidden">
+<div style="display:none">
+    <abbr title="Best Current Practice">BCP</abbr>
     <abbr title="Basis Registratie Personen, the Dutch citizen registry">BRP</abbr>
     <abbr title="Burgerservicenummer, the identification number for citizen in The Netherlands">BSN</abbr>
     <abbr title="Cross Site Request Forgery">CSRF</abbr>
+    <abbr title="European Union">EU</abbr>
+    <abbr title="General Data Protection Regulation">GDPR</abbr>
+    <abbr title="Internet Engineering Task Force">IETF</abbr>
     <abbr title="Identity Provider">IdP</abbr>
+    <abbr title="JSON Web Token">JWT</abbr>
+    <abbr title="JSON Web Signature">JWS</abbr>
+    <abbr title="JSON Web Encryption">JWE</abbr>
     <abbr title="Kamer van Koophandel, the Dutch Chamber of Commerce">KvK</abbr>
     <abbr title="Proof Key for Code Exchange">PKCE</abbr>
+    <abbr title="Request For Change">RFC</abbr>
     <abbr title="Rechtspersonen en Samenwerkingsverbanden Identificatienummer, the identification number for legal entities and associations in The Netherlands">RSIN</abbr>
+    <abbr title="Uniform Resource Identifier">URI</abbr>
     <abbr title="Cross-Site Scripting">XSS</abbr>
 </div>
 
