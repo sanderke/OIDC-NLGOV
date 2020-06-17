@@ -21,6 +21,7 @@ Representation
     <abbr title="General Data Protection Regulation">GDPR</abbr>
     <abbr title="Internet Engineering Task Force">IETF</abbr>
     <abbr title="Identity Provider">IdP</abbr>
+    <abbr title="JavaScript Object Notation, a lightweight data-exchange format often used with REST APIs">JSON</abbr>
     <abbr title="JSON Web Token">JWT</abbr>
     <abbr title="JSON Web Signature">JWS</abbr>
     <abbr title="JSON Web Encryption">JWE</abbr>
