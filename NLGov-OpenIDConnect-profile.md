@@ -1,5 +1,5 @@
 # Introduction
-Government regulations for permitting users (citizens and non-citizens) online access to government resources vary greatly from country to country. There is a strong desire to leverage federated authentication and identity services for public access to government resources online to enable and encourage the development of safe and innovative applications for e-government services, increase overall account security, reduce cost, and provide reliable identity assurances from established and trusted sources when applicable.
+Government regulations for permitting users (citizens and non-citizens) online access to government resources vary greatly from country to country. There is a strong desire to leverage federated authentication and identity services for public access to government resources online to enable the development of safe and innovative applications for e-government services, increase overall account security, reduce cost, and provide reliable identity assurances from established and trusted sources when applicable.
 
 This specification aims to define an OpenID Connect profile that provides Dutch governments with a foundation for securing federated access to public services online.
 
@@ -12,7 +12,7 @@ All uses of "JSON Web Signature (JWS)" [[RFC7515]] and "JSON Web Encryption (JWE
 This specification uses the following terms: 
 - "Access Token", "Authorization Code", "Authorization Endpoint", "Authorization Grant", "Authorization Server", "Client", "Client Authentication", "Client Identifier", "Client Secret", "Grant Type", "Protected Resource", "Redirection URI", "Refresh Token", "Resource Server", "Response Type", and "Token Endpoint" defined by 'OAuth 2.0' [[RFC6749]];
 - "Claim Name", "Claim Value", and "JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]];
-- "Browser-based application" defined by [OAuth 2.0 for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps);
+- "Browser-based application" defined by [[OAuth2.Browser-Based-Apps]];
 - "Native app", "Hybrid app", "External user-agent", "Embedded user-agent", "In-app browser tab", "Web-view", "Claimed 'https' scheme URI", "Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]];
 - "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]]; and
 - the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
@@ -25,7 +25,7 @@ Definitions for these terms as well as for the abbreviations used throughout thi
 ## Conformance
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
-This profile is based upon the 'International Government Assurance Profile (iGov) for OpenID Connect 1.0' [[OpenID.iGov]] as published by the OpenID Foundation (https://openid.net/foundation/). It should be considered a fork of this profile, as the iGov profile is geared more towards a United States context and the Netherlands towards a European Union context.
+This profile is based upon the 'International Government Assurance Profile (iGov) for OpenID Connect 1.0' [[OpenID.iGov]] as published by the [OpenID Foundation](https://openid.net/foundation/). It should be considered a fork of this profile, as the iGov profile is geared more towards a United States context and the Netherlands towards a European Union context.
 
 This specification defines requirements for the following components:
 - OpenID Connect 1.0 Relying Parties (also known as OpenID Clients)
@@ -100,24 +100,25 @@ The flow described by these steps is illustrated as follows:
 ## Client types
 This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply:
 
-**Note:** this profile utilizes a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) and [[RFC8252]]) instead, as it allows for better provision of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+**Note:** this profile utilizes a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provision of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
-*Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+*Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
 
 ### Browser-based Applications
-*Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including Cross-Site Scripting (XSS), Cross Site Request Forgery (CSRF) and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+*Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including Cross-Site Scripting (XSS), Cross Site Request Forgery (CSRF) and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
 
-In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients MUST follow the best practices as specified in [OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps) as well as the following:
+In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients MUST follow the best practices as specified in [[OAuth2.Browser-Based-Apps]] as well as the following:
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
 - OpenID Providers MUST support the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to make requests to its endpoints and SHOULD NOT use wildcard origins.
-- Browser-based applications MUST use PKCE [[RFC7636]] to protect calls to the token endpoint.
+- Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])
+" to protect calls to the token endpoint.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
-- Browser-based applications SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies that they include (e.g. via a content delivery network (CDN)) are not unexpectedly manipulated.
+- Browser-based applications SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies that they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
 ### Native and Hybrid Applications
-*Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], [Section 2.1](https://tools.ietf.org/html/rfc6749#section-2.1)).
+*Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], Section 2.1).
 
 *Hybrid applications* are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
@@ -658,7 +659,7 @@ Initial access tokens
 `subject_type`
 > For cases where correlation of End-User's activities across Clients is not appropriate, the `subject_type` parameter MUST be set to `pairwise`. In other cases, the use of `pairwise` is RECOMMENDED unless the use of public identifiers is required.
 
-([Section 2](https://openid.net/specs/openid-connect-registration-1_0.html#ClientMetadata)) of [[OpenID.Dynamic-Registration]] lists all Client Metadata values that are used by OpenID Connect.
+Section 2 of [[OpenID.Dynamic-Registration]] lists all Client Metadata values that are used by OpenID Connect.
 
 An example of a Client registration request:
   
@@ -690,9 +691,9 @@ Please refer to [Algorithms](#algorithms) for more information on eligible crypt
 The availability, quality, and reliability of an individual's identity attributes will vary greatly across jurisdictions and Provider systems. The following recommendations ensure maximum cross-jurisdictional interoperability, while setting Client expectations on the type of data they may acquire.
 
 ## Claim Interoperability
-As per section 5.1.2 of the OpenID Core specification, claim names SHOULD be collision-resistant. It is RECOMMENDED to use domain name based URIs as attribute names.
+As per Section 5.1.2 of [[OpenID.Core]], claim names SHOULD be collision-resistant. It is RECOMMENDED to use domain name based URIs as attribute names.
 
-OpenID Core section 5.1 specifies a list of standard claims. In a Dutch governmental context, attribute Claims are commonly registered in the BRP (_Basis Registratie Personen_, the Dutch citizen registry), as defined in [[?LO.GBA]].
+[[OpenID.Core]] Section 5.1 specifies a list of standard claims. In a Dutch governmental context, attribute Claims are commonly registered in the BRP (_Basis Registratie Personen_, the Dutch citizen registry), as defined in [[?LO.GBA]].
 Usage of, or interoperability with, the ISA<sup>2</sup> core vocabularies is RECOMMENDED.
 
 ## Claims Supported
@@ -712,10 +713,10 @@ However, in the Netherlands a common identifier (BSN) for citizens is available 
 
 The default `profile` scope of OpenID Connect is very wide, which is undesired from a privacy perspective. As such, the `profile` scope SHOULD NOT be used.
 
-Note that the `doc` profile described in the iGov profile for OpenID Connect [[[OpenID.iGov]] is not in common use in the Netherlands and therefore not included in this profile.
+Note that the `doc` profile described in the iGov profile for OpenID Connect [[OpenID.iGov]] is not in common use in the Netherlands and therefore not included in this profile.
 
 ## Claims Request
-OpenID Core section 5.5 [[OpenID.Core]] defines a method for a Client to request specific claims in the UserInfo object. OpenID Providers MUST support this `claims` parameter in the interest of data minimization - that is, the Provider only returns information on the subject the Client specifically asks for, and does not volunteer additional information about the subject.
+OpenID Core Section 5.5 [[OpenID.Core]] defines a method for a Client to request specific claims in the UserInfo object. OpenID Providers MUST support this `claims` parameter in the interest of data minimization - that is, the Provider only returns information on the subject the Client specifically asks for, and does not volunteer additional information about the subject.
 
 Clients requesting the `profile` scope MAY provide a claims request parameter.
 If the claims request is omitted, the OpenID Provider SHOULD provide a default claims set that it has available for the subject, in accordance with any policies set out by the trust framework the Provider supports.
@@ -745,7 +746,7 @@ In order to provide a source, including integrity and optionally confidentiality
 Data minimization is an essential concept in trust frameworks and federations exchanging End-User identity information for government applications.
 The design of this profile takes into consideration mechanisms to protect the End-User's government identity information and activity from unintentional exposure.
 
-Pairwise Subject identifiers MUST be supported by the OpenID Providers for frameworks where subjects should not be traceable or linkable across Clients by their subject ID. This prevents a situation where an End-User may inadvertently be assigned a universal government identifier.
+Pairwise Subject identifiers MUST be supported by the OpenID Providers for frameworks where subjects should not be traceable or linkable across Clients by their subject ID. This prevents situations where an End-User may inadvertently be assigned a universal government identifier.
 
 Request claims MUST be supported by the OpenID Providers to ensure that only the data the Client explicitly requests is provided in the UserInfo response or ID Token.
 This prevents situations where a Client may only require a partial set of claims, but receives (and is therefore exposed to) a full set of claims. For example, if a Client only needs an identifier and the persons legal age, the OpenID Provider MUST NOT send the Client the full user name and birth date.
@@ -760,9 +761,7 @@ For example, if a bilateral agreement between two agencies legally entitles usag
 
 The reasons for relaxing the controls that support data minimization are outside the scope of this profile.
 
-In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by utilizing aggregated or distributed claims. Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
-
-** TODO: check consistency wrt aggregated/distributed claims
+In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by utilizing aggregated or distributed claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
 
 # Security considerations
 All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as 'good', SHOULD NOT use any settings with a status 'phase out' and MUST NOT use any setting with a status 'insufficient' in these security guidelines or future updates thereof.
@@ -807,22 +806,22 @@ The OpenID Foundation is currently drafting a specification for explicit support
 ## Other features
 The following overview lists RFC and BCP documents being drafted by the OAuth 2.0 working group of the Internet Engineering Task Force (IETF) and the OpenID Foundation. Future updates to this profile are likely to seek interoperability with these RFCs and BCPs once finalized.
 
-[JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://tools.ietf.org/html/draft-ietf-oauth-access-token-jwt)
+[[?OAuth2.JWT]]
 > An RFC for Access Tokens in JWT format is being drafted in the OAuth 2.0 working group at IETF.
 
-[OAuth 2.0 JWT Secured Authorization Request (JAR)](https://tools.ietf.org/html/draft-ietf-oauth-jwsreq)
+[[?OAuth2.JAR]]
 > An RFC for Secured (signed and/or encrypted) Authorization Requests is being drafted in the OAuth 2.0 working group at IETF. The practices described in this RFC are already part of the OpenID Connect Core specification.
 
-[OAuth 2.0 Rich Authorization Requests (RAR)](https://tools.ietf.org/html/draft-lodderstedt-oauth-rar)
+[[?OAuth2.RAR]]
 > An RFC that introduces a request parameter `authorization_details`, which allows for more expressive authentication requests than those possible with the `scope` parameter, is being drafted in the OAuth 2.0 working group at IETF.
 
-[OAuth 2.0 Pushed Authorization Requests (PAR)](https://tools.ietf.org/html/draft-lodderstedt-oauth-par)
+[[?OAuth2.PAR]]
 > An RFC that introduces an endpoint to which Clients can send authorization requests via a direct POST request rather than sending it through the browser via a redirect is being drafted in the OAuth 2.0 working group at IETF. The practices described in this RFC are already part of the OpenID Connect Core specification.
 
-[OAuth 2.0 Security Best Practices](https://tools.ietf.org/html/draft-ietf-oauth-security-topics)
+[[?OAuth2.Security]]
 > A Best Current Practice document that extends the OAuth 2.0 Security Threat Model and provides security recommendations to address security challenges in OAuth 2.0 is being drafted in the OAuth 2.0 working group at IETF.
 
-[OAuth for Browser-Based Apps](https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps)
+[[?OAuth2.Browser-Based-Apps]]
 > A Best Current Practice document that details security considerations and best practices to be taken into account when implementing browser-based applications that use OAuth 2.0 is being drafted in the OAuth 2.0 working group at IETF.
 
 [[OAuth2.1]]
