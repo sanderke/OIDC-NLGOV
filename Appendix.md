@@ -7,14 +7,14 @@ Representation
 
 >  The action of one party acting on behalf of another party through delegated authority, which was given voluntary or based on legal grounds. Both parties can either be natural or juridical persons. The fact that one party is authorized on behalf of another party is named a _representation relationship_.
 
-eIDAS
+<abbr title="Electronic Identification, Authentication and Trust Services">eIDAS</abbr>
 
 >  eIDAS (Electronic Identification, Authentication and Trust Services) is an EU regulation on electronic identification and trust services for electronic transactions in the European Union.
 
 ## Abbreviations
 The following abbreviations were used throughout this specification:
 
-BRP
+<abbr title="Basis Registratie Personen, the Dutch citizen registry">BRP</abbr>
 > Basis Registratie Personen, the Dutch citizen registry
 
 BSN
