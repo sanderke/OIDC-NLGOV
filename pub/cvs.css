@@ -17,3 +17,7 @@ blockquote {
   margin-top: -1em !important;
   border: none !important;
 }
+
+abbr {
+  border-bottom: 1px dotted #005a9c !important;
+}
