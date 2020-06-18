@@ -634,7 +634,7 @@ The server MUST provide its public key in JWK Set format, such as the following 
       ]
     }
 
-In case PKIoverheid certificates are used, the certificate MUST be included as either an `x5c` or as `x5u` parameter, as per [[RFC7517]] Sections 4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as `x5c` parameter, for maximum interoperability. Parties MAY agree to use `x5u`, for instance for communication within specific environments. 
+In case PKIoverheid certificates are used, the certificate and entire certificate chain up until the root certificate MUST be included as either an `x5c` or as `x5u` parameter, according to [[RFC7517]] Sections 4.6 and 4.7. Parties SHOULD support the inclusion of the certificate chain as `x5c` parameter, for maximum interoperability. Parties MAY agree to use `x5u`, for instance for communication within specific environments. 
 
 Please refer to [Algorithms](#algorithms) for more information on eligible cryptographic methods and keys that can be used by OpenID Providers.
 
