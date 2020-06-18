@@ -27,6 +27,7 @@ Representation
     <abbr title="JSON Web Encryption">JWE</abbr>
     <abbr title="Kamer van Koophandel, the Dutch Chamber of Commerce">KvK</abbr>
     <abbr title="Level of Assurance">LoA</abbr>
+    <abbr title="OpenID Provider">OP</abbr>
     <abbr title="Proof Key for Code Exchange">PKCE</abbr>
     <abbr title="Request For Change">RFC</abbr>
     <abbr title="Rechtspersonen en Samenwerkingsverbanden Identificatienummer, the identification number for legal entities and associations in The Netherlands">RSIN</abbr>
