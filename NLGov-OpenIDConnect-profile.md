@@ -634,9 +634,9 @@ The server MUST provide its public key in JWK Set format, such as the following 
       ]
     }
 
-Please refer to [Algorithms](#algorithms) for more information on eligible cryptographic methods and keys that can be used by OpenID Providers.
+In case PKIoverheid certificates are used, the certificate MUST be included as either an `x5c` or as `x5u` parameter, as per [[RFC7517]] Sections 4.6 and 4.7. Parties SHOULD at least support the inclusion of the certificate as `x5c` parameter, for maximum interoperability. Parties MAY agree to use `x5u`, for instance for communication within specific environments. 
 
-* TODO include x5c with PKIO.
+Please refer to [Algorithms](#algorithms) for more information on eligible cryptographic methods and keys that can be used by OpenID Providers.
 
 ## Dynamic Registration
 If the OpenID Provider is acting as an NL-Gov OAuth Authorization Server (NL GOV Assurance profile for OAuth 2.0), then Dynamic Registration MUST be supported in accordance with that specification ([[OAuth2.NLGov]], see Section 3.1.3).
