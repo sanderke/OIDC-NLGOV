@@ -51,7 +51,7 @@ Authentication is provided in a federated manner. In other words, a Client syste
 Either a shared central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organization (intra-organizational) or can be an inter-organizational setting, through either bilateral or multilateral agreements.
 In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
 
-The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. This profile is not limited to Citizen-to-Government and Business-to-Government, nor intended to exclude Consumer-to-Business and Business-to-Business contexts, but additional considerations may be applicable in those other contexts.
+The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. This profile is not limited to Citizen-to-Government and Business-to-Government, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those other contexts.
 
 The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
 
