@@ -266,6 +266,15 @@ OpenID Providers MUST implement all *Mandatory to Implement Features for All Ope
 
 OpenID Providers MUST follow the security guidelines and best-practices listed in [Section 5.1](#client-types) for the Client types they support.
 
+## Request Objects
+OpenID Providers MUST accept requests containing a request object signed by the Client's private key. Servers MUST validate the signature on such requests against the Client's registered public key. OpenID Connect Providers MUST accept request objects encrypted to the provider's public key.
+
+OpenID Providers SHOULD accept request objects by reference using the `request_uri` parameter. The request object can be either hosted by the Client or pushed prior to the Authentication Request to the OpenID Provider. OpenID Providers MUST verify the `request_uri` is referencing a trusted location.
+
+Both of these methods allow for Clients to create a request that is protected from tampering through the browser, allowing for a higher security and privacy mode of operation for Clients and applications that require it. Clients are not required to use request objects, but OpenID Providers are required to support requests using them.
+
+* TODO: contrary to OIDC core, use unique requests and no overrides in CGI parameters. That is in line with PAR (still under development).
+
 ## ID Tokens
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
 ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
@@ -359,7 +368,7 @@ Its claims are as follows:
             "nbf": 1418699112,
       }
 
-## Pairwise Identifiers
+### Pairwise Identifiers
 Pairwise Subject identifiers specified in OpenID Connect Core [[OpenID.Core]] section 8 help protect an End-User's privacy by allowing an OpenID Provider to represent a single End-User with a different subject identifier (`sub`) for every Client the End-User connects to. This technique can help mitigate correlation of an End-User between multiple Clients and therewith tracking of End-Users between different sites and applications.
 
 Use of pairwise identifiers does not prevent Clients from correlating data based on other identifying attributes such as names, phone numbers, email addresses, document numbers, or other attributes. However, since not all transactions require access to these attributes, but a subject identifier is always required, a pairwise identifier will aid in protecting the privacy of End-Users as they navigate the system.
@@ -370,7 +379,7 @@ Polymorphic Pseudonyms and Polymorphic Identities, which are used as Subject Ide
 
 Note that BSNs MUST only be used by Relying Parties for Service eligible for using the BSN and that the BSN, or token containing it, SHOULD be encrypted.
 
-## Representation Relationships
+### Representation Relationships
 In Use Cases that involve representation relationships, representation relationships are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC8693]].
 
 **Note:** Whereas [[RFC8693]] lists the End-User in the `act` or `may_act` claims and the represented service consumer in the `sub` claim, this is reversed in this profile: the End-User is listed in the `sub` claim and the represented service consumer is listed in the `represents` claim. Reason for this is to mitigate the risk that a Client that does not explicitly support representation Use Cases cannot recognize the difference between an End-User that authenticates on behalf of himself or on behalf of someone else via representation.
@@ -406,6 +415,20 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
           }
         }
       }
+
+### Authentication Context
+Whereas the OpenID Connect iGov profile recommends the use of Vectors of Trust (`vot`) to determine the amount of trust to be placed digital transactions, using Authentication Context Class References (`acr`) instead is RECOMMENDED by this profile, due to their better alignment to the Levels of Assurance (LoA) defined by the `eIDAS` standards that are used in the European Union.
+
+OpenID Providers SHOULD use eIDAS Level of Assurance (LoA) values for the `acr` Claim, but MAY use different values if eIDAS is not applicable.
+
+OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters).
+
+OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but MUST use Authentication Context Class References (`acr`) instead.
+
+Clients MAY send an `vtr` (Vectors of Trust Request) parameter. If both the `vtr` and `acr_values` are in the request, the `acr_values` MUST take precedence and the `vtr` MUST be ignored.
+
+### Vectors of Trust
+OpenID Providers MAY provide `vot` (Vectors of Trust) and `vtm` (Vector Trust Mark) values in ID Tokens only if the `acr` claim is not requested by the Client (either via the `acr_values` or `claims` parameters). More information on Vectors of Trust is provided in [[RFC8485]].
 
 ## Access Token as JWT Bearer
 This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
@@ -458,29 +481,6 @@ And receives a document in response like the following:
 
 OpenID Providers MUST support the generation of JWT encoded responses from the UserInfo Endpoint. Responding unsigned JSON objects when neither signing nor encryption are requested by the Client as part of the `userinfo_signed_response_alg` and 
 `userinfo_encrypted_response_alg` Client metadata parameters registered as part of Client Registration is OPTIONAL. Signed responses MUST be signed by the OpenID Provider's key, and encrypted responses MUST be encrypted with the authorized Client's public key. Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
-
-## Request Objects
-OpenID Providers MUST accept requests containing a request object signed by the Client's private key. Servers MUST validate the signature on such requests against the Client's registered public key. OpenID Connect Providers MUST accept request objects encrypted to the provider's public key.
-
-OpenID Providers SHOULD accept request objects by reference using the `request_uri` parameter. The request object can be either hosted by the Client or pushed prior to the Authentication Request to the OpenID Provider. OpenID Providers MUST verify the `request_uri` is referencing a trusted location.
-
-Both of these methods allow for Clients to create a request that is protected from tampering through the browser, allowing for a higher security and privacy mode of operation for Clients and applications that require it. Clients are not required to use request objects, but OpenID Providers are required to support requests using them.
-
-* TODO: contrary to OIDC core, use unique requests and no overrides in CGI parameters. That is in line with PAR (still under development).
-
-## Authentication Context
-Whereas the OpenID Connect iGov profile recommends the use of Vectors of Trust (`vot`) to determine the amount of trust to be placed digital transactions, using Authentication Context Class References (`acr`) instead is RECOMMENDED by this profile, due to their better alignment to the Levels of Assurance (LoA) defined by the `eIDAS` standards that are used in the European Union.
-
-OpenID Providers SHOULD use eIDAS Level of Assurance (LoA) values for the `acr` Claim, but MAY use different values if eIDAS is not applicable.
-
-OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters).
-
-OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but MUST use Authentication Context Class References (`acr`) instead.
-
-Clients MAY send an `vtr` (Vectors of Trust Request) parameter. If both the `vtr` and `acr_values` are in the request, the `acr_values` MUST take precedence and the `vtr` MUST be ignored.
-
-## Vectors of Trust
-OpenID Providers MAY provide `vot` (Vectors of Trust) and `vtm` (Vector Trust Mark) values in ID Tokens only if the `acr` claim is not requested by the Client (either via the `acr_values` or `claims` parameters). More information on Vectors of Trust is provided in [[RFC8485]].
 
 ## Discovery
 The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programatic way for Clients to obtain configuration details for communicating with OpenID Providers. Discovery is an important part of building scalable federation ecosystems. Compliant OpenID Providers under this profile MUST publish their server metadata to help minimize configuration errors and support automation for scaleable deployments.
