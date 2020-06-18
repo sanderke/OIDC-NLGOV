@@ -709,14 +709,14 @@ Matching of the identity assertion based on claims to a local identifier or `acc
 
 The requirement for matching is also of importance where a cross-border or cross-jurisdiction authentication is required and therefore the availability of a single identifier (e.g. social security number) cannot be guaranteed for the individual wishing to authenticate.
 
-However, in the Netherlands a common identifier (BSN) for citizens is available for eligible organizations. Nationwide interoperable pseudonyms per Relying Party for non-BSN-eligible organizations exists as well.
+However, in the Netherlands the BSN is, as a common identifier for citizens, available to BSN-eligible organizations. Nationwide interoperable pseudonyms per Relying Party for non-BSN-eligible organizations exists as well.
 
 The default `profile` scope of OpenID Connect is very wide, which is undesired from a privacy perspective. As such, the `profile` scope SHOULD NOT be used.
 
 Note that the `doc` profile described in the iGov profile for OpenID Connect [[OpenID.iGov]] is not in common use in the Netherlands and therefore not included in this profile.
 
 ## Claims Request
-OpenID Core Section 5.5 [[OpenID.Core]] defines a method for a Client to request specific claims in the UserInfo object. OpenID Providers MUST support this `claims` parameter in the interest of data minimization - that is, the Provider only returns information on the subject the Client specifically asks for, and does not volunteer additional information about the subject.
+OpenID Core Section 5.5 [[OpenID.Core#ClaimsParameter]] defines a method for a Client to request specific claims in the UserInfo object. OpenID Providers MUST support this `claims` parameter in the interest of data minimization - that is, the Provider only returns information on the subject the Client specifically asks for, and does not volunteer additional information about the subject.
 
 Clients requesting the `profile` scope MAY provide a claims request parameter.
 If the claims request is omitted, the OpenID Provider SHOULD provide a default claims set that it has available for the subject, in accordance with any policies set out by the trust framework the Provider supports.
