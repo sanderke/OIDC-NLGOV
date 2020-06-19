@@ -61,6 +61,20 @@ This profile supports several Use Cases for representation relationships, which 
 The service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
 ## Service Intermediation
+A User intends to consume a Service on his/her own behalf, from a (semi-)governmental or public Service Provider via a distinct, separate, interface for accessing the Service (a.k.a. a front-end). For the Service authentication is required. The interface for accessing the Service is an automated support to the User for consuming the Service.
+
+The interface for accessing the Service can be either from the Service Provider itself (technical compartmentalization), as well as from a third party. In the latter case this is a specialized form of the Service Provider, named a Service Intermediary.
+
+The interface for accessing the Service has to be explicitly visible to the User, as is the Service itself. This includes, among others. aspects like naming and presentation. The responsibilities for the Service Provider are limited, the User itself is responsible for acting and for consuming the Service (Representation of the User by the Service Intermediary is explicitly excluded). The Service Provider remains responsible for providing the (contents of the) Service.
+
+Examples of scenario's where Service Intermediation is applicable:
+
+- helping a User on submitting information, with additional guidance, information and explanation.
+- automated tax declaration from an accounting application.
+- aggregating multiple Services.
+- providing an interface for accessing a Service in an alternative presentation form.
+
+
 * TODO FdK
 
 ## Misc
