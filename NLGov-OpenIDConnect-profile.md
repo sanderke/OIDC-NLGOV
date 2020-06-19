@@ -273,7 +273,7 @@ OpenID Providers SHOULD accept request objects by reference using the `request_u
 
 Both of these methods allow for Clients to create a request that is protected from tampering through the browser, allowing for a higher security and privacy mode of operation for Clients and applications that require it. Clients are not required to use request objects, but OpenID Providers are required to support requests using them.
 
-* TODO: contrary to OIDC core, use unique requests and no overrides in CGI parameters. That is in line with PAR (still under development).
+Note that when a request object is used (either passed by value or by reference), the Client MAY send the parameters included in the request object duplicated in the query parameters as well for backwards compatibility (so that the request is a valid OAuth 2.0 Authorization Request). However, the OpenID Provider MUST only consider the parameters included in the request object and ignore the duplicated query parameters.
 
 ## ID Tokens
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
@@ -792,8 +792,6 @@ For symmetric encryption, implementations:
 - MUST NOT support algorithms that are less secure than `A256GCM`.
 
 In addition to proper selection and configuration of algorithms, implementation MUST ensure to use a cryptographically secure (pseudo)random generator. Administrators and implementations MUST apply industry best practices for key management of cryptographic keys. This includes best practices for selection of applicable key length, as applicable for the relevant algorithms selected.
-
-* TBD: how to do updates on algorithms
 
 # Future updates
 This profile was creating using published, finalized specifications and standards as basis. Some relevant new documents are under development at the time of writing. As this profile does not use any draft documents as basis, these cannot be included.
