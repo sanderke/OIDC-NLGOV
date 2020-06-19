@@ -37,4 +37,4 @@ Representation
 
 
 # Notices
-* (C) copyright OIDF (!), ... TODO
+The technology described in this specification was made available from contributions from various sources, including members of the OpenID Foundation (OIDF), the Internet Engineering Task Force (IETF) and others.
