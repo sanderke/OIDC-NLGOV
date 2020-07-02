@@ -38,7 +38,7 @@ When an NL GOV-compliant component is interacting with other NL GOV-compliant co
 
 An NL GOV-compliant OpenID Connect Identity Provider MUST support all features as described in this specification. A general-purpose Identity Provider MAY support additional features for use with non-NL GOV Clients.
 
-An NL GOV-compliant OpenID Connect Identity Provider MAY also provide NL GOV-compliant OAuth 2.0 authorization server functionality. In such cases, the authorization server MUST fully implement the NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]]. If an NL GOV-compliant OpenID Connect Identity Provider does not provide NL GOV-compliant OAuth 2.0 authorization server services, all features related to interaction between the authorization server and protected resource are therefore OPTIONAL.
+An NL GOV-compliant OpenID Connect Identity Provider MAY also provide NL GOV-compliant OAuth 2.0 Authorization Server functionality. In such cases, the Authorization Server MUST fully implement the NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]]. If an NL GOV-compliant OpenID Connect Identity Provider does not provide NL GOV-compliant OAuth 2.0 Authorization Server services, all features related to interaction between the Authorization Server and protected resource are therefore OPTIONAL.
 
 An NL GOV-compliant OpenID Connect Client MUST use all functions as described in this specification. A general-purpose Client library MAY support additional features for use with non-NL GOV OpenID Connect Identity Providers.
 
@@ -53,7 +53,7 @@ In case a federation or scheme is being used, an Identity Broker may be applicab
 
 The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. This profile is not limited to these contexts, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those other contexts.
 
-The Service Provider or Relying Party request either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
+The Service Provider or OpenID Client request either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
 This profile supports several Use Cases for representation relationships, which apply when an End-User intends to consume an online service on behalf of a Natural or Juridical Person (the Service Consumer), where authentication and authorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
@@ -77,7 +77,7 @@ Examples of scenario's where Service Intermediation is applicable:
 <mark>TODO FdK</mark>
 
 ## Misc
-The OpenID Connect specification [[OpenID.Core]] supports self-issued OpenID Connect Providers. However, as this profile centers around (semi-)governmental and public domain Use Cases where assurance on identity verification is virtually always required, self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
+The OpenID Connect specification [[OpenID.Core]] supports self-issued OpenID Connect Providers. However, as this profile centers around (semi-)governmental and public domain Use Cases where assurance on identity verification is virtually always required, self-issued OpenID Providers MUST NOT be accepted by OpenID Clients under this profile.
 
 As the Dutch identity eco-system supports multiple OpenID Providers, Identity Brokers are in common use. Brokers relieve OpenID Clients of managing multiple connections to OpenID Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is the forming of so-called privacy hotspots, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, are encouraged to increase overall end-to-end security.
@@ -94,9 +94,9 @@ Therefore, the Implicit Flow and Hybrid flow MUST NOT be used. Also, the IETF OA
 ## Authorization Code Flow
 The Authorization Code Flow returns an Authorization Code to the Client, which can then exchange it for an ID Token and an Access Token directly. The flow comprises the following steps:
 
-1. The Client sends an Authorization Request - containing the desired request parameters - to the Authorization Server.
-2. The Authorization Server authenticates the End-User.
-3. The Authorization Server sends the End-User back to the Client with an Authorization Code.
+1. The Client sends an Authorization Request - containing the desired request parameters - to the OpenID Provider.
+2. The OpenID Provider authenticates the End-User.
+3. The OpenID Provider sends the End-User back to the Client with an Authorization Code.
 4. The Client requests a response using the Authorization Code at the Token Endpoint.
 5. The Client receives a response that contains an ID Token and Access Token in the response body.
 6. The Client validates the ID token and retrieves Claims and Subject Identifier(s) of the authenticated End-User.
@@ -125,8 +125,7 @@ In Use Cases that involve Browser-based applications, OpenID Providers and OpenI
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
 - OpenID Providers MUST support the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to make requests to its endpoints and SHOULD NOT use wildcard origins.
-- Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])
-" to protect calls to the token endpoint.
+- Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the token endpoint.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
 - Browser-based applications SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies that they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
@@ -158,7 +157,7 @@ Request Parameters:
 >  REQUIRED. Indicates the access privileges being requested. MUST contain at least the value `openid` and SHOULD contain a specific scope for which access is requested.
 
 `redirect_uri`
->  REQUIRED. Indicates a valid endpoint where the Client will receive the authentication response. MUST be an absolute HTTPS URL unless the Client is a native application operating on a desktop device, in which case it MAY be an absolute HTTP URL with the literal loopback IP address and port number the client is listening on as hostname (MUST NOT use `localhost`, see [[RFC8252]] Sections 7.3 and 8.3). MUST exactly match one of the Redirection URI values for the Client pre-registered at the OpenID Provider, with the matching performed as described in Section 6.2.1 of [[RFC3986]] (Simple String Comparison). Inter-app redirect URIs for Native applications MUST use Claimed `https` Scheme URI Redirection, as specified in Section 7.2 of [[RFC8252]].
+>  REQUIRED. Indicates a valid endpoint where the Client will receive the authentication response. MUST be an absolute HTTPS URL unless the Client is a native application operating on a desktop device, in which case it MAY be an absolute HTTP URL with the literal loopback IP address and port number the client is listening on as hostname (MUST NOT use `localhost`, see [[RFC8252]] Sections 7.3 and 8.3). MUST exactly match one of the Redirection URI values for the Client pre-registered at the OpenID Provider, with the matching performed as described in Section 6.2.1 of [[RFC3986]] (Simple String Comparison). Inter-app redirect URIs for Native applications on mobile devices MUST use Claimed `https` Scheme URI Redirection, as specified in Section 7.2 of [[RFC8252]].
 
 `state`
 >  REQUIRED. Unguessable random string generated by the Client, used to protect against CSRF attacks. Must contain a sufficient amount of entropy to avoid guessing. Returned to the Client in the Authentication Response.
@@ -170,7 +169,7 @@ Request Parameters:
 >  OPTIONAL. Lists the acceptable LoAs for this authentication. `acr_values` takes precedence over `vtr`. See also [Section 5.2.3](#authentication-context).
 
 `vtr`
->  OPTIONAL. MUST be set to a value as described in Section 6.1 of Vectors of Trust [[RFC8485]]. MUST NOT be used when `acr_values` is set or when the `acr` claim is requested via the `claims` parameter. See also [Section 5.2.4](#vectors-of-trust).
+>  OPTIONAL. MUST be set to a value as described in Section 6.1 of Vectors of Trust [[RFC8485]]. MUST NOT be used when `acr_values` is set or when the `acr` Claim is requested via the `claims` parameter. See also [Section 5.2.4](#vectors-of-trust).
 
 `claims`
 > OPTIONAL. This parameter is used to request specific Claims. The value is a JSON object listing the requested Claims, as specified in section 5.5 of [[OpenID.Core]].
@@ -203,11 +202,11 @@ Request objects MUST be signed by the Client's registered key. Request objects M
 ## Requests to the Token Endpoint
 
 ### Client Authentication
-Confidential Clients, as defined in [Section 4.1](#client-types), MUST authenticate to the Authorization Server using either:
+Confidential Clients, as defined in [Section 4.1](#client-types), MUST authenticate to the OpenID Provider using either:
 - a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the `private_key_jwt` method defined in [[OpenID.Core]]; or
 - mutually authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the `client_id` parameter MUST be included.
 
-Public Clients MAY authenticate to the Authorization Server. However, the Authorization Server MUST NOT rely on public client authentication for the purpose of identifying the client.
+Public Clients MAY authenticate to the OpenID Provider. However, the OpenID Provider MUST NOT rely on public client authentication for the purpose of identifying the client.
 
 Clients MUST NOT use more than one authentication method in each request.
 
@@ -223,7 +222,7 @@ The following parameters are specified:
 > REQUIRED. The value of the code parameter returned in the Authorization Response. Identical as in [[OAuth2.NLGov]].
 
 `client_assertion`
-> REQUIRED, in case `private_key_jwt` is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The Relying Party must generate a new assertion JWT for each call to the token endpoint. 
+> REQUIRED, in case `private_key_jwt` is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The OpenID Client must generate a new assertion JWT for each call to the token endpoint. 
 
 `client_assertion_type`
 > REQUIRED, in case `client_assertion` is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
@@ -240,30 +239,30 @@ Clients MUST verify the following in received ID tokens:
 > The `issuer` Claim is the Uniform Resource Locater (URL) of the expected issuer.
 
 `aud`
-> The `audience` Claim contains the client ID of the Client.
+> The `audience` Claim contains the Client ID of the Client.
 
 `exp`, `iat`, `nbf`
-> The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from 1970-01-01T00:00:00Z UTC) within acceptable ranges.
+> The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC).
 
 `acr`
 > The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See also [Section 5.2.3](#authentication-context).
 
 `represents`
-> The `represents` Claim, if applicable, identifies the represented Service Consumer on behalf of which the End-User intends to authenticate. Any Client MUST be able to process `represents` Claims. As an exceptions a `represents` Claims MAY be ignored, if and only if the explicitly agreed upon before hand that no Representation will be provided.
+> The `represents` Claim, if applicable, identifies the represented Service Consumer on behalf of which the End-User intends to authenticate. Any Client MUST be able to process `represents` Claims. As an exception, `represents` Claims MAY be ignored by the Client if, and only if, it is explicitly agreed upon beforehand that no Representation will be provided.
 
 ## Discovery
-Client SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes.
+All Clients SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes.
 
 Clients and Resource Servers SHOULD acquire metadata using either the "OpenID Connect Discovery 1.0" [[OpenID.Discovery]] method using the `/.well-known/openid-configuration` location (section 4), or the "OAuth 2.0 Authorization Server Metadata" [[RFC8414]] method using the `/.well-known/oauth-authorization-server` location (section 3). Methods using WebFinger with (partial) personal identifiable information SHOULD NOT be used, to avoid privacy issues such as leaking information to unknown locations.
 
-Clients and Resource Servers SHOULD cache OpenID Provider metadata once an OpenID Provider has been discovered and used by the Client. Clients and Resource Servers SHOULD utilize the HTTP headers provided by the server for caching [[RFC7234]].
+Clients and Resource Servers SHOULD cache OpenID Provider metadata once an OpenID Provider has been discovered and used by the Client. Clients and Resource Servers SHOULD utilize the HTTP headers provided by the OpenID Provider for caching [[RFC7234]].
 
 Clients SHOULD support `signed_metadata` as specified in [[RFC8414]] Section 2.1.
-In case signed metadata is available, this MUST be used over non-signed metadata and the signature MUST be verified  prior to further utilizing it contents.
+In case signed metadata is available, this MUST be used over non-signed metadata and the signature MUST be verified prior to further utilizing it contents.
 
-Clients use the public keys made available from the `jwks` endpoint to validate the signature on tokens. [[OpenID.Core]] recommends using the HTTP `Cache-Control` Header option and the `max-age` directive to inform Clients how long they can cache the public keys for before returning to the `jwks_uri` location to retrieve replacement keys from the Identity Provider.
+Clients use the public keys made available from the `jwks` endpoint to validate the signature on tokens. OpenID Connect [[OpenID.Core]] recommends using the HTTP `Cache-Control` Header option and the `max-age` directive to inform Clients how long they can cache the public keys for before returning to the `jwks_uri` location to retrieve replacement keys from the OpenID Provider.
 
-To rotate keys, the decrypting party can publish new keys at its `jwks_uri` location and remove from the JWK Set those that are being decommissioned. The `jwks_uri` SHOULD include a `Cache-Control` header in the response that contains a `max-age` directive, which enables the encrypting party to safely cache the JWK Set and not have to re-retrieve the document for every encryption event. 
+To rotate keys, the decrypting party can publish an updated JWK Set at its `jwks_uri` location with the new keys added and the decommissioned keys removed. The `jwks_uri` SHOULD include a `Cache-Control` header in the response that contains a `max-age` directive, which enables the encrypting party to safely cache the JWK Set and not have to re-retrieve the document for every encryption event. 
 The decrypting party SHOULD remove decommissioned keys from the JWK Set referenced by `jwks_uri` but retain them internally for some reasonable period of time, coordinated with the cache duration, to facilitate a smooth transition between keys by allowing the encrypting party some time to obtain the new keys. The cache duration SHOULD also be coordinated with the issuance of new signing keys.
 Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
 
@@ -280,11 +279,11 @@ OpenID Providers MUST implement all *Mandatory to Implement Features for All Ope
 OpenID Providers MUST follow the security guidelines and best-practices listed in [Section 4.1](#client-types) for the Client types they support.
 
 ## Request Objects
-OpenID Providers MUST accept requests containing a request object signed by the Client's private key. Servers MUST validate the signature on such requests against the Client's registered public key. OpenID Connect Providers MUST accept request objects encrypted to the provider's public key.
+OpenID Providers MUST accept requests containing a request object signed by the Client's private key. OpenID Providers MUST validate the signature on such requests against the Client's registered public key. OpenID Providers MUST accept request objects encrypted to the OpenID Provider's public key.
 
-OpenID Providers SHOULD accept request objects by reference using the `request_uri` parameter. The request object can be either hosted by the Client or pushed prior to the Authentication Request to the OpenID Provider. OpenID Providers MUST verify the `request_uri` is referencing a trusted location.
+OpenID Providers SHOULD accept request objects by reference using the `request_uri` parameter. The request object can be either hosted by the Client or pushed to the OpenID Provider prior to the Authentication Request. OpenID Providers MUST verify that the `request_uri` is referencing a trusted location.
 
-Both of these methods allow for Clients to create a request that is protected from tampering through the browser, allowing for a higher security and privacy mode of operation for Clients and applications that require it. Clients are not required to use request objects, but OpenID Providers are required to support requests using them.
+Using request objects allow for Clients to create a request that is protected from tampering through the browser, allowing for a higher security and privacy mode of operation for Clients and applications that require it. Clients are not required to use request objects, but OpenID Providers are required to support requests using them.
 
 Note that when a request object is used (either passed by value or by reference), the Client MAY send the parameters included in the request object duplicated in the query parameters as well for backwards compatibility (so that the request is a valid OAuth 2.0 Authorization Request). However, the OpenID Provider MUST only consider the parameters included in the request object and ignore the duplicated query parameters.
 
@@ -292,24 +291,24 @@ Note that when a request object is used (either passed by value or by reference)
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
 ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
 
-The ID Token MUST expire and SHOULD have an active lifetime no longer than five minutes. Since the ID token is consumed by the Client and not presented to remote systems, much shorter expiration times are RECOMMENDED where possible.
+The ID Token MUST expire and SHOULD have an active lifetime no longer than five minutes. Since the ID token is consumed by the Client and not presented to remote systems, it is RECOMMENDED that expiration times are kept as short as possible.
 
-The token response includes an Access Token (which can be used to make a UserInfo request) and ID Token (a signed and optionally encrypted JSON Web Token). ID Token values have the following meanings:
+The Token Response includes an Access Token (which can be used to make a UserInfo request) and ID Token (a signed and optionally encrypted JSON Web Token). This profile imposes the following requirements on the Claims used in ID Tokens:
 
 `iss`
-> REQUIRED. The `issuer` field is the Uniform Resource Locater (URL) of the expected issuer.
+> REQUIRED. The `issuer` field is the Uniform Resource Locator (URL) of the expected issuer.
 
 `aud`
-> REQUIRED. The `audience` field contains the client ID of the Client.
+> REQUIRED. The `audience` field contains the Client ID of the Client.
 
 `sub`
-> REQUIRED. The identifier of the authenticated End-User. OpenID Providers MUST support a pairwise identifier in accordance with "OpenID Connect Core" [[OpenID.Core]] section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
+> REQUIRED. The identifier of the authenticated End-User. OpenID Providers MUST support a pairwise identifier in accordance with the OpenID Connect specification [[OpenID.Core]], section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
 
 `sub_id_type`
-> REQUIRED. The type of identifier used for the subject. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in `sub` is explicitly included. The value of the `sub_id_type` MUST be a URI.
+> REQUIRED. The type of identifier passed in the `sub` Claim. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in the `sub` Claim is explicitly included. The value of the `sub_id_type` MUST be a URI.
 
 `acr`
-> REQUIRED. The LoA the End-User was authenticated at. MUST be a member of the `acr_values` list from the authentication request. See also [Section 5.2.3](#authentication-context).
+> REQUIRED. The LoA the End-User was authenticated at. MUST be a member of the `acr_values` list from the Authentication Request. See also [Section 5.2.3](#authentication-context).
 
 `nonce`
 > REQUIRED. MUST match the `nonce` value that was provided in the Authentication Request.
@@ -318,13 +317,13 @@ The token response includes an Access Token (which can be used to make a UserInf
 > REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identify the ID Token between sender and receiver for at least 12 months.
 
 `auth_time`
-> RECOMMENDED. This SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate.
+> RECOMMENDED. The `auth_time` Claim SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate.
 
 `exp`, `iat`, `nbf`
-> REQUIRED. The `expiration`, `issued at`, and `not before` timestamps for the token are dates (integer number of seconds since from `1970-01-01T00:00:00Z UTC`) within acceptable ranges.
+> REQUIRED. The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC).
 
 `represents`
-> REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a representation relationship for the acting party.
+> REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a representation relationship for the End-User.
 
 `alt_sub`
 > OPTIONAL. Describes alternative subject identifiers for the authenticated End-User in the context of a specific audience. The value of `alt_sub` is an array of objects, each of which MUST contain `sub`, `sub_id_type`, and `aud` Claims to uniquely identify the authenticated End-User and the audience for the alternative subject identifier.
@@ -358,7 +357,7 @@ This example ID Token has been signed using the server's RSA key:
             aSI6ImE2NWM1NjBkLTA4NWMtNDY2ZS05N2M1LWY4N
             jM5ZmNhNWVhNyIsIm5iZiI6MTQxODY5OTExMn0
 
-Its claims are as follows:
+Its Claims are as follows:
 
      {
             "auth_time": 1418698782,
@@ -382,7 +381,7 @@ Its claims are as follows:
       }
 
 ### Pairwise Identifiers
-Pairwise Subject identifiers specified in OpenID Connect Core [[OpenID.Core]] section 8 help protect an End-User's privacy by allowing an OpenID Provider to represent a single End-User with a different subject identifier (`sub`) for every Client the End-User connects to. This technique can help mitigate correlation of an End-User between multiple Clients and therewith tracking of End-Users between different sites and applications.
+Pairwise Subject identifiers specified in OpenID Connect Core [[OpenID.Core]] Section 8 help protect an End-User's privacy by allowing an OpenID Provider to represent a single End-User with a different subject identifier (`sub`) for every Client the End-User connects to. This technique can help mitigate correlation of an End-User between multiple Clients and therewith tracking of End-Users between different sites and applications.
 
 Use of pairwise identifiers does not prevent Clients from correlating data based on other identifying attributes such as names, phone numbers, email addresses, document numbers, or other attributes. However, since not all transactions require access to these attributes, but a subject identifier is always required, a pairwise identifier will aid in protecting the privacy of End-Users as they navigate the system.
 
@@ -395,23 +394,23 @@ Note that BSNs MUST only be used by Relying Parties for Service eligible for usi
 ### Representation Relationships
 In Use Cases that involve representation relationships, representation relationships are explicitly mentioned in the form of a `represents` Claim, analogous to the Delegation Semantics specified in [[RFC8693]].
 
-**Note:** Whereas [[RFC8693]] lists the End-User in the `act` or `may_act` claims and the represented service consumer in the `sub` claim, this is reversed in this profile: the End-User is listed in the `sub` claim and the represented service consumer is listed in the `represents` claim. Reason for this is to mitigate the risk that a Client that does not explicitly support representation Use Cases cannot recognize the difference between an End-User that authenticates on behalf of himself or on behalf of someone else via representation.
+**Note:** Whereas [[RFC8693]] lists the End-User in the `act` or `may_act` Claims and the represented service consumer in the `sub` Claim, this is reversed in this profile: the End-User is listed in the `sub` Claim and the represented service consumer is listed in the `represents` Claim. Reason for this is to mitigate the risk that a Client that does not explicitly support representation Use Cases cannot recognize the difference between an End-User that authenticates on behalf of himself or on behalf of someone else via representation.
 
-As such, all Clients MUST process `represents` claims used, in case Representation can be applicable in the context of the Relying Party and OpenID Provider.
+As such, all Clients MUST process `represents` Claims used, in case Representation can be applicable in the context of the OpenID Client and OpenID Provider. As an exception, `represents` Claims MAY be ignored by the Client if, and only if, it is explicitly agreed upon beforehand that no Representation will be provided.
 
 This profile specifies representation relations in ID Tokens as follows:
 - The End-User is always identified by the `sub` Claim;
 - The represented Service Consumer is mentioned in the `represents` Claim.
 - In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
 - Each `represents` Claim MUST contain `sub`, `sub_id_type`, and `iss` Claims to uniquely identify the represented party.
-- `represents` Claims MAY contain additional claims (e.g. `email`) to provide additional useful information about the represented party.
+- `represents` Claims MAY contain additional Claims (e.g. `email`) to provide additional useful information about the represented party.
 - Claims within the `represents` Claim pertain only to the identity of that party and MUST NOT contain Claims that are not related to the represented party, such as top-level Claims `exp`, `nbf`, and `aud`.
 
-A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: the requested scope also includes the required `openid` scope; claims that do not add to the example are omitted for readability):
+A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba` may look like (note: the requested scope also includes the required `openid` scope; Claims that do not add to the example are omitted for readability):
 
       {
         "scope": "openid urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba",
-        /* End-User */
+        /* End-User - representing the Service Consumer */
         "sub": "RKyLpEVr1L",
         "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
         "iss": "urn:uuid:b556992a-e233-4fdc-915a-e2b52d3cc355",
@@ -421,7 +420,7 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
           "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
           "iss": "urn:uuid:28e0686f-20ff-41bd-8520-57b9c68cc9a3",
           "represents": {
-            /* Service Consumer */
+            /* Service Consumer - represented by the End-User */
             "sub": "4Yg8u72NxR",
             "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
             "iss": "urn:uuid:55291cc0-fd2a-4eb6-b444-5b2783e62673"
@@ -430,7 +429,7 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
       }
 
 ### Authentication Context
-Whereas the OpenID Connect iGov profile recommends the use of Vectors of Trust (`vot`) to determine the amount of trust to be placed digital transactions, using Authentication Context Class References (`acr`) instead is RECOMMENDED by this profile, due to their better alignment to the Levels of Assurance (LoA) defined by the `eIDAS` standards that are used in the European Union.
+Whereas the iGov Assurance Profile for OpenID Connect [[OpenID.iGov]] recommends the use of Vectors of Trust (`vot`) to determine the amount of trust to be placed digital transactions, using Authentication Context Class References (`acr`) instead is RECOMMENDED by this profile, due to their better alignment to the Levels of Assurance (LoA) defined by the `eIDAS` standards that are used in the European Union.
 
 OpenID Providers SHOULD use eIDAS Level of Assurance (LoA) values for the `acr` Claim, but MAY use different values if eIDAS is not applicable.
 
@@ -441,19 +440,19 @@ OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but
 Clients MAY send an `vtr` (Vectors of Trust Request) parameter. If both the `vtr` and `acr_values` are in the request, the `acr_values` MUST take precedence and the `vtr` MUST be ignored.
 
 ### Vectors of Trust
-OpenID Providers MAY provide `vot` (Vectors of Trust) and `vtm` (Vector Trust Mark) values in ID Tokens only if the `acr` claim is not requested by the Client (either via the `acr_values` or `claims` parameters). More information on Vectors of Trust is provided in [[RFC8485]].
+OpenID Providers MAY provide `vot` (Vectors of Trust) and `vtm` (Vector Trust Mark) values in ID Tokens only if the `acr` Claim is not requested by the Client (either via the `acr_values` or `claims` parameters). More information on Vectors of Trust is provided in [[RFC8485]].
 
 ## Access Tokens
-This profile requires an Access Token to be in JWT form. This is in line with the underlying OAuth2 NL-Gov [[OAuth2.NLGov]] profile.
+This profile requires an Access Token to be in JWT form. This is in line with the underlying NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]].
 
-Using a JWT formatted Access Token allows any Relying Party to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, UserInfo response and introspection response.
+Using a JWT formatted Access Token allows any OpenID Client to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, UserInfo response and Introspection response.
 
-Note that ID Token and UserInfo response are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. Introspection response is for usage by the requestor of an Introspection, which can be either a Client or Resource Server.
-The Resource Server is normally not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorization Servers. In the case of Service Intermediation this is applicable by definition.
-This profile does not directly place any constraints on the placement of claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
+Note that ID Tokens and UserInfo responses are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. The Introspection response is intended for the requestor of an Introspection, which can be either a Client or Resource Server.
+The Resource Server is typically not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorization Servers. In the case of Service Intermediation this is applicable by definition.
+This profile does not directly place any constraints on the placement of Claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
 
 ## UserInfo Endpoint
-OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the `sub` (subject) claim. It is expected that the `sub` claim will remain pseudonymous in Use Cases where obtaining personal information is not needed.
+OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the `sub` (subject) Claim. It is expected that the `sub` Claim will remain pseudonymous in Use Cases where obtaining personal information is not needed.
 
 Support for a UserInfo Endpoint is important for maximum Client implementation interoperability even if no additional End-User information is returned. Clients are not required to call the UserInfo Endpoint, but should not receive an error if they do.
 
@@ -493,21 +492,21 @@ And receives a document in response like the following:
 
 
 OpenID Providers MUST support the generation of JWT encoded responses from the UserInfo Endpoint. Responding unsigned JSON objects when neither signing nor encryption are requested by the Client as part of the `userinfo_signed_response_alg` and 
-`userinfo_encrypted_response_alg` Client metadata parameters registered as part of Client Registration is OPTIONAL. Signed responses MUST be signed by the OpenID Provider's key, and encrypted responses MUST be encrypted with the authorized Client's public key. Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
+`userinfo_encrypted_response_alg` Client metadata parameters registered as part of Client Registration is OPTIONAL. Signed responses MUST be signed by the OpenID Provider's signing key, and encrypted responses MUST be encrypted with the authorized Client's public key. Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
 
 ## Discovery
 The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programatic way for Clients to obtain configuration details for communicating with OpenID Providers. Discovery is an important part of building scalable federation ecosystems. Compliant OpenID Providers under this profile MUST publish their server metadata to help minimize configuration errors and support automation for scaleable deployments.
 
 Exposing a Discovery endpoint does NOT inherently put the OpenID Provider at risk to attack. Endpoints and parameters specified in the Discovery document SHOULD be considered public information regardless of the existence of the Discovery document.
 
-Access to the Discovery document MAY be protected with existing web authentication methods if required by the OpenID Provider. Credentials for the Discovery document are then managed by the Provider. Support for these authentication methods is outside the scope of this profile.
+Access to the Discovery document MAY be protected with existing web authentication methods if required by the OpenID Provider. Credentials for the Discovery document are then managed by the OpenID Provider. Support for these authentication methods is outside the scope of this profile.
 
 Endpoints described in the Discovery document MUST be secured in accordance with this profile and MAY have additional controls the Provider wishes to support.
 
-All OpenID Providers are uniquely identified by a URL known as the issuer.
+All OpenID Providers are uniquely identified by a URL known as the `issuer`.
 This URL serves as the prefix of a service discovery endpoint as specified in the OpenID Connect Discovery standard and "OAuth 2.0 Authorization Server Metadata" [[RFC8414]]. 
 An OpenID Provider SHOULD publish equivalent JSON metadata on both `/.well-known/openid-configuration` and `/.well-known/oauth-authorization-server`, and MAY publish on other locations.
-The OpenID Provider SHOULD include a `signed_metadata` claim, as described in [[RFC8414]] section 2.1.
+The OpenID Provider SHOULD include a `signed_metadata` Claim, as described in [[RFC8414]] Section 2.1.
 
 Note that for privacy considerations, only direct requests to the server metadata document SHOULD be used. The WebFinger method to locate the relevant OpenID Provider and its metadata, as described in [[OpenID.Discovery]] section 2, MUST NOT be supported.
 
@@ -520,22 +519,22 @@ The discovery document MUST contain at minimum the following fields:
 > REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint as defined by [[RFC6749]].
 
 `token_endpoint`
-> REQUIRED. The fully qualified URL of the server's token endpoint as defined by [[RFC6749]].
+> REQUIRED. The fully qualified URL of the OpenID Provider's token endpoint as defined by [[RFC6749]].
 
 `introspection_endpoint`
-> OPTIONAL. The fully qualified URL of the server's introspection endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
+> OPTIONAL. The fully qualified URL of the OpenID Provider's introspection endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
 
 `revocation_endpoint`
-> OPTIONAL. The fully qualified URL of the server's revocation endpoint defined by "OAuth 2.0 Token Revocation" [[RFC7009]].
+> OPTIONAL. The fully qualified URL of the OpenID Provider's revocation endpoint defined by "OAuth 2.0 Token Revocation" [[RFC7009]].
 
 `jwks_uri`
-> REQUIRED. The fully qualified URI of the server's public key in JWK Set format. For verifying the signatures on tokens and responses and for encrypting requests to the server
+> REQUIRED. The fully qualified URI of the server's public keys in JWK Set format. These keys can be used by Clients to verify signatures on tokens and responses from the OpenID Provider and for encrypting requests to the OpenID Provider.
 
 `scopes_supported`
-> REQUIRED. The list of scopes the server supports.
+> REQUIRED. The list of scopes the OpenID Provider supports.
 
 `claims_supported`
-> REQUIRED. JSON array containing the list of claims available in the supported scopes. See [Claims Supported](#claims-supported).
+> REQUIRED. JSON array containing the list of Claims available in the supported scopes. See [Claims Supported](#claims-supported).
 
 `vot`
 > OPTIONAL. JSON array containing the list of supported Vectors of Trust. See [Vectors of Trust](#vectors-of-trust).
@@ -543,7 +542,7 @@ The discovery document MUST contain at minimum the following fields:
 `acr_values_supported`
 > OPTIONAL. JSON array containing the list of supported Levels of Assurance. See [Authentication Context](#authentication-context).
 
-The following example shows the JSON document found at a discovery endpoint for an authorization server:
+The following example shows the JSON document found at a discovery endpoint for an OpenID Provider:
 
     {
       "request_parameter_supported": true,
@@ -623,11 +622,11 @@ The following example shows the JSON document found at a discovery endpoint for 
       ]
     }
 
-It is RECOMMENDED that servers provide cache information through HTTP headers and make the cache valid for at least one week.
-An OpenID Provider SHOULD document its change procedure. In order to support automated transitions to configuration updates, an OpenID Provider SHOULD only make non-breaking changes and retain backward compatibility when possible. It is RECOMMENDED an OpenID Provider monitors usage of outdated configuration options used by any Relying Party and actively work with their administrators to update configurations.
+It is RECOMMENDED that OpenID Providers provide cache information through HTTP headers and make the cache valid for at least one week.
+OpenID Providers SHOULD document their change procedure. In order to support automated transitions to configuration updates, OpenID Providers SHOULD only make non-breaking changes and retain backward compatibility when possible. It is RECOMMENDED that OpenID Providers monitor usage of outdated configuration options used by any OpenID Client and actively work with their administrators to update configurations.
 The above on caching and changes MUST be applied as well to the `jwks_uri` containing the OpenID Provider's key set.
 
-The server MUST provide its public key in JWK Set format, such as the following 2048-bit RSA key:
+The OpenID Provider MUST provide its public key in JWK Set format, such as the following 2048-bit RSA key:
 
     {
       "keys": [
@@ -656,7 +655,7 @@ If the OpenID Provider is acting as an NL-Gov OAuth Authorization Server (NL GOV
 
 Dynamic Registration MUST also be supported in combination with per-instance provisioning of secrets when registering Native Applications as confidential Clients.
 
-In other cases, particularly when dealing with Browser-based applications or Native Apps, Dynamic Registration SHOULD be supported in accordance with the NL GOV Assurance profile for OAuth 2.0.
+In other cases, particularly when dealing with Browser-based applications or Native Apps, Dynamic Registration SHOULD be supported in accordance with the NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]].
 
 This profile imposes the following requirements upon the Client Registration request:
 
@@ -704,51 +703,50 @@ Please refer to [Algorithms](#algorithms) for more information on eligible crypt
 The availability, quality, and reliability of an individual's identity attributes will vary greatly across jurisdictions and Provider systems. The following recommendations ensure maximum cross-jurisdictional interoperability, while setting Client expectations on the type of data they may acquire.
 
 ## Claim Interoperability
-As per Section 5.1.2 of [[OpenID.Core]], claim names SHOULD be collision-resistant. It is RECOMMENDED to use domain name based URIs as attribute names.
+As per Section 5.1.2 of [[OpenID.Core]], Claim names SHOULD be collision-resistant. It is RECOMMENDED to use domain name based URIs as attribute names.
 
-[[OpenID.Core]] Section 5.1 specifies a list of standard claims. In a Dutch governmental context, attribute Claims are commonly registered in the BRP (_Basis Registratie Personen_, the Dutch citizen registry), as defined in [[?LO.GBA]].
+[[OpenID.Core]] Section 5.1 specifies a list of standard Claims. In a Dutch governmental context, attribute Claims are commonly registered in the BRP (_Basis Registratie Personen_, the Dutch citizen registry), as defined in [[?LO.GBA]].
 Usage of, or interoperability with, the ISA<sup>2</sup> core vocabularies is RECOMMENDED.
 
 ## Claims Supported
-Discovery requires including the `claims_supported` field, which defines the claims a Client MAY expect to receive for the supported scopes. OpenID Providers MUST return claims on a best effort basis. However, a Provider asserting it can provide an End-User Claim does not imply that this data is available for all its End-Users: Clients MUST be prepared to receive partial data.
-Providers MAY return claims outside of the `claims_supported` list, but they MUST still ensure that the extra claims to not violate the privacy policies set out by the trust framework the Provider supports. The Provider MUST ensure to comply with applicable privacy legislation (e.g. informed consent as per GDPR) at all times.
+Discovery requires including the `claims_supported` field, which defines the Claims a Client MAY expect to receive for the supported scopes. OpenID Providers MUST return Claims on a best effort basis. However, an OpenID Provider asserting it can provide an End-User Claim does not imply that this data is available for all its End-Users: Clients MUST be prepared to receive partial data.
+OpenID Providers MAY return Claims outside of the `claims_supported` list, but they MUST still ensure that the extra Claims to not violate the privacy policies set out by the trust framework the Provider supports. The OpenID Provider MUST ensure to comply with applicable privacy legislation (e.g. informed consent as per GDPR) at all times.
 
 Note that when Representation is applicable, the OpenID Provider MUST include `represents` in the list of supported Claims and MAY include nested Claims inside the `represents` Claim.
 
 ## Scope Profiles
-In the interests of data minimization balanced with the requirement to successfully identify the individual signing in to a service, the default OpenID Connect profiles may not be appropriate.
+In the interests of data minimization balanced with the requirement to successfully identify the individual signing in to a service, the default OpenID Connect scope profiles to request Claims ([[OpenID.Core]] Section [5.4](https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims)) may not be appropriate.
 
-Matching of the identity assertion based on claims to a local identifier or `account` related to the individual identity at a level of assurance is a requirement where the government in question is not able to provide a single identifier for all citizens based on an authoritative register of citizens.
+Matching of the identity assertion based on Claims to a local identifier or `account` related to the individual identity at a level of assurance is a requirement where the government in question is not able to provide a single identifier for all citizens based on an authoritative register of citizens.
 
 The requirement for matching is also of importance where a cross-border or cross-jurisdiction authentication is required and therefore the availability of a single identifier (e.g. social security number) cannot be guaranteed for the individual wishing to authenticate.
 
-However, in the Netherlands the BSN is, as a common identifier for citizens, available to BSN-eligible organizations. Nationwide interoperable pseudonyms per Relying Party for non-BSN-eligible organizations exists as well.
+However, in the Netherlands the BSN is, as a common identifier for citizens, available to BSN-eligible organizations. Nationwide interoperable pseudonyms per OpenID Client for non-BSN-eligible organizations exist as well.
 
 The default `profile` scope of OpenID Connect is very wide, which is undesired from a privacy perspective. As such, the `profile` scope SHOULD NOT be used.
 
 Note that the `doc` profile described in the iGov profile for OpenID Connect [[OpenID.iGov]] is not in common use in the Netherlands and therefore not included in this profile.
 
 ## Claims Request
-OpenID Core Section 5.5 [[OpenID.Core]] defines a method for a Client to request specific claims in the UserInfo object. OpenID Providers MUST support this `claims` parameter in the interest of data minimization - that is, the Provider only returns information on the subject the Client specifically asks for, and does not volunteer additional information about the subject.
+OpenID Core Section 5.5 [[OpenID.Core]] defines a method for a Client to request specific Claims in the UserInfo object. OpenID Providers MUST support this `claims` parameter in the interest of data minimization - that is, the Provider only returns information on the subject the Client specifically asks for, and does not volunteer additional information about the subject.
 
-Clients requesting the `profile` scope MAY provide a claims request parameter.
-If the claims request is omitted, the OpenID Provider SHOULD provide a default claims set that it has available for the subject, in accordance with any policies set out by the trust framework the Provider supports.
+Clients requesting the `profile` scope MAY provide a `claims` request parameter.
+If the Claims request is omitted, the OpenID Provider SHOULD provide a default Claims set that it has available for the subject, in accordance with any policies set out by the trust framework the Provider supports.
 **Note:** clients SHOULD NOT request the `profile` scope, as described in the previous section.
 
 ## Claims Response
-Response to a UserInfo request MUST match the scope and claims requested to avoid having a OpenID Provider over-expose an End-User's identity information.
-Providers MUST NOT provide any personal identifiable information without applicable consent.
+Response to a UserInfo request MUST match the scope and Claims requested to avoid having a OpenID Provider over-expose an End-User's identity information.
+OpenID Providers MUST NOT provide any personal identifiable information without applicable consent.
 
-Claims response MAY also make use of the aggregated and/or distributed claims structure to refer to the original source of the subject's claims.
+Claims responses MAY also make use of the aggregated and/or distributed Claims structure to refer to the original source of the subject's Claims.
 
 ## Claims Metadata
-Claims Metadata (such as locale or the confidence level the OpenID Provider has in the Claim for the End-User) can be expressed as attributes within the UserInfo object, but are outside the scope of this document. These types of
-claims are best described by the trust framework the Clients and OpenID Providers operate within.
-It is up to the Relying Party to assess the level of confidence provided by the OpenID Provider or the trust framework, per claim. Expressing or evaluating such confidence is beyond the scope of this profile.
+Claims Metadata (such as locale or the confidence level the OpenID Provider has in the Claim for the End-User) can be expressed as attributes within the UserInfo object, but are outside the scope of this document. These types of Claims are best described by the trust framework the Clients and OpenID Providers operate within.
+It is up to the Client to assess the level of confidence provided by the OpenID Provider or the trust framework, per Claim. Expressing or evaluating such confidence is beyond the scope of this profile.
 
-In order to provide a source, including integrity and optionally confidentiality, an OpenID Provider SHOULD be able to provide aggregated or support distributed claims. The signee of such aggregated or distributed claims implies the source and can support in assessing the level confidence or quality of the claim.
+In order to provide a source, including integrity and optionally confidentiality, an OpenID Provider SHOULD be able to provide aggregated or support distributed Claims. The signee of such aggregated or distributed Claims implies the source and can support in assessing the level confidence or quality of the Claim.
 
-# Relation with 3rd party (Resource Servers)
+# Relation with 3rd parties (Resource Servers)
 ## Service Intermediation
 
 <mark>Todo: FdK</mark>
@@ -763,20 +761,20 @@ The design of this profile takes into consideration mechanisms to protect the En
 
 Pairwise Subject identifiers MUST be supported by the OpenID Providers for frameworks where subjects should not be traceable or linkable across Clients by their subject ID. This prevents situations where an End-User may inadvertently be assigned a universal government identifier.
 
-Request claims MUST be supported by the OpenID Providers to ensure that only the data the Client explicitly requests is provided in the UserInfo response or ID Token.
-This prevents situations where a Client may only require a partial set of claims, but receives (and is therefore exposed to) a full set of claims. For example, if a Client only needs an identifier and the persons legal age, the OpenID Provider MUST NOT send the Client the full user name and birth date.
-Similarly, broad attribute requests through the scope parameter, such as `profile` SHOULD NOT be used.
+Request Claims MUST be supported by OpenID Providers to ensure that only the data the Client explicitly requests is provided in the UserInfo response or ID Token.
+This prevents situations where a Client may only require a partial set of Claims, but receives (and is therefore exposed to) a full set of Claims. For example, if a Client only needs an identifier and the persons legal age, the OpenID Provider MUST NOT send the Client the full user name and birth date.
+Similarly, broad attribute requests through the `scope` parameter, such as `profile` SHOULD NOT be used.
 
-All Relying Parties MUST apply the concept of data minimization. As a result, a Client MUST NOT request any more identifiers, attributes or other claims than strictly necessary.
+All Clients MUST apply the concept of data minimization. As a result, a Client MUST NOT request any more identifiers, attributes or other Claims than strictly necessary.
 Additionally, Clients SHOULD ensure they minimize the scope and audience they request, use and forward. This principle applies to both to usage at the Client as well as forwarded access tokens in a Service Intermediation scenario.
 Token Exchange ([[RFC8693]]) SHOULD be used to request access tokens with a minimal scope and audience.
 
 Despite the mechanisms enforced by this profile, the operational circumstances may allow these controls to be relaxed in a specific context.
-For example, if a bilateral agreement between two agencies legally entitles usage of citizen identifiers, then the pairwise anonymous identifier requirement may be relaxed. In cases where all Clients are entitled to process claims associated to a subject at an OpenID Provider, the claims request requirement may be relaxed.
+For example, if a bilateral agreement between two agencies legally entitles usage of citizen identifiers, then the pairwise anonymous identifier requirement may be relaxed. In cases where all Clients are entitled to process Claims associated to a subject at an OpenID Provider, the Claims request requirement may be relaxed.
 
 The reasons for relaxing the controls that support data minimization are outside the scope of this profile.
 
-In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by utilizing aggregated or distributed claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
+In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by using aggregated or distributed Claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
 
 # Security considerations
 All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as 'good', SHOULD NOT use any settings with a status 'phase out' and MUST NOT use any setting with a status 'insufficient' in these security guidelines or future updates thereof.
