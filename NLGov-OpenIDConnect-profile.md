@@ -74,8 +74,7 @@ Examples of scenario's where Service Intermediation is applicable:
 - aggregating multiple Services.
 - providing an interface for accessing a Service in an alternative presentation form.
 
-
-* TODO FdK
+<mark>TODO FdK</mark>
 
 ## Misc
 OpenID Connect Core supports self-issued OpenID Connect Providers. As the context of this profile is centered around (semi-)governmental and public domain Use Cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
@@ -751,10 +750,12 @@ In order to provide a source, including integrity and optionally confidentiality
 
 # Relation with 3rd party (Resource Servers)
 ## Service Intermediation
+
+<mark>Todo: FdK</mark>
+
 * not part of iGov
 * RFC7800 cnf key/cert references
 * requires registration of resource servers, for introspection (move up to OAuth profile?)
-
 
 # Privacy considerations
 Data minimization is an essential concept in trust frameworks and federations exchanging End-User identity information for government applications.
