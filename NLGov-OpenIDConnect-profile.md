@@ -18,18 +18,18 @@ This specification uses the following terms:
 - the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
 
 In addition to the above terminology, this profile defines the following terms:
-- "Representation", "eIDAS".
+- "Representation", "Representation Relation", "eIDAS".
 
 Definitions for these terms as well as for the abbreviations used throughout this specification are listed in the [Glossary](#a-glossary).
 
 ## Conformance
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
-This profile is based upon the 'International Government Assurance Profile (iGov) for OpenID Connect 1.0' [[OpenID.iGov]] as published by the [OpenID Foundation](https://openid.net/foundation/). It should be considered a fork of this profile, as the iGov profile is geared more towards a United States context and the Netherlands towards a European Union context.
+This profile is based upon the 'International Government Assurance Profile (iGov) for OpenID Connect 1.0' [[OpenID.iGov]] as published by the [OpenID Foundation](https://openid.net/foundation/). It should be considered a fork of this profile, as the iGov profile is geared more towards a United States context and this NL GOV profile towards a European Union context.
 
 This specification defines requirements for the following components:
-- OpenID Connect 1.0 Relying Parties (also known as OpenID Clients)
-- OpenID Connect 1.0 Identity Providers (also known as OpenID Providers)
+- OpenID Connect 1.0 Relying Parties (also known as OpenID Clients, or RP)
+- OpenID Connect 1.0 Identity Providers (also known as OpenID Providers, IdP or OP)
 
 The specification also defines features for interaction between these components:
 - Relying Party to Identity Provider
@@ -47,18 +47,18 @@ This profile supports several Use Cases. Design choices within this profile have
 
 The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
 
-Authentication is provided in a federated manner. In other words, a Client system is relying upon another system, the OpenID Provider (OP), for authentication.
-Either a shared central Identity Provider (IdP) / OpenID Provider (OP) or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organization (intra-organizational) or can be an inter-organizational setting, through either bilateral or multilateral agreements.
+Authentication is provided in a federated manner. In other words, a Client system is relying upon another system, the OpenID Provider, for authentication.
+Either a shared central OpenID Provider or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organization (intra-organizational) or multiple organizations (inter-organizational), through either bilateral or multilateral agreements.
 In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
 
-The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. This profile is not limited to Citizen-to-Government and Business-to-Government, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those other contexts.
+The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. This profile is not limited to these contexts, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those other contexts.
 
-The Service Provider or Relying Party requests either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
+The Service Provider or Relying Party request either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
 This profile supports several Use Cases for representation relationships, which apply when an End-User intends to consume an online service on behalf of a Natural or Juridical Person (the Service Consumer), where authentication and authorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a representation relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of representation relationships. The formalization of these relationships is out of scope of this profile.
 
-The service is offered by a (semi)governmental or public Service Provider; example Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
+Example Representation Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
 ## Service Intermediation
 A User intends to consume a Service on his/her own behalf, from a (semi-)governmental or public Service Provider via a distinct, separate, interface for accessing the Service (a.k.a. a front-end). For the Service authentication is required. The interface for accessing the Service is an automated support to the User for consuming the Service.
@@ -77,10 +77,10 @@ Examples of scenario's where Service Intermediation is applicable:
 <mark>TODO FdK</mark>
 
 ## Misc
-OpenID Connect Core supports self-issued OpenID Connect Providers. As the context of this profile is centered around (semi-)governmental and public domain Use Cases, some assurance on identity verifying will be required in almost every scenario. Therefore self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
+The OpenID Connect specification [[OpenID.Core]] supports self-issued OpenID Connect Providers. However, as this profile centers around (semi-)governmental and public domain Use Cases where assurance on identity verification is virtually always required, self-issued OpenID Providers MUST NOT be accepted by Relying Parties under this profile.
 
-As the Dutch identity eco-system supports multiple Identity Providers (OpenID Providers), Identity Brokers are in common use. Brokers relieve Relying Parties of managing many connections to Identity Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is forming of a so-called privacy hotspot, points were data collection can be concentrated.
-To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, will be encouraged to increase overall end-to-end security.
+As the Dutch identity eco-system supports multiple OpenID Providers, Identity Brokers are in common use. Brokers relieve OpenID Clients of managing multiple connections to OpenID Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is the forming of so-called privacy hotspots, points were data collection can be concentrated.
+To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, are encouraged to increase overall end-to-end security.
 
 # Flow
 OpenID Connect Core specifies three paths via which authentication can can be performed: the *Authorization Code Flow*, the *Implicit Flow* and the *Hybrid Flow*. The flows determine how the ID Token and Access Token are returned to the Client.
@@ -92,7 +92,7 @@ The Implicit Flow and Hybrid Flow allow tokens to be obtained from the Authoriza
 Therefore, the Implicit Flow and Hybrid flow MUST NOT be used. Also, the IETF OAuth Working Group is removing support for the Implicit Flow from the OAuth 2.1 specification [[?OAuth2.1]] for the same reasons.
 
 ## Authorization Code Flow
-The Authorization Code Flow returns an Authorization Code to the Client, which can then exchange it for an ID Token and an Access Token directly. The flow goes through the following steps:
+The Authorization Code Flow returns an Authorization Code to the Client, which can then exchange it for an ID Token and an Access Token directly. The flow comprises the following steps:
 
 1. The Client sends an Authorization Request - containing the desired request parameters - to the Authorization Server.
 2. The Authorization Server authenticates the End-User.
@@ -113,7 +113,7 @@ The flow described by these steps is illustrated as follows:
 ## Client types
 This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply:
 
-**Note:** this profile utilizes a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provision of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+**Note:** this profile uses a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provision of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 ### Web Applications
 *Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
