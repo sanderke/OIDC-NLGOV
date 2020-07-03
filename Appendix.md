@@ -30,6 +30,7 @@ Representation
     <abbr title="OpenID Provider">OP</abbr>
     <abbr title="Proof Key for Code Exchange">PKCE</abbr>
     <abbr title="Request For Change">RFC</abbr>
+    <abbr title="Relying Party">RP</abbr>
     <abbr title="Rechtspersonen en Samenwerkingsverbanden Identificatienummer, the identification number for legal entities and associations in The Netherlands">RSIN</abbr>
     <abbr title="Uniform Resource Identifier">URI</abbr>
     <abbr title="Cross-Site Scripting">XSS</abbr>
