@@ -18,7 +18,7 @@ This specification uses the following terms:
 - the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
 
 In addition to the above terminology, this profile defines the following terms:
-- "Representation", "Representation Relation", "eIDAS".
+- "Representation", "Representation relationship", "eIDAS".
 
 Definitions for these terms as well as for the abbreviations used throughout this specification are listed in the [Glossary](#a-glossary).
 
@@ -61,11 +61,11 @@ This profile supports several Use Cases for representation relationships, which 
 Example Representation Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
 ## Service Intermediation
-A User intends to consume a Service on his/her own behalf, from a (semi-)governmental or public Service Provider via a distinct, separate, interface for accessing the Service (a.k.a. a front-end). For the Service authentication is required. The interface for accessing the Service is an automated support to the User for consuming the Service.
+Service Intermediation is applicable when the Service Provider does not directly interact with the OpenID Provider for End-User authentication, but delegates this responsibility to a Service Intermediary.
 
-The interface for accessing the Service can be either from the Service Provider itself (technical compartmentalization), as well as from a third party. In the latter case this is a specialized form of the Service Provider, named a Service Intermediary.
+Service Intermediaries either intermediate on individual Services offered by a single Service Provider (also referred to as "Static Service Intermediation") or provide portal services by intermediating on several Services from potentially multiple Service Providers (also referred to as "Dynamic Service Intermediation").
 
-The interface for accessing the Service has to be explicitly visible to the User, as is the Service itself. This includes, among others. aspects like naming and presentation. The responsibilities for the Service Provider are limited, the User itself is responsible for acting and for consuming the Service (Representation of the User by the Service Intermediary is explicitly excluded). The Service Provider remains responsible for providing the (contents of the) Service.
+Service Intermediaries are generally not allowed to access the identifiers and attributes intended for the Service Providers, hence the use of identifiers encrypted to specific Service Providers is usually required. Also, in Dynamic Service Intermediation it should be possible to obtain encrypted identifiers for the different intermediated Services via different interactions with the OpenID Provider, with End-User consent but without the need of complete re-authentication.
 
 Examples of scenario's where Service Intermediation is applicable:
 
