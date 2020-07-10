@@ -18,7 +18,7 @@ blockquote {
   border: none !important;
 }
 
-:not(code) abbr {
+:not(code) > abbr {
   border-bottom: 1px dotted #005a9c !important;
   cursor: help;
 }
