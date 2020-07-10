@@ -198,7 +198,7 @@ https://idp-p.example.com/authorize?
 Clients MAY optionally send requests to the authorization endpoint using the `request` or `request_uri` parameter as defined by OpenID Connect [[OpenID.Core]], section 6.
 The use of the `request_uri` is preferred because of browser limits and network latency.
 
-Request objects MUST be signed by the Client's registered key. Request objects MAY be encrypted to the OpenID Provider's public key.
+Request objects MUST be signed by the Client's registered key. Request objects MAY be encrypted to the OpenID Provider's public key. When sending request objects by reference, Clients MUST pre-register `request_uri` values with the OpenID Provider at registration and MUST only use pre-registered values for `request_uri`.
 
 ### Authentication Response Validation
 All Clients MUST validate the following in received Authentication Responses:
@@ -288,7 +288,7 @@ OpenID Providers MUST follow the security guidelines and best-practices listed i
 ## Request Objects
 OpenID Providers MUST accept requests containing a request object signed by the Client's private key. OpenID Providers MUST validate the signature on such requests against the Client's registered public key. OpenID Providers MUST accept request objects encrypted to the OpenID Provider's public key.
 
-OpenID Providers SHOULD accept request objects by reference using the `request_uri` parameter. The request object can be either hosted by the Client or pushed to the OpenID Provider prior to the Authentication Request. OpenID Providers MUST verify that the `request_uri` is referencing a trusted location.
+OpenID Providers SHOULD accept request objects by reference using the `request_uri` parameter. The request object can be either hosted by the Client or pushed to the OpenID Provider prior to the Authentication Request. OpenID Providers MUST verify that the `request_uri` parameter exactly matches one of the `request_uris` values for the Client pre-registered at the OpenID Provider, with the matching performed as described in Section 6.2.1 of [[RFC3986]] (Simple String Comparison). 
 
 Using request objects allow for Clients to create a request that is protected from tampering through the browser, allowing for a higher security and privacy mode of operation for Clients and applications that require it. Clients are not required to use request objects, but OpenID Providers are required to support requests using them.
 
@@ -551,6 +551,12 @@ The discovery document MUST contain at minimum the following fields:
 `acr_values_supported`
 > OPTIONAL. JSON array containing the list of supported Levels of Assurance. See [Authentication Context](#authentication-context).
 
+`request_uri_parameter_supported`
+> OPTIONAL. Boolean value which specifies whether the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. As per [[OpenID.Core]], the default value is `true`.
+
+`require_request_uri_registration`
+> REQUIRED and MUST have Boolean value `true` if the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. OPTIONAL otherwise. This parameter indicates that `request_uri` values used by the Client to send Request Objects by reference must always be pre-registered.
+
 The following example shows the JSON document found at a discovery endpoint for an OpenID Provider:
 
     {
@@ -679,6 +685,9 @@ Initial access tokens
 
 `subject_type`
 > For cases where correlation of End-User's activities across Clients is not appropriate, the `subject_type` parameter MUST be set to `pairwise`. In other cases, the use of `pairwise` is RECOMMENDED unless the use of public identifiers is required.
+
+`request_uris`
+> Array of `request_uri` values that are pre-registered by the Client for use at the OpenID Provider. Clients that make Authentication Requests using the `request_uri` parameter, MUST only do so via pre-registered `request_uri` values.
 
 Section 2 of [[OpenID.Dynamic-Registration]] lists all Client Metadata values that are used by OpenID Connect.
 
