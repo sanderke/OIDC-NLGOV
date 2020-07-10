@@ -249,7 +249,7 @@ Clients MUST verify the following in received ID tokens:
 > The `audience` Claim contains the Client ID of the Client.
 
 `exp`, `iat`, `nbf`
-> The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC). Values for `iat` and `nbf` MUST lie in the past and `exp` MUST lie in the future; acceptable ranges SHOULD be agreed upon between the OpenID Provider and OpenID Client and be based upon the risk classification of the authentication context.
+> The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC). Values for `iat` and `nbf` MUST lie in the past and `exp` MUST lie in the future; the acceptable range for how far away `iat` is in the past is specific to the Client.
 
 `acr`
 > The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See also [Section 5.2.3](#authentication-context).
@@ -327,7 +327,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > REQUIRED if `max-age` was specified in the request or when `auth-time` was requested as an Essential Claim. Otherwise `auth_time` is OPTIONAL and SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate. See also Section 15.1 of [[OpenID.Core]].
 
 `exp`, `iat`, `nbf`
-> REQUIRED. The `expiration`, `issued at`, and `not before` timestamps indicate when the token expires, was issued and becomes valid, respectively. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC). Acceptable ranges for these Claims SHOULD be agreed upon between the OpenID Provider and OpenID Client and be based upon the risk classification of the authentication context.
+> REQUIRED. The `expiration`, `issued at`, and `not before` timestamps indicate when the token expires, was issued and becomes valid, respectively. The expiration time for ID Tokens is specific to the OpenID Provider.
 
 `represents`
 > REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a representation relationship for the End-User.
