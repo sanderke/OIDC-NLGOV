@@ -305,7 +305,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > REQUIRED. The identifier of the authenticated End-User. OpenID Providers MUST support a pairwise identifier in accordance with the OpenID Connect specification [[OpenID.Core]], section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
 
 `sub_id_type`
-> REQUIRED. The type of identifier passed in the `sub` Claim. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in the `sub` Claim is explicitly included. The value of the `sub_id_type` MUST be a URI.
+> OPTIONAL. The type of identifier passed in the `sub` Claim. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in the `sub` Claim SHOULD be explicitly included. The value of the `sub_id_type` MUST be a URI. Values supported by the OpenID Provider are provided via the [Discovery endpoint](#discovery-0).
 
 `acr`
 > REQUIRED. The LoA the End-User was authenticated at. MUST be a member of the `acr_values` list from the Authentication Request. See also [Section 5.2.3](#authentication-context).
@@ -540,6 +540,9 @@ The discovery document MUST contain at minimum the following fields:
 
 `vot`
 > OPTIONAL. JSON array containing the list of supported Vectors of Trust. See [Vectors of Trust](#vectors-of-trust).
+
+`sub_id_types_supported`
+> OPTIONAL. JSON array containing the list of supported identifiers in the `sub` Claim of ID Tokens. The values MUST be URIs, the exact URIs to be used are sitution specific; as an example encrypted BSNs and Pseudonyms could be specified with `urn:nl-eid-gdi:1.0:id:BSN` or `urn:nl-eid-gdi:1.0:id:Pseudonym` respectively.
 
 `acr_values_supported`
 > OPTIONAL. JSON array containing the list of supported Levels of Assurance. See [Authentication Context](#authentication-context).
