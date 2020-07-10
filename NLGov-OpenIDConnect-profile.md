@@ -439,6 +439,8 @@ OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but
 
 Clients MAY send an `vtr` (Vectors of Trust Request) parameter. If both the `vtr` and `acr_values` are in the request, the `acr_values` MUST take precedence and the `vtr` MUST be ignored.
 
+**Note:** Risk Based Authentication should be an integral part of the LoA framework that is used such that the End-User's context, identifiers and attributes provided and services requested determine the minimum required LoA for the authentication. Selection of the LoA framework is, however, situation specific and beyond the scope of this profile.
+
 ### Vectors of Trust
 OpenID Providers MAY provide `vot` (Vectors of Trust) and `vtm` (Vector Trust Mark) values in ID Tokens only if the `acr` Claim is not requested by the Client (either via the `acr_values` or `claims` parameters). More information on Vectors of Trust is provided in [[RFC8485]].
 
