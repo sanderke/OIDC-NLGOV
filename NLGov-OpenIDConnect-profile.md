@@ -327,7 +327,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > REQUIRED if `max-age` was specified in the request or when `auth-time` was requested as an Essential Claim. Otherwise `auth_time` is OPTIONAL and SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate. See also Section 15.1 of [[OpenID.Core]].
 
 `exp`, `iat`, `nbf`
-> REQUIRED. The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC).
+> REQUIRED. The `expiration`, `issued at`, and `not before` timestamps indicate when the token expires, was issued and becomes valid, respectively. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC).
 
 `represents`
 > REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a representation relationship for the End-User.
