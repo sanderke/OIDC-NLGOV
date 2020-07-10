@@ -1,7 +1,7 @@
 Project to define a profile for OpenID Connect, for usage in the Dutch governmental/public domain.
 
 # Supporting documentation
-Documentation and resulting reports of the Working Group can be found in the [Wiki](-/wikis/Verslaglegging-werkgroep).
+Documentation and resulting reports of the Working Group can be found in the [Wiki](Verslaglegging-werkgroep).
 
 # OpenID Foundation iGov profile for OpenID Connect
 Original upstream OpenID Foundation iGov profile for OpenID Connect (as well as for OAuth2) can be found on [https://bitbucket.org/openid/igov/src/master/](https://bitbucket.org/openid/igov/src/master/).
