@@ -141,7 +141,9 @@ In Use Cases that involve Native applications, OpenID Providers and OpenID Clien
 - Public native applications MUST use PKCE to protect calls to the token endpoint. Confidential native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or in-app browser tab to make authorization requests; embedded user-agents or web-view components MUST NOT be used for this purpose. See [[RFC8252]] for a description of the 'in-app browser tab' feature.
 
-## Requests to the Authorization Endpoint (Authentication Request)
+## Authorization Endpoint
+
+### Authentication Request
 The following describes the supported OpenID Connect Authorization Code Flow parameters for use with NL Gov compatible OpenID Provider.
 Some of these requirements are inherited as specified in Section 2.1.1 of [[OAuth2.NLGov]].
 
@@ -192,14 +194,19 @@ https://idp-p.example.com/authorize?
  &acr_values=http%3a%2f%2feidas.europa.eu%2fLoA%2fsubstantial
 ```
 
-
 ### Request Objects
 Clients MAY optionally send requests to the authorization endpoint using the `request` or `request_uri` parameter as defined by OpenID Connect [[OpenID.Core]], section 6.
 The use of the `request_uri` is preferred because of browser limits and network latency.
 
 Request objects MUST be signed by the Client's registered key. Request objects MAY be encrypted to the OpenID Provider's public key.
 
-## Requests to the Token Endpoint
+### Authentication Response Validation
+All Clients MUST validate the following in received Authentication Responses:
+
+`state`
+> The `state` response parameter MUST equal the `state` request parameter sent in the Authentication Request.
+
+## Token Endpoint
 
 ### Client Authentication
 Confidential Clients, as defined in [Section 4.1](#client-types), MUST authenticate to the OpenID Provider using either:
@@ -230,7 +237,7 @@ The following parameters are specified:
 `client_id`
 > REQUIRED, in case mutually authenticated TLS is used for client authentication.
 
-## ID Tokens
+### ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it using the public key of the issuing server, which is published in JSON Web Key (JWK) format. ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
 
 Clients MUST verify the following in received ID tokens:
@@ -242,7 +249,7 @@ Clients MUST verify the following in received ID tokens:
 > The `audience` Claim contains the Client ID of the Client.
 
 `exp`, `iat`, `nbf`
-> The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC).
+> The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC). Values for `iat` and `nbf` MUST lie in the past and `exp` MUST lie in the future; acceptable ranges are situation specific and should be subject to the risk classification of the authentication context.
 
 `acr`
 > The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See also [Section 5.2.3](#authentication-context).
@@ -317,7 +324,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identify the ID Token between sender and receiver for at least 12 months.
 
 `auth_time`
-> RECOMMENDED. The `auth_time` Claim SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate.
+> REQUIRED if `max-age` was specified in the request or when `auth-time` was requested as an Essential Claim. Otherwise `auth_time` is OPTIONAL and SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate. See also Section 15.1 of [[OpenID.Core]].
 
 `exp`, `iat`, `nbf`
 > REQUIRED. The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC).
@@ -333,9 +340,6 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 
 `vtm`
 > REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See also [Section 5.2.4](#vectors-of-trust).
-
-`auth_time`
-> REQUIRED if `max-age` was specified in the request or when `auth-time` was requested as an Essential Claim, otherwise it is OPTIONAL. See also Section 15.1 of [[OpenID.Core]].
 
 Other Claims MAY be included. See Claims Request below on how such Claims SHOULD be requested by the Client to be provided by the OpenID Provider.
 
