@@ -484,7 +484,7 @@ And receives a document in response like the following:
     HTTP/1.1 200 OK
     Date: Tue, 16 Dec 2014 03:00:12 GMT
     Access-Control-Allow-Origin: *
-    Content-Type: application/json;charset=ISO-8859-1
+    Content-Type: application/json
     Content-Language: en-US
     Content-Length: 333
     Connection: close
