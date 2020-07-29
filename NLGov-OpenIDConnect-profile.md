@@ -53,7 +53,7 @@ In case a federation or scheme is being used, an Identity Broker may be applicab
 
 The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. This profile is not limited to these contexts, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those other contexts.
 
-The Service Provider or OpenID Client request either an authenticated identifier, attributes or both from the OpenID Provider. As target user audiences are diverse, multiple types of identifiers can be supported.
+The Service Provider or OpenID Client requests either an authenticated identifier, attributes or both from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
 This profile supports several Use Cases for Representation Relationships, which apply when an End-User intends to consume an online service on behalf of a Natural or Juridical Person (the Service Consumer), where authentication and authorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a Representation Relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of Representation Relationships. The formalization of these relationships is out of scope of this profile.
