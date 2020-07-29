@@ -25,7 +25,7 @@ Definitions for these terms as well as for the abbreviations used throughout thi
 ## Conformance
 As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
 
-This profile is based upon the 'International Government Assurance Profile (iGov) for OpenID Connect 1.0' [[OpenID.iGov]] as published by the [OpenID Foundation](https://openid.net/foundation/). It should be considered a fork of this profile, as the iGov profile is geared more towards a United States context and this NL GOV profile towards a European Union context.
+This profile is based upon the 'International Government Assurance Profile (iGov) for OpenID Connect 1.0' [[OpenID.iGov]] as published by the [OpenID Foundation](https://openid.net/foundation/). It should be considered a fork of this profile, as the iGov profile is geared more towards a United States context and this NL GOV profile towards a Dutch context with European Union regulations applicable.
 
 This specification defines requirements for the following components:
 - OpenID Connect 1.0 Relying Parties (also known as OpenID Clients, or RP)
