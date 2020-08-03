@@ -139,7 +139,7 @@ In Use Cases that involve Native applications, OpenID Providers and OpenID Clien
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
 - The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure client authentication.
 - Public native applications MUST use PKCE to protect calls to the token endpoint. Confidential native applications SHOULD use PKCE.
-- Native applications MUST use an external user-agent or in-app browser tab to make authorization requests; embedded user-agents or web-view components MUST NOT be used for this purpose. See [[RFC8252]] for a description of the 'in-app browser tab' feature.
+- Native applications MUST use an external user-agent or 'in-app browser tab' to make authorization requests; an 'embedded user-agent' or 'web-view' components MUST NOT be used for this purpose. See "OAuth 2.0 for Native apps" [[RFC8252]] for more information on the 'in-app browser tab' feature and support on various platforms.
 
 ## Authorization Endpoint
 
