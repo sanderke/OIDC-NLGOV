@@ -87,7 +87,7 @@ OpenID Connect Core specifies three paths via which authentication can be perfor
 
 This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint.
 
-The Implicit Flow and Hybrid Flow allow tokens to be obtained from the Authorization endpoint, and thereby omitting the Token endpoint. This  makes them vulnerable to token leakage and token replay and makes it impossible to cryptographically bind tokens to a certain client.
+The Implicit Flow and Hybrid Flow allow tokens to be obtained from the Authorization Endpoint, and thereby omitting the Token endpoint. This  makes them vulnerable to token leakage and token replay and makes it impossible to cryptographically bind tokens to a certain client.
 
 Therefore, the Implicit Flow and Hybrid flow MUST NOT be used. Also, the IETF OAuth Working Group is removing support for the Implicit Flow from the OAuth 2.1 specification [[?OAuth2.1]] for the same reasons.
 
@@ -195,7 +195,7 @@ https://idp-p.example.com/authorize?
 ```
 
 ### Request Objects
-Clients MAY optionally send requests to the authorization endpoint using the `request` or `request_uri` parameter as defined by OpenID Connect [[OpenID.Core]], section 6.
+Clients MAY optionally send requests to the Authorization Endpoint using the `request` or `request_uri` parameter as defined by OpenID Connect [[OpenID.Core]], section 6.
 The use of the `request_uri` is preferred because of browser limits and network latency.
 
 Request objects MUST be signed by the Client's registered key. Request objects MAY be encrypted to the OpenID Provider's public key. When sending request objects by reference, Clients MUST pre-register `request_uri` values with the OpenID Provider at registration and MUST only use pre-registered values for `request_uri`.
@@ -522,7 +522,7 @@ The discovery document MUST contain at minimum the following fields:
 > REQUIRED. The fully qualified issuer URL of the OpenID Provider.
 
 `authorization_endpoint`
-> REQUIRED. The fully qualified URL of the OpenID Provider's authorization endpoint as defined by [[RFC6749]].
+> REQUIRED. The fully qualified URL of the OpenID Provider's Authorization Endpoint as defined by [[RFC6749]].
 
 `token_endpoint`
 > REQUIRED. The fully qualified URL of the OpenID Provider's token endpoint as defined by [[RFC6749]].
