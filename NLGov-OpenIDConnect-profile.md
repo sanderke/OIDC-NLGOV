@@ -300,33 +300,33 @@ Note that when a Request Object is used (either passed by value or by reference)
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
 ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
 
-The ID Token MUST expire and SHOULD have an active lifetime no longer than five minutes. Since the ID token is consumed by the Client and not presented to remote systems, it is RECOMMENDED that expiration times are kept as short as possible.
+The ID Token MUST expire and SHOULD have an active lifetime no longer than five minutes. Since the ID Token is consumed by the Client and not presented to remote systems, it is RECOMMENDED that expiration times are kept as short as possible.
 
 The Token Response includes an Access Token (which can be used to make a UserInfo request) and ID Token (a signed and optionally encrypted JSON Web Token). This profile imposes the following requirements on the Claims used in ID Tokens:
 
 `iss`
-> REQUIRED. The `issuer` field is the Uniform Resource Locator (URL) of the expected issuer.
+> REQUIRED. The `issuer` field is the Uniform Resource Locator (URL) of the expected Issuer.
 
 `aud`
 > REQUIRED. The `audience` field contains the Client ID of the Client.
 
 `sub`
-> REQUIRED. The identifier of the authenticated End-User. OpenID Providers MUST support a pairwise identifier in accordance with the OpenID Connect specification [[OpenID.Core]], section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
+> REQUIRED. The identifier of the authenticated End-User, also known as the subject. OpenID Providers MUST support a pairwise identifier in accordance with the OpenID Connect specification [[OpenID.Core]], section 8.1. See Pairwise Identifiers below on when it may be useful to relax this requirement.
 
 `sub_id_type`
-> OPTIONAL. The type of identifier passed in the `sub` Claim. In order to support multiple type of identifiers in an interoperable way, the type of identifier used for the identifier in the `sub` Claim SHOULD be explicitly included. The value of the `sub_id_type` MUST be a URI. Values supported by the OpenID Provider are provided via the [Discovery endpoint](#discovery-0).
+> OPTIONAL. The type of identifier passed in the `sub` Claim. In order to support multiple types of identifiers in an interoperable way, the type of identifier used for the identifier in the `sub` Claim SHOULD be explicitly included. The value of the `sub_id_type` MUST be a URI. Values supported by the OpenID Provider are provided via the [Discovery endpoint](#discovery-0).
 
 `acr`
 > REQUIRED. The LoA the End-User was authenticated at. MUST be a member of the `acr_values` list from the Authentication Request. See also [Section 5.2.3](#authentication-context).
 
 `nonce`
-> REQUIRED. MUST match the `nonce` value that was provided in the Authentication Request.
+> REQUIRED. MUST contain the `nonce` value that was provided in the Authentication Request.
 
 `jti`
 > REQUIRED. A unique identifier for the token, which can be used to prevent reuse of the token. The value of `jti` MUST uniquely identify the ID Token between sender and receiver for at least 12 months.
 
 `auth_time`
-> REQUIRED if `max-age` was specified in the request or when `auth-time` was requested as an Essential Claim. Otherwise `auth_time` is OPTIONAL and SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate. See also Section 15.1 of [[OpenID.Core]].
+> REQUIRED if `max_age` was specified in the request or when `auth_time` was requested as an Essential Claim. Otherwise `auth_time` is OPTIONAL and SHOULD be included if the OpenID Provider can assert an End-User's authentication intent was demonstrated. For example, a login event where the End-User took some action to authenticate. See also Section 15.1 of [[OpenID.Core]].
 
 `exp`, `iat`, `nbf`
 > REQUIRED. The `expiration`, `issued at`, and `not before` timestamps indicate when the token expires, was issued and becomes valid, respectively. The expiration time for ID Tokens is specific to the OpenID Provider.
@@ -335,7 +335,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a Representation Relationship for the End-User.
 
 `alt_sub`
-> OPTIONAL. Describes alternative subject identifiers for the authenticated End-User in the context of a specific audience. The value of `alt_sub` is an array of objects, each of which MUST contain `sub`, `sub_id_type`, and `aud` Claims to uniquely identify the authenticated End-User and the audience for the alternative subject identifier.
+> OPTIONAL. Describes alternative Subject Identifiers for the authenticated End-User in the context of a specific audience. The value of `alt_sub` is an array of objects, each of which MUST contain `sub`, `sub_id_type`, and `aud` Claims to uniquely identify the authenticated End-User and the audience for the alternative Subject Identifier.
 
 `vot`
 > OPTIONAL. The vector value as specified in Vectors of Trust. As eIDAS is leading in most scenarios targeted by this profile, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust. See also [Section 5.2.4](#vectors-of-trust).
