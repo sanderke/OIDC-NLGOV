@@ -198,9 +198,9 @@ https://idp-p.example.com/authorize?
 
 ### Request Objects
 Clients MAY optionally send requests to the Authorization Endpoint using the `request` or `request_uri` parameter as defined by OpenID Connect [[OpenID.Core]], section 6.
-The use of the `request_uri` is preferred because of browser limits and network latency.
+Passing a Request Object by reference using the `request_uri` is preferred because of browser limits and network latency.
 
-Request objects MUST be signed by the Client's registered key. Request objects MAY be encrypted to the OpenID Provider's public key. When sending request objects by reference, Clients MUST pre-register `request_uri` values with the OpenID Provider at registration and MUST only use pre-registered values for `request_uri`.
+Request Objects MUST be signed by the Client's registered key. Request Objects MAY be encrypted to the OpenID Provider's public key. When sending Request Objects by reference, Clients MUST pre-register `request_uri` values with the OpenID Provider at registration and MUST only use pre-registered values for `request_uri`.
 
 ### Authentication Response Validation
 All Clients MUST validate the following in received Authentication Responses:
