@@ -119,15 +119,15 @@ This profile supports the following types of Client applications to which specif
 *Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
 
 ### Browser-based Applications
-*Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are not capable of maintaining the confidentiality of secrets and therefore vulnerable to several types of attacks, including Cross-Site Scripting (XSS), Cross Site Request Forgery (CSRF) and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
+*Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are considered to be not capable of maintaining the confidentiality of secrets, as they may be vulnerable to several types of attacks, including Cross-Site Scripting (XSS), Cross Site Request Forgery (CSRF) and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
 
 In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients MUST follow the best practices as specified in [[OAuth2.Browser-Based-Apps]] as well as the following:
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
-- OpenID Providers MUST support the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to make requests to its endpoints and SHOULD NOT use wildcard origins.
+- OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
 - Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the token endpoint.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
-- Browser-based applications SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies that they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
+- Browser-based applications SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
 ### Native and Hybrid Applications
 *Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], Section 2.1).
