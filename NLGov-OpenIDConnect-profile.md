@@ -267,7 +267,7 @@ Clients and Resource Servers SHOULD acquire metadata using either the "OpenID Co
 Clients and Resource Servers SHOULD cache OpenID Provider metadata once an OpenID Provider has been discovered and used by the Client. Clients and Resource Servers SHOULD utilize the HTTP headers provided by the OpenID Provider for caching [[RFC7234]].
 
 Clients SHOULD support `signed_metadata` as specified in [[RFC8414]] Section 2.1.
-In case signed metadata is available, this MUST be used over non-signed metadata and the signature MUST be verified prior to further utilizing it contents.
+In case signed metadata is available, this MUST be used over non-signed metadata and the signature MUST be verified prior to further utilizing any contents.
 
 Clients use the public keys made available from the `jwks` endpoint to validate the signature on tokens. OpenID Connect [[OpenID.Core]] recommends using the HTTP `Cache-Control` Header option and the `max-age` directive to inform Clients how long they can cache the public keys for before returning to the `jwks_uri` location to retrieve replacement keys from the OpenID Provider.
 
