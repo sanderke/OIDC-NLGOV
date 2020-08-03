@@ -139,7 +139,7 @@ In Use Cases that involve Browser-based applications, OpenID Providers and OpenI
 In Use Cases that involve Native applications, OpenID Providers and OpenID Clients MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC8252]] as well as the following:
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
-- The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure client authentication.
+- The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure Client Authentication.
 - Public native applications MUST use PKCE to protect calls to the Token Endpoint. Confidential native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or 'in-app browser tab' to make authorization requests; an 'embedded user-agent' or 'web-view' components MUST NOT be used for this purpose. See "OAuth 2.0 for Native apps" [[RFC8252]] for more information on the 'in-app browser tab' feature and support on various platforms.
 
@@ -215,7 +215,7 @@ Confidential Clients, as defined in [Section 4.1](#client-types), MUST authentic
 - a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the `private_key_jwt` method defined in [[OpenID.Core]]; or
 - mutually authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the `client_id` parameter MUST be included.
 
-Public Clients MAY authenticate to the OpenID Provider. However, the OpenID Provider MUST NOT rely on public client authentication for the purpose of identifying the client.
+Public Clients MAY authenticate to the OpenID Provider. However, the OpenID Provider MUST NOT rely on public client Authentication for the purpose of identifying the client.
 
 Clients MUST NOT use more than one authentication method in each request.
 
@@ -228,16 +228,16 @@ The following parameters are specified:
 > REQUIRED. MUST contain the value `authorization_code`. Identical as in [[OAuth2.NLGov]].
  
 `code`
-> REQUIRED. The value of the code parameter returned in the Authorization Response. Identical as in [[OAuth2.NLGov]].
+> REQUIRED. The value of the `code` parameter returned in the Authorization Response. Identical as in [[OAuth2.NLGov]].
 
 `client_assertion`
-> REQUIRED, in case `private_key_jwt` is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The OpenID Client must generate a new assertion JWT for each call to the Token Endpoint. 
+> REQUIRED, in case `private_key_jwt` is used for Client Authentication. The value of the signed Client Authentication JWT generated as described in [[OAuth2.NLGov]]. The OpenID Client must generate a new assertion JWT for each call to the Token Endpoint. 
 
 `client_assertion_type`
 > REQUIRED, in case `client_assertion` is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
  
 `client_id`
-> REQUIRED, in case mutually authenticated TLS is used for client authentication.
+> REQUIRED, in case mutually authenticated TLS is used for Client Authentication.
 
 ### ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it using the public key of the issuing server, which is published in JSON Web Key (JWK) format. ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
