@@ -231,7 +231,7 @@ The following parameters are specified:
 > REQUIRED. The value of the `code` parameter returned in the Authorization Response. Identical as in [[OAuth2.NLGov]].
 
 `client_assertion`
-> REQUIRED, in case `private_key_jwt` is used for Client Authentication. The value of the signed Client Authentication JWT generated as described in [[OAuth2.NLGov]]. The OpenID Client must generate a new assertion JWT for each call to the Token Endpoint. 
+> REQUIRED, in case `private_key_jwt` is used for Client Authentication. The value of the signed Client Authentication JWT generated as described in [[OAuth2.NLGov]]. The OpenID Client MUST generate a new assertion JWT for each call to the Token Endpoint. 
 
 `client_assertion_type`
 > REQUIRED, in case `client_assertion` is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
