@@ -125,7 +125,7 @@ In Use Cases that involve Browser-based applications, OpenID Providers and OpenI
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
 - OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
-- Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the token endpoint.
+- Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
 - Browser-based applications SHOULD restrict its JavaScript execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
 - Browser-based applications SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
@@ -138,7 +138,7 @@ In Use Cases that involve Native applications, OpenID Providers and OpenID Clien
 
 - OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
 - The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure client authentication.
-- Public native applications MUST use PKCE to protect calls to the token endpoint. Confidential native applications SHOULD use PKCE.
+- Public native applications MUST use PKCE to protect calls to the Token Endpoint. Confidential native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or 'in-app browser tab' to make authorization requests; an 'embedded user-agent' or 'web-view' components MUST NOT be used for this purpose. See "OAuth 2.0 for Native apps" [[RFC8252]] for more information on the 'in-app browser tab' feature and support on various platforms.
 
 ## Authorization Endpoint
@@ -229,7 +229,7 @@ The following parameters are specified:
 > REQUIRED. The value of the code parameter returned in the Authorization Response. Identical as in [[OAuth2.NLGov]].
 
 `client_assertion`
-> REQUIRED, in case `private_key_jwt` is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The OpenID Client must generate a new assertion JWT for each call to the token endpoint. 
+> REQUIRED, in case `private_key_jwt` is used for client authentication. The value of the signed Client authentication JWT generated as described in [[OAuth2.NLGov]]. The OpenID Client must generate a new assertion JWT for each call to the Token Endpoint. 
 
 `client_assertion_type`
 > REQUIRED, in case `client_assertion` is present. MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`.
@@ -525,7 +525,7 @@ The discovery document MUST contain at minimum the following fields:
 > REQUIRED. The fully qualified URL of the OpenID Provider's Authorization Endpoint as defined by [[RFC6749]].
 
 `token_endpoint`
-> REQUIRED. The fully qualified URL of the OpenID Provider's token endpoint as defined by [[RFC6749]].
+> REQUIRED. The fully qualified URL of the OpenID Provider's Token Endpoint as defined by [[RFC6749]].
 
 `introspection_endpoint`
 > OPTIONAL. The fully qualified URL of the OpenID Provider's introspection endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
