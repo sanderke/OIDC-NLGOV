@@ -12,6 +12,7 @@ All uses of "JSON Web Signature (JWS)" [[RFC7515]] and "JSON Web Encryption (JWE
 This specification uses the following terms: 
 - "Access Token", "Authorization Code", "Authorization Endpoint", "Authorization Grant", "Authorization Server", "Client", "Client Authentication", "Client Identifier", "Client Secret", "Grant Type", "Protected Resource", "Redirection URI", "Refresh Token", "Resource Server", "Response Type", and "Token Endpoint" defined by 'OAuth 2.0' [[RFC6749]];
 - "Claim Name", "Claim Value", and "JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]];
+- "Introspection Endpoint" defined by [[RFC7662]];
 - "Browser-based application" defined by [[OAuth2.Browser-Based-Apps]];
 - "Native app", "Hybrid app", "External user-agent", "Embedded user-agent", "In-app browser tab", "Web-view", "Claimed 'https' scheme URI", "Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]];
 - "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]]; and
@@ -528,10 +529,10 @@ The discovery document MUST contain at minimum the following fields:
 > REQUIRED. The fully qualified URL of the OpenID Provider's Token Endpoint as defined by [[RFC6749]].
 
 `introspection_endpoint`
-> OPTIONAL. The fully qualified URL of the OpenID Provider's introspection endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
+> OPTIONAL. The fully qualified URL of the OpenID Provider's Introspection Endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
 
 `revocation_endpoint`
-> OPTIONAL. The fully qualified URL of the OpenID Provider's revocation endpoint defined by "OAuth 2.0 Token Revocation" [[RFC7009]].
+> OPTIONAL. The fully qualified URL of the OpenID Provider's Revocation Endpoint defined by "OAuth 2.0 Token Revocation" [[RFC7009]].
 
 `jwks_uri`
 > REQUIRED. The fully qualified URI of the server's public keys in JWK Set format. These keys can be used by Clients to verify signatures on tokens and responses from the OpenID Provider and for encrypting requests to the OpenID Provider.
