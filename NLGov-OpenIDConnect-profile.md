@@ -13,6 +13,7 @@ This specification uses the following terms:
 - "Access Token", "Authorization Code", "Authorization Endpoint", "Authorization Grant", "Authorization Server", "Client", "Client Authentication", "Client Identifier", "Client Secret", "Grant Type", "Protected Resource", "Redirection URI", "Refresh Token", "Resource Server", "Response Type", and "Token Endpoint" defined by 'OAuth 2.0' [[RFC6749]];
 - "Claim Name", "Claim Value", and "JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]];
 - "Introspection Endpoint" defined by [[RFC7662]];
+- "Revocation Endpoint" defined by [[RFC]];
 - "Browser-based application" defined by [[OAuth2.Browser-Based-Apps]];
 - "Native app", "Hybrid app", "External user-agent", "Embedded user-agent", "In-app browser tab", "Web-view", "Claimed 'https' scheme URI", "Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]];
 - "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]]; and
