@@ -240,12 +240,12 @@ The following parameters are specified:
 > REQUIRED, in case mutually authenticated TLS is used for Client Authentication.
 
 ### ID Tokens
-All Clients MUST validate the signature of an ID Token before accepting it using the public key of the issuing server, which is published in JSON Web Key (JWK) format. ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
+All Clients MUST validate the signature of an ID Token before accepting it. Validation can be done using the public key of the issuing server, which is published in JSON Web Key (JWK) format. ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
 
 Clients MUST verify the following in received ID tokens:
 
 `iss`
-> The `issuer` Claim is the Uniform Resource Locater (URL) of the expected issuer.
+> The `issuer` Claim is the Uniform Resource Locater (URL) of the expected Issuer.
 
 `aud`
 > The `audience` Claim contains the Client ID of the Client.
