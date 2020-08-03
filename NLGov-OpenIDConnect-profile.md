@@ -288,13 +288,13 @@ OpenID Providers MUST implement all *Mandatory to Implement Features for All Ope
 OpenID Providers MUST follow the security guidelines and best-practices listed in [Section 4.1](#client-types) for the Client types they support.
 
 ## Request Objects
-OpenID Providers MUST accept requests containing a request object signed by the Client's private key. OpenID Providers MUST validate the signature on such requests against the Client's registered public key. OpenID Providers MUST accept request objects encrypted to the OpenID Provider's public key.
+OpenID Providers MUST accept requests containing a Request Object signed by the Client's private key. OpenID Providers MUST validate the signature on such requests against the Client's registered public key. OpenID Providers MUST accept Request Objects encrypted to the OpenID Provider's public key.
 
-OpenID Providers SHOULD accept request objects by reference using the `request_uri` parameter. The request object can be either hosted by the Client or pushed to the OpenID Provider prior to the Authentication Request. OpenID Providers MUST verify that the `request_uri` parameter exactly matches one of the `request_uris` values for the Client pre-registered at the OpenID Provider, with the matching performed as described in Section 6.2.1 of [[RFC3986]] (Simple String Comparison). 
+OpenID Providers SHOULD accept Request Objects by reference using the `request_uri` parameter. The Request Object can be either hosted by the Client or pushed to the OpenID Provider prior to the Authentication Request. OpenID Providers MUST verify that the `request_uri` parameter exactly matches one of the `request_uri` values for the Client pre-registered at the OpenID Provider, with the matching performed as described in Section 6.2.1 of [[RFC3986]] (Simple String Comparison).
 
-Using request objects allow for Clients to create a request that is protected from tampering through the browser, allowing for a higher security and privacy mode of operation for Clients and applications that require it. Clients are not required to use request objects, but OpenID Providers are required to support requests using them.
+Using Request Objects allows for Clients to create a request that is protected from tampering through the browser, allowing for a higher security and privacy mode of operation for Clients and applications that require it. Clients are not required to use Request Objects, but OpenID Providers are required to support requests using them.
 
-Note that when a request object is used (either passed by value or by reference), the Client MAY send the parameters included in the request object duplicated in the query parameters as well for backwards compatibility (so that the request is a valid OAuth 2.0 Authorization Request). However, the OpenID Provider MUST only consider the parameters included in the request object and ignore the duplicated query parameters.
+Note that when a Request Object is used (either passed by value or by reference), the Client MAY send the parameters included in the Request Object duplicated in the query parameters as well for backwards compatibility (so that the request is a valid OAuth 2.0 Authorization Request). However, the OpenID Provider MUST only consider the parameters included in the Request Object and ignore the duplicated query parameters.
 
 ## ID Tokens
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
