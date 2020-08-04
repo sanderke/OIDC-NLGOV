@@ -675,13 +675,13 @@ In other cases, particularly when dealing with Browser-based applications or Nat
 This profile imposes the following requirements upon the Client Registration request:
 
 Initial access tokens
-> In cases where the OpenID Provider limits the parties that are allowed to register clients using Dynamic Registration (i.e. when open registration is not applicable), the use of an initial access token is REQUIRED for making Client Registration requests. In cases where open registration is applicable, the use of an initial access token is OPTIONAL.
+> In cases where the OpenID Provider limits the parties that are allowed to register Clients using Dynamic Registration (i.e. when open registration is not applicable), the use of an initial access token is REQUIRED for making Client Registration requests. In cases where open registration is applicable, the use of an initial access token is OPTIONAL.
 
 `redirect_uris`
 > REQUIRED. Array of Redirection URI values used by the Client. MUST be absolute HTTPS URLs (unless the Client is a native application operating on a desktop device (and registered as such), in which case it MAY be absolute HTTP URLs with the literal loopback IP addresses and port numbers the client is listening on as hostnames (MUST NOT use `localhost`, see [[RFC8252]] Sections 7.3 and 8.3)) and one of these registered Redirection URI values MUST exactly match the `redirect_uri` parameter value used in each Authorization Request.
 
-`jwks_uri` and `jwks`
-> Clients SHOULD referencing their JSON Web Key (JWK) Set via the `jwks_uri` parameter rather than passing their JWK Set document by value using the `jwks` parameter, as it allows for easier key rotation. Also, the `jwks` and `jwks_uri` parameters MUST NOT both be present in the same request.
+`jwks_uri` *or* `jwks`
+> Clients SHOULD reference their JSON Web Key (JWK) Set via the `jwks_uri` parameter rather than passing their JWK Set document by value using the `jwks` parameter, as it allows for easier key rotation. Also, the `jwks` and `jwks_uri` parameters MUST NOT both be present in the same request.
 
 `subject_type`
 > For cases where correlation of End-User's activities across Clients is not appropriate, the `subject_type` parameter MUST be set to `pairwise`. In other cases, the use of `pairwise` is RECOMMENDED unless the use of public identifiers is required.
@@ -689,7 +689,7 @@ Initial access tokens
 `request_uris`
 > Array of `request_uri` values that are pre-registered by the Client for use at the OpenID Provider. Clients that make Authentication Requests using the `request_uri` parameter, MUST only do so via pre-registered `request_uri` values.
 
-Section 2 of [[OpenID.Dynamic-Registration]] lists all Client Metadata values that are used by OpenID Connect.
+Section 2 of [[OpenID.Dynamic-Registration]] lists all Client Metadata values that are used by OpenID Connect. Note that additional parameters are defined in OAuth 2.0 Dynamic Client Registration Protocol ([[RFC7591]]) can be relevant as well and MAY be used.
 
 An example of a Client registration request:
   
