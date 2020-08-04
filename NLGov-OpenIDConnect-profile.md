@@ -40,9 +40,9 @@ When an NL GOV-compliant component is interacting with other NL GOV-compliant co
 
 An NL GOV-compliant OpenID Connect Identity Provider MUST support all features as described in this specification. A general-purpose Identity Provider MAY support additional features for use with non-NL GOV Clients.
 
-An NL GOV-compliant OpenID Connect Identity Provider MAY also provide NL GOV-compliant OAuth 2.0 Authorization Server functionality. In such cases, the Authorization Server MUST fully implement the NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]]. If an NL GOV-compliant OpenID Connect Identity Provider does not provide NL GOV-compliant OAuth 2.0 Authorization Server services, all features related to interaction between the Authorization Server and protected resource are therefore OPTIONAL.
+An NL GOV-compliant OpenID Connect Identity Provider MAY also provide NL GOV-compliant OAuth 2.0 Authorization Server functionality. In such cases, the Authorization Server MUST fully implement the NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]]. If an NL GOV-compliant OpenID Connect Identity Provider does not provide NL GOV-compliant OAuth 2.0 Authorization Server services, all features related to interaction between the Authorization Server and protected resource are OPTIONAL.
 
-An NL GOV-compliant OpenID Connect Client MUST use all functions as described in this specification. A general-purpose Client library MAY support additional features for use with non-NL GOV OpenID Connect Identity Providers.
+An NL GOV-compliant OpenID Connect Client MUST use all required functionality described in this specification. A general-purpose Client library MAY support additional features for use with non-NL GOV OpenID Connect Identity Providers.
 
 # Use Case & context
 This profile supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
