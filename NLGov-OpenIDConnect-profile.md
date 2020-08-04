@@ -13,8 +13,8 @@ This specification uses the following terms:
 - "Access Token", "Authorization Code", "Authorization Endpoint", "Authorization Grant", "Authorization Server", "Client", "Client Authentication", "Client Identifier", "Client Secret", "Grant Type", "Protected Resource", "Redirection URI", "Refresh Token", "Resource Server", "Response Type", and "Token Endpoint" defined by 'OAuth 2.0' [[RFC6749]];
 - "Claim Name", "Claim Value", and "JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]];
 - "Introspection Endpoint" defined by [[RFC7662]];
-- "Revocation Endpoint" defined by [[RFC]];
-- "Browser-based application" defined by [[OAuth2.Browser-Based-Apps]];
+- "Revocation Endpoint" defined by [[RFC7009]];
+- "Browser-based application" defined by [[?OAuth2.Browser-Based-Apps]];
 - "Native app", "Hybrid app", "External user-agent", "Embedded user-agent", "In-app browser tab", "Web-view", "Claimed 'https' scheme URI", "Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]];
 - "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]]; and
 - the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
@@ -40,9 +40,9 @@ When an NL GOV-compliant component is interacting with other NL GOV-compliant co
 
 An NL GOV-compliant OpenID Connect Identity Provider MUST support all features as described in this specification. A general-purpose Identity Provider MAY support additional features for use with non-NL GOV Clients.
 
-An NL GOV-compliant OpenID Connect Identity Provider MAY also provide NL GOV-compliant OAuth 2.0 Authorization Server functionality. In such cases, the Authorization Server MUST fully implement the NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]]. If an NL GOV-compliant OpenID Connect Identity Provider does not provide NL GOV-compliant OAuth 2.0 Authorization Server services, all features related to interaction between the Authorization Server and protected resource are therefore OPTIONAL.
+An NL GOV-compliant OpenID Connect Identity Provider MAY also provide NL GOV-compliant OAuth 2.0 Authorization Server functionality. In such cases, the Authorization Server MUST fully implement the NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]]. If an NL GOV-compliant OpenID Connect Identity Provider does not provide NL GOV-compliant OAuth 2.0 Authorization Server services, all features related to interaction between the Authorization Server and protected resource are OPTIONAL.
 
-An NL GOV-compliant OpenID Connect Client MUST use all functions as described in this specification. A general-purpose Client library MAY support additional features for use with non-NL GOV OpenID Connect Identity Providers.
+An NL GOV-compliant OpenID Connect Client MUST use all required functionality described in this specification. A general-purpose Client library MAY support additional features for use with non-NL GOV OpenID Connect Identity Providers.
 
 # Use Case & context
 This profile supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
@@ -113,9 +113,13 @@ The flow described by these steps is illustrated as follows:
 # OpenID Client profile
 
 ## Client types
-This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply:
+This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply.
 
-**Note:** this profile uses a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provisioning of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+**Note:** this profile uses a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[?OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provisioning of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+
+The following design considerations apply to all Client types:
+- Clients SHOULD restrict its Client-Side script (e.g. JavaScript) execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
+- Clients SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
 ### Web Applications
 *Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
@@ -123,22 +127,15 @@ This profile supports the following types of Client applications to which specif
 ### Browser-based Applications
 *Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are considered to be not capable of maintaining the confidentiality of secrets, as they may be vulnerable to several types of attacks, including Cross-Site Scripting (XSS), Cross Site Request Forgery (CSRF) and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
 
-In Use Cases that involve Browser-based applications, OpenID Providers and OpenID Clients MUST follow the best practices as specified in [[OAuth2.Browser-Based-Apps]] as well as the following:
-
-- OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
-- OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
+- Browser-based applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
 - Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
-- Browser-based applications SHOULD restrict its JavaScript execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
-- Browser-based applications SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
 ### Native and Hybrid Applications
 *Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], Section 2.1).
 
 *Hybrid applications* are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
-In Use Cases that involve Native applications, OpenID Providers and OpenID Clients MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC8252]] as well as the following:
-
-- OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use.
+- Native applications MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC8252]].
 - The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure Client Authentication.
 - Public native applications MUST use PKCE to protect calls to the Token Endpoint. Confidential native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or 'in-app browser tab' to make authorization requests; an 'embedded user-agent' or 'web-view' components MUST NOT be used for this purpose. See "OAuth 2.0 for Native apps" [[RFC8252]] for more information on the 'in-app browser tab' feature and support on various platforms.
@@ -283,9 +280,11 @@ Native Clients MUST either be provisioned a unique per-instance Client identifie
 Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual labor and the risks of configuration errors. Dynamic Client Registration Management Protocol [[RFC7592]] MAY be used by Clients.
 
 # OpenID Provider profile
-OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see also [Chapter 3](#flow)).
-
-OpenID Providers MUST follow the security guidelines and best-practices listed in [Section 4.1](#client-types) for the Client types they support.
+- OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see also [Chapter 3](#flow)).
+- OpenID Providers MUST support "Proof Key for Code Exchange ([[RFC7636]])" to allow public Clients to protect calls to the Token Endpoint.
+- OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
+- OpenID Providers that support Web Applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
+- OpenID Providers that support Native Applications MUST follow the best practices specified in OAuth 2.0 for Native Apps [[RFC8252]].
 
 ## Request Objects
 OpenID Providers MUST accept requests containing a Request Object signed by the Client's private key. OpenID Providers MUST validate the signature on such requests against the Client's registered public key. OpenID Providers MUST accept Request Objects encrypted to the OpenID Provider's public key.
@@ -458,6 +457,9 @@ Using a JWT formatted Access Token allows any OpenID Client to consume and verif
 Note that ID Tokens and UserInfo responses are primarily intended for the Client. The Access Token is primarily intended for consumption by a Resource Server. The Introspection response is intended for the requestor of an Introspection, which can be either a Client or Resource Server.
 The Resource Server is typically not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorization Servers. In the case of Service Intermediation this is applicable by definition.
 This profile does not directly place any constraints on the placement of Claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
+
+## Refresh Tokens
+OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use. Additionally, OpenID Providers MAY cryptographically bind refresh tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1).
 
 ## UserInfo Endpoint
 OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the `sub` (subject) Claim. It is expected that the `sub` Claim will remain pseudonymous in Use Cases where obtaining personal information is not needed.
@@ -855,5 +857,5 @@ The following overview lists RFC and BCP documents being drafted by the OAuth 2.
 [[?OAuth2.Browser-Based-Apps]]
 > A Best Current Practice document that details security considerations and best practices to be taken into account when implementing browser-based applications that use OAuth 2.0 is being drafted in the OAuth 2.0 working group at IETF.
 
-[[OAuth2.1]]
+[[?OAuth2.1]]
 > An effort to consolidate and simplify OAuth 2.0 by adding and removing functionality of the core OAuth 2.0 specification and by incorporating several RFCs and BCPs that were built upon OAuth 2.0.
