@@ -545,9 +545,6 @@ The discovery document MUST contain at minimum the following fields:
 `claims_supported`
 > REQUIRED. JSON array containing the list of Claims available in the supported scopes. See [Claims Supported](#claims-supported).
 
-`vot`
-> OPTIONAL. JSON array containing the list of supported Vectors of Trust. See [Vectors of Trust](#vectors-of-trust).
-
 `sub_id_types_supported`
 > OPTIONAL. JSON array containing the list of supported types of Subject Identifiers in the `sub` Claim of ID Tokens. The values MUST be URIs, the exact URIs to be used are situation specific; as an example encrypted BSNs and Pseudonyms could be specified with `urn:nl-eid-gdi:1.0:id:BSN` or `urn:nl-eid-gdi:1.0:id:Pseudonym` respectively.
 
