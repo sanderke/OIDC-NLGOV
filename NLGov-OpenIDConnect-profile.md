@@ -14,7 +14,7 @@ This specification uses the following terms:
 - "Claim Name", "Claim Value", and "JSON Web Token (JWT)" defined by 'JSON Web Token (JWT)' [[RFC7519]];
 - "Introspection Endpoint" defined by [[RFC7662]];
 - "Revocation Endpoint" defined by [[RFC7009]];
-- "Browser-based application" defined by [[OAuth2.Browser-Based-Apps]];
+- "Browser-based application" defined by [[?OAuth2.Browser-Based-Apps]];
 - "Native app", "Hybrid app", "External user-agent", "Embedded user-agent", "In-app browser tab", "Web-view", "Claimed 'https' scheme URI", "Private-use URI scheme" defined by 'OAuth 2.0 for Native Apps' [[RFC8252]];
 - "User-agent" defined by 'Hypertext Transfer Protocol' [[RFC2616]]; and
 - the terms defined by 'OpenID Connect Core 1.0' [[OpenID.Core]].
@@ -115,7 +115,7 @@ The flow described by these steps is illustrated as follows:
 ## Client types
 This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply.
 
-**Note:** this profile uses a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provisioning of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+**Note:** this profile uses a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[?OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provisioning of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 The following design considerations apply to all Client types:
 - Clients SHOULD restrict its Client-Side script (e.g. JavaScript) execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
@@ -127,7 +127,7 @@ The following design considerations apply to all Client types:
 ### Browser-based Applications
 *Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are considered to be not capable of maintaining the confidentiality of secrets, as they may be vulnerable to several types of attacks, including Cross-Site Scripting (XSS), Cross Site Request Forgery (CSRF) and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
 
-- Browser-based applications MUST follow the best practices specified in [[OAuth2.Browser-Based-Apps]].
+- Browser-based applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
 - Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
 
 ### Native and Hybrid Applications
@@ -283,7 +283,8 @@ Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual labo
 - OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see also [Chapter 3](#flow)).
 - OpenID Providers MUST support "Proof Key for Code Exchange ([[RFC7636]])" to allow public Clients to protect calls to the Token Endpoint.
 - OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
-- OpenID Providers that support Web Applications and/or Native Applications MUST follow the best practices specified in [[OAuth2.Browser-Based-Apps]] and OAuth 2.0 for Native Apps [[RFC8252]], respectively.
+- OpenID Providers that support Web Applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
+- OpenID Providers that support Native Applications MUST follow the best practices specified in OAuth 2.0 for Native Apps [[RFC8252]].
 
 ## Request Objects
 OpenID Providers MUST accept requests containing a Request Object signed by the Client's private key. OpenID Providers MUST validate the signature on such requests against the Client's registered public key. OpenID Providers MUST accept Request Objects encrypted to the OpenID Provider's public key.
