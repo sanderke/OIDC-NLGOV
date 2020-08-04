@@ -735,7 +735,7 @@ Note that when Representation is supported, the OpenID Provider MUST include `re
 ## Scope Profiles
 In the interests of data minimization balanced with the requirement to successfully identify the individual signing in to a service, the default OpenID Connect scope profiles to request Claims ([[OpenID.Core]] Section [5.4](https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims)) may not be appropriate.
 
-Matching of the identity assertion based on Claims to a local identifier or `account` related to the individual identity at a level of assurance is a requirement where the government in question is not able to provide a single identifier for all citizens based on an authoritative register of citizens.
+Matching of the identity assertion based on Claims to a local identifier or `account` related to the individual identity at a Level of Assurance is a requirement where the government in question is not able to provide a single identifier for all citizens based on an authoritative register of citizens.
 
 The requirement for matching is also of importance where a cross-border or cross-jurisdiction authentication is required and therefore the availability of a single identifier (e.g. social security number) cannot be guaranteed for the individual wishing to authenticate.
 
