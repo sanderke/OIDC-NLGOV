@@ -29,6 +29,7 @@ Representation
     <abbr title="Level of Assurance">LoA</abbr>
     <abbr title="OpenID Provider">OP</abbr>
     <abbr title="Proof Key for Code Exchange">PKCE</abbr>
+	<abbr title="Risk Based Authentication">RBA</abbr>
     <abbr title="Request For Change">RFC</abbr>
     <abbr title="Relying Party">RP</abbr>
     <abbr title="Rechtspersonen en Samenwerkingsverbanden Identificatienummer, the identification number for legal entities and associations in The Netherlands">RSIN</abbr>
