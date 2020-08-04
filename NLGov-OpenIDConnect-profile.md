@@ -459,12 +459,12 @@ The Resource Server is typically not considered as an actor in OpenID Connect, b
 This profile does not directly place any constraints on the placement of Claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
 
 ## Refresh Tokens
-OpenID Providers MAY issue refresh tokens to Clients; when used, refresh tokens MUST be one-time-use. Additionally, OpenID Providers MAY cryptographically bind refresh tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1).
+OpenID Providers MAY issue Refresh Tokens to Clients; when used, Refresh Tokens MUST be one-time-use. Additionally, OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1).
 
 ## UserInfo Endpoint
 OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the `sub` (subject) Claim. It is expected that the `sub` Claim will remain pseudonymous in Use Cases where obtaining personal information is not needed.
 
-Support for a UserInfo Endpoint is important for maximum Client implementation interoperability even if no additional End-User information is returned. Clients are not required to call the UserInfo Endpoint, but should not receive an error if they do.
+Support for a UserInfo Endpoint is important for maximum Client implementation interoperability even if no additional End-User information is returned. Clients are not required to call the UserInfo Endpoint, but SHOULD NOT receive an error if they do.
 
 In an example transaction, the Client sends a request to the UserInfo Endpoint like the following:
 
@@ -501,8 +501,7 @@ And receives a document in response like the following:
     }
 
 
-OpenID Providers MUST support the generation of JWT encoded responses from the UserInfo Endpoint. Responding unsigned JSON objects when neither signing nor encryption are requested by the Client as part of the `userinfo_signed_response_alg` and 
-`userinfo_encrypted_response_alg` Client metadata parameters registered as part of Client Registration is OPTIONAL. Signed responses MUST be signed by the OpenID Provider's signing key, and encrypted responses MUST be encrypted with the authorized Client's public key. Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
+OpenID Providers MUST support the generation of JWT encoded responses from the UserInfo Endpoint. Responding with unsigned JSON objects when neither signing nor encryption are requested by the Client as part of the `userinfo_signed_response_alg` and `userinfo_encrypted_response_alg` Client metadata parameters registered as part of Client Registration is OPTIONAL. Signed responses MUST be signed by the OpenID Provider's signing key, and encrypted responses MUST be encrypted with the authorized Client's public key. Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
 
 ## Discovery
 The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programatic way for Clients to obtain configuration details for communicating with OpenID Providers. Discovery is an important part of building scalable federation ecosystems. Compliant OpenID Providers under this profile MUST publish their server metadata to help minimize configuration errors and support automation for scaleable deployments.
