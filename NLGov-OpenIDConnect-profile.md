@@ -718,13 +718,13 @@ An example of a Client registration request:
 Please refer to [Algorithms](#algorithms) for more information on eligible cryptographic methods and keys that can be used when registering a Client.
 
 # User Info
-The availability, quality, and reliability of an individual's identity attributes will vary greatly across jurisdictions and Provider systems. The following recommendations ensure maximum cross-jurisdictional interoperability, while setting Client expectations on the type of data they may acquire.
+The availability, quality and reliability of an individual's identity attributes will vary greatly across jurisdictions and Provider systems. The following recommendations ensure maximum cross-jurisdictional interoperability, while setting Client expectations on the type of data they may acquire.
 
 ## Claim Interoperability
 As per Section 5.1.2 of [[OpenID.Core]], Claim names SHOULD be collision-resistant. It is RECOMMENDED to use domain name based URIs as attribute names.
 
-[[OpenID.Core]] Section 5.1 specifies a list of standard Claims. In a Dutch governmental context, attribute Claims are commonly registered in the BRP (_Basis Registratie Personen_, the Dutch citizen registry), as defined in [[?LO.GBA]].
-Usage of, or interoperability with, the ISA<sup>2</sup> core vocabularies is RECOMMENDED.
+[[OpenID.Core]] Section 5.1 specifies a list of standard Claims. In a Dutch governmental context, attribute Claims are commonly registered in the BRP (_Basis Registratie Personen_, the Dutch citizen registry), as defined in [[?LO.GBA]]. Note that some of the standard Claims of OpenID Connect do not map directly or correctly with BRP attributes. BRP attributes SHOULD be prefered over OpenID Connect claims for attributes.
+Additionally, usage of, or interoperability with, the ISA<sup>2</sup> core vocabularies is RECOMMENDED.
 
 ## Claims Supported
 Discovery requires including the `claims_supported` field, which defines the Claims a Client MAY expect to receive for the supported scopes. OpenID Providers MUST return Claims on a best effort basis. However, an OpenID Provider asserting it can provide an End-User Claim does not imply that this data is available for all its End-Users: Clients MUST be prepared to receive partial data.
