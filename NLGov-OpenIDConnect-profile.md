@@ -504,7 +504,7 @@ And receives a document in response like the following:
 OpenID Providers MUST support the generation of JWT encoded responses from the UserInfo Endpoint. Responding with unsigned JSON objects when neither signing nor encryption are requested by the Client as part of the `userinfo_signed_response_alg` and `userinfo_encrypted_response_alg` Client metadata parameters registered as part of Client Registration is OPTIONAL. Signed responses MUST be signed by the OpenID Provider's signing key, and encrypted responses MUST be encrypted with the authorized Client's public key. Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
 
 ## Discovery
-The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programatic way for Clients to obtain configuration details for communicating with OpenID Providers. Discovery is an important part of building scalable federation ecosystems. Compliant OpenID Providers under this profile MUST publish their server metadata to help minimize configuration errors and support automation for scaleable deployments.
+The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programmatic way for Clients to obtain configuration details for communicating with OpenID Providers. Discovery is an important part of building scalable federation ecosystems. Compliant OpenID Providers under this profile MUST publish their server metadata to help minimize configuration errors and support automation for scalable deployments.
 
 Exposing a Discovery endpoint does NOT inherently put the OpenID Provider at risk to attack. Endpoints and parameters specified in the Discovery document SHOULD be considered public information regardless of the existence of the Discovery document.
 
@@ -522,7 +522,7 @@ Note that for privacy considerations, only direct requests to the server metadat
 The discovery document MUST contain at minimum the following fields:
 
 `issuer`
-> REQUIRED. The fully qualified issuer URL of the OpenID Provider.
+> REQUIRED. The fully qualified Issuer URL of the OpenID Provider.
 
 `authorization_endpoint`
 > REQUIRED. The fully qualified URL of the OpenID Provider's Authorization Endpoint as defined by [[RFC6749]].
@@ -534,10 +534,10 @@ The discovery document MUST contain at minimum the following fields:
 > OPTIONAL. The fully qualified URL of the OpenID Provider's Introspection Endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
 
 `revocation_endpoint`
-> OPTIONAL. The fully qualified URL of the OpenID Provider's Revocation Endpoint defined by "OAuth 2.0 Token Revocation" [[RFC7009]].
+> OPTIONAL. The fully qualified URL of the OpenID Provider's Revocation Endpoint as defined by "OAuth 2.0 Token Revocation" [[RFC7009]].
 
 `jwks_uri`
-> REQUIRED. The fully qualified URI of the server's public keys in JWK Set format. These keys can be used by Clients to verify signatures on tokens and responses from the OpenID Provider and for encrypting requests to the OpenID Provider.
+> REQUIRED. The fully qualified URL of the server's public keys in JWK Set format. These keys can be used by Clients to verify signatures on tokens and responses from the OpenID Provider and for encrypting requests to the OpenID Provider.
 
 `scopes_supported`
 > REQUIRED. The list of scopes the OpenID Provider supports.
@@ -549,10 +549,10 @@ The discovery document MUST contain at minimum the following fields:
 > OPTIONAL. JSON array containing the list of supported Vectors of Trust. See [Vectors of Trust](#vectors-of-trust).
 
 `sub_id_types_supported`
-> OPTIONAL. JSON array containing the list of supported identifiers in the `sub` Claim of ID Tokens. The values MUST be URIs, the exact URIs to be used are sitution specific; as an example encrypted BSNs and Pseudonyms could be specified with `urn:nl-eid-gdi:1.0:id:BSN` or `urn:nl-eid-gdi:1.0:id:Pseudonym` respectively.
+> OPTIONAL. JSON array containing the list of supported types of Subject Identifiers in the `sub` Claim of ID Tokens. The values MUST be URIs, the exact URIs to be used are situation specific; as an example encrypted BSNs and Pseudonyms could be specified with `urn:nl-eid-gdi:1.0:id:BSN` or `urn:nl-eid-gdi:1.0:id:Pseudonym` respectively.
 
 `acr_values_supported`
-> OPTIONAL. JSON array containing the list of supported Levels of Assurance. See [Authentication Context](#authentication-context).
+> OPTIONAL. JSON array containing the list of supported Levels of Assurances. See [Authentication Context](#authentication-context).
 
 `request_uri_parameter_supported`
 > OPTIONAL. Boolean value which specifies whether the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. As per [[OpenID.Core]], the default value is `true`.
