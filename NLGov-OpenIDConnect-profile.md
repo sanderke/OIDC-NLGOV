@@ -131,7 +131,7 @@ The following design considerations apply to all Client types:
 - Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
 
 ### Native and Hybrid Applications
-*Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], Section 2.1).
+*Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications can sufficiently protect dynamically issued secrets, but are not capable of maintaining the confidentiality of secrets that are statically included as part of an app distribution. Therefore, Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], Section 2.1).
 
 *Hybrid applications* are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
