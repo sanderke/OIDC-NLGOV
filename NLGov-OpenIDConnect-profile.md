@@ -316,7 +316,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > OPTIONAL. The type of identifier passed in the `sub` Claim. In order to support multiple types of identifiers in an interoperable way, the type of identifier used for the identifier in the `sub` Claim SHOULD be explicitly included. The value of the `sub_id_type` MUST be a URI. Values supported by the OpenID Provider are provided via the [Discovery endpoint](#discovery-0).
 
 `acr`
-> REQUIRED. The LoA the End-User was authenticated at. MUST be at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters) or-if none was requested-a Level of Assurance established through prior agreement. See also [Section 5.2.3](#authentication-context).
+> REQUIRED. The LoA the End-User was authenticated at. MUST be at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters) or - if none was requested - a Level of Assurance established through prior agreement. See also [Section 5.2.3](#authentication-context).
 
 `nonce`
 > REQUIRED. MUST contain the `nonce` value that was provided in the Authentication Request.
@@ -438,7 +438,7 @@ Whereas the iGov Assurance Profile for OpenID Connect [[OpenID.iGov]] recommends
 
 OpenID Providers SHOULD use eIDAS Level of Assurance (LoA) values for the `acr` Claim, but MAY use different values if eIDAS is not applicable.
 
-OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters) or-if none was requested-a Level of Assurance established through prior agreement.
+OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters) or - if none was requested - a Level of Assurance established through prior agreement.
 
 OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but MUST use Authentication Context Class References (`acr`) instead.
 
