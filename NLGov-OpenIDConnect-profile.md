@@ -679,7 +679,7 @@ Initial access tokens
 
 `redirect_uris`
 > REQUIRED. Array of Redirection URI values used by the Client. MUST be absolute HTTPS URLs. One of these registered Redirection URI values MUST exactly match the `redirect_uri` parameter value used in each Authorization Request.
-- Only in the specific case that the Client is a native application operating on a desktop device (and is registered as such), the `redirect_uri` MAY be absolute HTTP URLs with the literal loopback IP addresses and port numbers the client is listening on as hostnames (MUST NOT use `localhost`, see [[RFC8252]] Sections 7.3 and 8.3)). In such cases, even though the port number is part of the registered `redirect_uri`, the OpenID Provider MUST allow any port to be specified in the Authorization Request for loopback IP redirect URIs.
+> - Only in the specific case that the Client is a native application operating on a desktop device (and is registered as such), the `redirect_uri` MAY be absolute HTTP URLs with the literal loopback IP addresses and port numbers the client is listening on as hostnames (MUST NOT use `localhost`, see [[RFC8252]] Sections 7.3 and 8.3)). In such cases, even though the port number is part of the registered `redirect_uri`, the OpenID Provider MUST allow any port to be specified in the Authorization Request for loopback IP redirect URIs.
 
 `jwks_uri` *or* `jwks`
 > Clients SHOULD reference their JSON Web Key (JWK) Set via the `jwks_uri` parameter rather than passing their JWK Set document by value using the `jwks` parameter, as it allows for easier key rotation. Also, the `jwks` and `jwks_uri` parameters MUST NOT both be present in the same request.
