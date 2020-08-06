@@ -212,7 +212,7 @@ Confidential Clients, as defined in [Section 4.1](#client-types), MUST authentic
 - a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the `private_key_jwt` method defined in [[OpenID.Core]]; or
 - mutually authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the `client_id` parameter MUST be included.
 
-Public Clients MAY authenticate to the OpenID Provider. However, the OpenID Provider MUST NOT rely on public client Authentication for the purpose of identifying the client.
+Public Clients MAY authenticate to the OpenID Provider. However, the OpenID Provider MUST NOT rely on public Client Authentication for the purpose of identifying the client.
 
 Clients MUST NOT use more than one authentication method in each request.
 
