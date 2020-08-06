@@ -316,7 +316,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > OPTIONAL. The type of identifier passed in the `sub` Claim. In order to support multiple types of identifiers in an interoperable way, the type of identifier used for the identifier in the `sub` Claim SHOULD be explicitly included. The value of the `sub_id_type` MUST be a URI. Values supported by the OpenID Provider are provided via the [Discovery endpoint](#discovery-0).
 
 `acr`
-> REQUIRED. The LoA the End-User was authenticated at. MUST be at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters) or - if none was requested - a Level of Assurance established through prior agreement. See also [Section 5.2.3](#authentication-context).
+> OPTIONAL. The LoA the End-User was authenticated at. MUST be at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters) or - if none was requested - a Level of Assurance established through prior agreement. See also [Section 5.2.3](#authentication-context). As eIDAS is leading in most scenarios targeted by this profile, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust (`vot`).
 
 `nonce`
 > REQUIRED. MUST contain the `nonce` value that was provided in the Authentication Request.
@@ -337,7 +337,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > OPTIONAL. Describes alternative Subject Identifiers for the authenticated End-User in the context of a specific audience. The value of `alt_sub` is an array of objects, each of which MUST contain `sub`, `sub_id_type`, and `aud` Claims to uniquely identify the authenticated End-User and the audience for the alternative Subject Identifier.
 
 `vot`
-> OPTIONAL. The vector value as specified in Vectors of Trust. As eIDAS is leading in most scenarios targeted by this profile, using the `acr` Claim to express the Level of Assurance is preferred over Vectors of Trust. See also [Section 5.2.4](#vectors-of-trust).
+> OPTIONAL. The vector value as specified in Vectors of Trust. MUST NOT be included when `acr` is included. See also [Section 5.2.4](#vectors-of-trust).
 
 `vtm`
 > REQUIRED if `vot` is provided. The trustmark URI as specified in Vectors of Trust. See also [Section 5.2.4](#vectors-of-trust).
@@ -519,16 +519,19 @@ The OpenID Provider SHOULD include a `signed_metadata` Claim, as described in [[
 
 Note that for privacy considerations, only direct requests to the server metadata document SHOULD be used. The WebFinger method to locate the relevant OpenID Provider and its metadata, as described in [[OpenID.Discovery]] section 2, MUST NOT be supported.
 
-The discovery document MUST contain at minimum the following fields:
+This profile imposes the following requirements upon the Discovery document:
 
 `issuer`
-> REQUIRED. The fully qualified Issuer URL of the OpenID Provider.
+> REQUIRED. The fully qualified Issuer URL of the OpenID Provider as defined by [[RFC8414]].
 
 `authorization_endpoint`
 > REQUIRED. The fully qualified URL of the OpenID Provider's Authorization Endpoint as defined by [[RFC6749]].
 
 `token_endpoint`
 > REQUIRED. The fully qualified URL of the OpenID Provider's Token Endpoint as defined by [[RFC6749]].
+
+`registration_endpoint`
+> REQUIRED. The fully qualified URL of the OpenID Provider's Dynamic Registration endpoint [[RFC7591]].
 
 `introspection_endpoint`
 > OPTIONAL. The fully qualified URL of the OpenID Provider's Introspection Endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
@@ -641,7 +644,7 @@ It is RECOMMENDED that OpenID Providers provide cache information through HTTP h
 OpenID Providers SHOULD document their change procedure. In order to support automated transitions to configuration updates, OpenID Providers SHOULD only make non-breaking changes and retain backward compatibility when possible. It is RECOMMENDED that OpenID Providers monitor usage of outdated configuration options used by any OpenID Client and actively work with their administrators to update configurations.
 The above on caching and changes MUST be applied as well to the `jwks_uri` containing the OpenID Provider's key set.
 
-The OpenID Provider MUST provide its public key in JWK Set format, such as the following 2048-bit RSA key:
+The OpenID Provider MUST provide its public key in JWK Set format, such as the following example JWK Set containing a 2048-bit RSA key and a PKIoverheid key:
 
     {
       "keys": [
@@ -657,6 +660,28 @@ The OpenID Provider MUST provide its public key in JWK Set format, such as the f
                 fCaPDNp00J6AbY6w",
           "kty": "RSA",
           "kid": "rsa1"
+        },
+        {
+          "kty": "PKIX",
+          "x5c": [
+            "MIIE3jCCA8agAwIBAgICAwEwDQYJKoZIhvcNAQEFBQAwYzELMAkGA
+            1UEBhMCVVMxITAfBgNVBAoTGFRoZSBHbyBEYWRkeSBHcm91cCwgSW5
+            jLjExMC8GA1UECxMoR2[...]TVSzGh6O1mawGhId/dQb8vxRMDsxux
+            N89txJx9OjxUUAiKEngHUuHqDTMBqLdElrRhjZkAzVvb3du6/KFUJh
+            eqwNTrZEjYx8WnM25sgVjOuH0aBsXBTWVU+4=",
+            "MIIE+zCCBGSgAwIBAgICAQ0wDQYJKoZIhvcNAQEFBQAwgbsxJDAiB
+            gNVBAcTG1ZhbGlDZXJ0IFZhbGlkYXRpb24gTmV0d29yazEXMBUGA1U
+            EChMOVmFsaUNlcnQsIE[...]luYAzBgNVBAsTLFZhbGlDZXJ0IENsY
+            XNzIDIgUG9saWN5IFZhbGlkYXRpb24gQXV0aG9yaXR5MSEwHwYDVQQ
+            DExhodHRwOjZXRn453HWkrugp++85j09VZw==",
+            "MIIC5zCCAlACAQEwDQYJKoZIhvcNAQEFBQAwgbsxJDAiBgNVBAcTG
+            1ZhbGlDZXJ0IFZhbGlkYXRpb24gTmV0d29yazEXMBUGA1UEChMOVmF
+            saUNlcnQsIEluYy4xNT[...]AzBgNVBAsTLFZhbGlDZXJ0IENsYXNz
+            IDIgUG9saWN5IFZhbGlkYXRpb24gQXV0aMtsq2azSiGM5bUMMj4Qss
+            xsodyamEwCW/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd"
+          ],
+          "use": "sign",
+          "kid": "PKIo1"
         }
       ]
     }
