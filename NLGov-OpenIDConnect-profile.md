@@ -781,18 +781,18 @@ In order to provide a source, including integrity and optionally confidentiality
 Data minimization is an essential concept in trust frameworks and federations exchanging End-User identity information for government applications.
 The design of this profile takes into consideration mechanisms to protect the End-User's government identity information and activity from unintentional exposure.
 
-Pairwise Subject identifiers MUST be supported by the OpenID Providers for frameworks where subjects should not be traceable or linkable across Clients by their subject ID. This prevents situations where an End-User may inadvertently be assigned a universal government identifier.
+Pairwise Subject identifiers MUST be supported by the OpenID Providers for frameworks where subjects should not be traceable or linkable across Clients by their Subject ID. This prevents situations where an End-User may inadvertently be assigned a universal government identifier.
 
-Request Claims MUST be supported by OpenID Providers to ensure that only the data the Client explicitly requests is provided in the UserInfo response or ID Token.
+Request Claims using the `claim` parameter MUST be supported by OpenID Providers to ensure that only the data the Client explicitly requests is provided in the UserInfo response or ID Token.
 This prevents situations where a Client may only require a partial set of Claims, but receives (and is therefore exposed to) a full set of Claims. For example, if a Client only needs an identifier and the persons legal age, the OpenID Provider MUST NOT send the Client the full user name and birth date.
 Similarly, broad attribute requests through the `scope` parameter, such as `profile` SHOULD NOT be used.
 
 All Clients MUST apply the concept of data minimization. As a result, a Client MUST NOT request any more identifiers, attributes or other Claims than strictly necessary.
-Additionally, Clients SHOULD ensure they minimize the scope and audience they request, use and forward. This principle applies to both to usage at the Client as well as forwarded access tokens in a Service Intermediation scenario.
-Token Exchange ([[RFC8693]]) SHOULD be used to request access tokens with a minimal scope and audience.
+Additionally, Clients SHOULD ensure they minimize the scope and audience they request, use and forward. This principle applies to both to usage at the Client as well as forwarded Access Tokens in a Service Intermediation scenario.
+Token Exchange ([[RFC8693]]) SHOULD be used to request Access Tokens with a minimal scope and audience.
 
 Despite the mechanisms enforced by this profile, the operational circumstances may allow these controls to be relaxed in a specific context.
-For example, if a bilateral agreement between two agencies legally entitles usage of citizen identifiers, then the pairwise anonymous identifier requirement may be relaxed. In cases where all Clients are entitled to process Claims associated to a subject at an OpenID Provider, the Claims request requirement may be relaxed.
+For example, if a bilateral agreement between two agencies legally entitles usage of citizen identifiers, then the Pairwise Pseudonymous Identifier requirement may be relaxed. In cases where all Clients are entitled to process Claims associated to a subject at an OpenID Provider, the Claims request requirement may be relaxed.
 
 The reasons for relaxing the controls that support data minimization are outside the scope of this profile.
 
