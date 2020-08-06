@@ -131,7 +131,7 @@ The following design considerations apply to all Client types:
 - Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
 
 ### Native and Hybrid Applications
-*Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications are not capable of maintaining the confidentiality of Client credentials, but can sufficiently protect dynamically issued credentials such as tokens. Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], Section 2.1).
+*Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications can sufficiently protect dynamically issued secrets, but are not capable of maintaining the confidentiality of secrets that are statically included as part of an app distribution. Therefore, Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], Section 2.1).
 
 *Hybrid applications* are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
@@ -316,7 +316,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > OPTIONAL. The type of identifier passed in the `sub` Claim. In order to support multiple types of identifiers in an interoperable way, the type of identifier used for the identifier in the `sub` Claim SHOULD be explicitly included. The value of the `sub_id_type` MUST be a URI. Values supported by the OpenID Provider are provided via the [Discovery endpoint](#discovery-0).
 
 `acr`
-> REQUIRED. The LoA the End-User was authenticated at. MUST be a member of the `acr_values` list from the Authentication Request. See also [Section 5.2.3](#authentication-context).
+> REQUIRED. The LoA the End-User was authenticated at. MUST be at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters) or - if none was requested - a Level of Assurance established through prior agreement. See also [Section 5.2.3](#authentication-context).
 
 `nonce`
 > REQUIRED. MUST contain the `nonce` value that was provided in the Authentication Request.
@@ -438,7 +438,7 @@ Whereas the iGov Assurance Profile for OpenID Connect [[OpenID.iGov]] recommends
 
 OpenID Providers SHOULD use eIDAS Level of Assurance (LoA) values for the `acr` Claim, but MAY use different values if eIDAS is not applicable.
 
-OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters).
+OpenID Providers MUST provide a Level of Assurance as `acr` value that is at least the requested Level of Assurance value requested by the Client (either via the `acr_values` or `claims` parameters) or - if none was requested - a Level of Assurance established through prior agreement.
 
 OpenID Providers MUST NOT provide Authentication Methods References (`amr`), but MUST use Authentication Context Class References (`acr`) instead.
 
@@ -674,11 +674,15 @@ In other cases, particularly when dealing with Browser-based applications or Nat
 
 This profile imposes the following requirements upon the Client Registration request:
 
-Initial access tokens
-> In cases where the OpenID Provider limits the parties that are allowed to register Clients using Dynamic Registration (i.e. when open registration is not applicable), the use of an initial access token is REQUIRED for making Client Registration requests. In cases where open registration is applicable, the use of an initial access token is OPTIONAL.
+`Initial access tokens`
+> In cases where the OpenID Provider limits the parties that are allowed to register Clients using Dynamic Registration (i.e. when open registration is not applicable), the use of an initial access token in the form of an OAuth2 Bearer token [[RFC6750]] is REQUIRED for making Client Registration requests. In cases where open registration is applicable, the use of an initial access token is OPTIONAL.
 
 `redirect_uris`
-> REQUIRED. Array of Redirection URI values used by the Client. MUST be absolute HTTPS URLs (unless the Client is a native application operating on a desktop device (and registered as such), in which case it MAY be absolute HTTP URLs with the literal loopback IP addresses and port numbers the client is listening on as hostnames (MUST NOT use `localhost`, see [[RFC8252]] Sections 7.3 and 8.3)) and one of these registered Redirection URI values MUST exactly match the `redirect_uri` parameter value used in each Authorization Request.
+> REQUIRED. Array of Redirection URI values used by the Client. MUST be absolute HTTPS URLs. One of these registered Redirection URI values MUST exactly match the `redirect_uri` parameter value used in each Authorization Request.
+
+> The only exception is when the Client is a native application operating on a desktop device (and is registered as such). In such cases:
+> - the `redirect_uri` MAY be absolute HTTP URLs with the literal loopback IP addresses and port numbers the client is listening on as hostnames (MUST NOT use `localhost`, see [[RFC8252]] Sections 7.3 and 8.3)); and
+> - even though the port number is part of the registered `redirect_uri`, the OpenID Provider MUST allow any port to be specified in the Authorization Request for loopback IP redirect URIs.
 
 `jwks_uri` *or* `jwks`
 > Clients SHOULD reference their JSON Web Key (JWK) Set via the `jwks_uri` parameter rather than passing their JWK Set document by value using the `jwks` parameter, as it allows for easier key rotation. Also, the `jwks` and `jwks_uri` parameters MUST NOT both be present in the same request.

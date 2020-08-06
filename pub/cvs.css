@@ -18,6 +18,14 @@ blockquote {
   border: none !important;
 }
 
+/* Unordered list styling om opsommingen in definitielijsten goed te stylen */
+blockquote>ul {
+  margin-top: -1em !important;
+}
+blockquote>ul>li {
+  margin: 0 !important;
+}
+
 :not(code) > abbr {
   border-bottom: 1px dotted #005a9c !important;
   cursor: help;
