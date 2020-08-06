@@ -807,7 +807,7 @@ All Clients MUST conform to applicable recommendations found in the Security Con
 
 <!-- [Algorithms](#algorithms) --->
 ## Algorithms
-Security of OpenID Connect and OAuth 2.0 is significantly based on the application of cryptography. Herein the choice of algorithms is important for both security as well as interoperability. This section lists relevant choices for algorithms for all message and tokens.
+Security of OpenID Connect and OAuth 2.0 is significantly based on the application of cryptography. Herein the choice of algorithms is important for both security as well as interoperability. This section lists relevant choices of algorithms for all messages and tokens.
 
 For signing of messages and tokens, implementations:
 - MUST support `RS256`.
@@ -826,7 +826,7 @@ For symmetric encryption, implementations:
 - MAY support other algorithms, provided they are at least equally secure as `A256GCM`.
 - MUST NOT support algorithms that are less secure than `A256GCM`.
 
-In addition to proper selection and configuration of algorithms, implementation MUST ensure to use a cryptographically secure (pseudo)random generator. Administrators and implementations MUST apply industry best practices for key management of cryptographic keys. This includes best practices for selection of applicable key length, as applicable for the relevant algorithms selected.
+In addition to proper selection and configuration of algorithms, implementations MUST ensure to use a cryptographically secure (pseudo)random generator. Administrators and implementations MUST apply industry best practices for key management of cryptographic keys. This includes best practices for selection of applicable key length as applicable for the relevant algorithm(s) selected.
 
 # Future updates
 This profile was creating using published, finalized specifications and standards as basis. Some relevant new documents are under development at the time of writing. As this profile does not use any draft documents as basis, these cannot be included.
