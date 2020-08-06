@@ -829,12 +829,12 @@ For symmetric encryption, implementations:
 In addition to proper selection and configuration of algorithms, implementations MUST ensure to use a cryptographically secure (pseudo)random generator. Administrators and implementations MUST apply industry best practices for key management of cryptographic keys. This includes best practices for selection of applicable key length as applicable for the relevant algorithm(s) selected.
 
 # Future updates
-This profile was creating using published, finalized specifications and standards as basis. Some relevant new documents are under development at the time of writing. As this profile does not use any draft documents as basis, these cannot be included.
+This profile was created using published, finalized specifications and standards as basis. Some relevant new documents are under development at the time of writing. As this profile does not use any draft documents as basis, these cannot be included.
 However, we want to attend readers to these developments and for them to take into account that future updates to this profile may incorporate the resulting standards and specifications. Furthermore we would like encourage readers to follow relevant developments.
 
 ## Federations
-This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain. However, no specific support or requirements for federations are included in this version of this profile.
-The OpenID Foundation is currently drafting a specification for explicit support of federations using OpenID Connect. Future updates to this profile are likely to adopt this profile once finalized. See [Federation at the OpenID Foundation](https://openid.net/tag/federation/).
+This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain orgranisations. However, no specific support or requirements for federations are included in this version of this profile.
+The OpenID Foundation is currently drafting a specification for explicit support of federations using OpenID Connect. Future updates to this profile may adopt such federation specificaitons once finalized. See [Federation at the OpenID Foundation](https://openid.net/tag/federation/).
 
 ## Other features
 The following overview lists RFC and BCP documents being drafted by the OAuth 2.0 working group of the Internet Engineering Task Force (IETF) and the OpenID Foundation. Future updates to this profile are likely to seek interoperability with these RFCs and BCPs once finalized.
