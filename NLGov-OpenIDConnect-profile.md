@@ -531,7 +531,7 @@ This profile imposes the following requirements upon the Discovery document:
 > REQUIRED. The fully qualified URL of the OpenID Provider's Token Endpoint as defined by [[RFC6749]].
 
 `registration_endpoint`
-> REQUIRED. The fully qualified URL of the OpenID Provider's Dynamic Registration endpoint [[RFC7591]].
+> RECOMMENDED. The fully qualified URL of the OpenID Provider's Dynamic Registration endpoint [[RFC7591]].
 
 `introspection_endpoint`
 > OPTIONAL. The fully qualified URL of the OpenID Provider's Introspection Endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
