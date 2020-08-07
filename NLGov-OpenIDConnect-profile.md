@@ -644,7 +644,7 @@ It is RECOMMENDED that OpenID Providers provide cache information through HTTP h
 OpenID Providers SHOULD document their change procedure. In order to support automated transitions to configuration updates, OpenID Providers SHOULD only make non-breaking changes and retain backward compatibility when possible. It is RECOMMENDED that OpenID Providers monitor usage of outdated configuration options used by any OpenID Client and actively work with their administrators to update configurations.
 The above on caching and changes MUST be applied as well to the `jwks_uri` containing the OpenID Provider's key set.
 
-The OpenID Provider MUST provide its public key in JWK Set format, such as the following example JWK Set containing a 2048-bit RSA key and a PKIoverheid key:
+The OpenID Provider MUST provide its public key in JWK Set format, such as the following example JWK Set containing a PKIoverheid certificate chain and its 2048-bit RSA key (example certificates abbreviated):
 
     {
       "keys": [
@@ -659,10 +659,7 @@ The OpenID Provider MUST provide its public key in JWK Set format, such as the f
                 E0__RI0kDU-27mb6esswnP2WgHZQPsk779fTcNDBIcYgyLujlcUATEq
                 fCaPDNp00J6AbY6w",
           "kty": "RSA",
-          "kid": "rsa1"
-        },
-        {
-          "kty": "PKIX",
+          "kid": "rsa-PKIo",
           "x5c": [
             "MIIE3jCCA8agAwIBAgICAwEwDQYJKoZIhvcNAQEFBQAwYzELMAkGA
             1UEBhMCVVMxITAfBgNVBAoTGFRoZSBHbyBEYWRkeSBHcm91cCwgSW5
@@ -680,8 +677,7 @@ The OpenID Provider MUST provide its public key in JWK Set format, such as the f
             IDIgUG9saWN5IFZhbGlkYXRpb24gQXV0aMtsq2azSiGM5bUMMj4Qss
             xsodyamEwCW/POuZ6lcg5Ktz885hZo+L7tdEy8W9ViH0Pd"
           ],
-          "use": "sign",
-          "kid": "PKIo1"
+          "use": "sig",
         }
       ]
     }
