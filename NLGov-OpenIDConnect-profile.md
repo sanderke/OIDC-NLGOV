@@ -280,6 +280,7 @@ Native Clients MUST either be provisioned a unique per-instance Client identifie
 Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual labor and the risks of configuration errors. Dynamic Client Registration Management Protocol [[RFC7592]] MAY be used by Clients.
 
 # OpenID Provider profile
+For OpenID Providers the following items are applicable:
 - OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see also [Chapter 3](#flow)).
 - OpenID Providers MUST support "Proof Key for Code Exchange ([[RFC7636]])" to allow public Clients to protect calls to the Token Endpoint.
 - OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
