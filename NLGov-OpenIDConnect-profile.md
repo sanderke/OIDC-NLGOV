@@ -119,7 +119,7 @@ This profile supports the following types of Client applications to which specif
 
 The following design considerations apply to all Client types:
 - Clients SHOULD restrict its Client-Side script (e.g. JavaScript) execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
-- Clients SHOULD use "Subresource Integrity ([[SRI]])" to verify that external dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
+- Clients SHOULD use "Subresource Integrity ([[SRI]])" to verify that any dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
 ### Web Applications
 *Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
