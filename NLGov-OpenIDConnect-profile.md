@@ -205,7 +205,7 @@ All Clients MUST validate the following in received Authentication Responses:
 `state`
 > The `state` response parameter MUST equal the `state` request parameter sent in the Authentication Request.
 
-This in line with OpenID Connect Core ([[OpenID.Core]], section 3.1.2.7), which equals to OAuth 2.0 ([[RFC6749]], section 4.1.2 and 10.12). Verifying the `state` returned in the Authorization Response is part of CSRF mitigation measures and will help prevent attacks with late or stale repsonses, among others.
+This in line with OpenID Connect Core ([[OpenID.Core]], Section 3.1.2.7), which equals to OAuth 2.0 ([[RFC6749]], Section 4.1.2 and 10.12). Verifying the `state` returned in the Authorization Response is part of CSRF mitigation measures and will help prevent attacks with late or stale repsonses, among others.
 
 ## Token Endpoint
 
@@ -237,6 +237,15 @@ The following parameters are specified:
  
 `client_id`
 > REQUIRED, in case mutually authenticated TLS is used for Client Authentication.
+
+### Token Response Validation
+All Clients MUST validate the following in received Token Responses:
+
+- Follow the Token Response validation rules in [[RFC6749]], Sections 5.1 and 10.12.
+- Validate the Access Token according to [[OpenID.Core]], Section 3.1.3.8.
+- Validate the ID Token according to [[OpenID.Core]], Section 3.1.3.7, and the below mentioned requirements for validating the ID Token.
+
+This in line with [[OpenID.Core]], Section 3.1.3.5.
 
 ### ID Tokens
 All Clients MUST validate the signature of an ID Token before accepting it. Validation can be done using the public key of the issuing server, which is published in JSON Web Key (JWK) format. ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
