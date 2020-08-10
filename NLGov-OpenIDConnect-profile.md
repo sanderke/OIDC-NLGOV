@@ -426,10 +426,15 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
         "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
         "iss": "urn:uuid:b556992a-e233-4fdc-915a-e2b52d3cc355",
         "represents": {
-          /* Intermediary in representation chain */
-          "sub": "q5r5sd8ffY",
-          "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
+          /* Intermediary in representation chain - an organization in this example */
+          "sub": "492099595",
+          "sub_id_type": "urn:nl-eid-gdi:1.0:id:RSIN",
           "iss": "urn:uuid:28e0686f-20ff-41bd-8520-57b9c68cc9a3",
+          "alt_sub": {
+            "sub": "27381312",
+            "sub_id_type": "urn:nl-eid-gdi:1.0:id:KvKnr",
+            "iss": "urn:uuid:ebc29845-d35f-4c6a-bbb2-a59fdcb1cc6b"
+          }
           "represents": {
             /* Service Consumer - represented by the End-User */
             "sub": "4Yg8u72NxR",
