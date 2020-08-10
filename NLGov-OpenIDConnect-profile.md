@@ -249,6 +249,9 @@ Clients MUST verify the following in received ID tokens:
 `aud`
 > The `audience` Claim contains the Client ID of the Client.
 
+`nonce`
+> The `nonce` parameter in the ID Token MUST equal the `nonce` request parameter sent in the Authentication Request.
+
 `exp`, `iat`, `nbf`
 > The `expiration`, `issued at`, and `not before` timestamps for the token are within acceptable ranges. These Claims are formatted as Unix Time Stamps (number of seconds since 1970-01-01T00:00:00Z UTC). Values for `iat` and `nbf` MUST lie in the past and `exp` MUST lie in the future; the acceptable range for how far away `iat` is in the past is specific to the Client.
 
