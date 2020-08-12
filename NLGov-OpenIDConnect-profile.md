@@ -118,6 +118,7 @@ This profile supports the following types of Client applications to which specif
 **Note:** this profile uses a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[?OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provisioning of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
 The following design considerations apply to all Client types:
+- Clients MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
 - Clients SHOULD restrict its Client-Side script (e.g. JavaScript) execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
 - Clients SHOULD use "Subresource Integrity ([[SRI]])" to verify that any dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
@@ -128,7 +129,6 @@ The following design considerations apply to all Client types:
 *Browser-based applications* are applications that are dynamically downloaded and executed in a web browser that are also sometimes referred to as *user-agent-based applications* or *single-page applications*. Browser-based applications are considered to be not capable of maintaining the confidentiality of secrets, as they may be vulnerable to several types of attacks, including Cross-Site Scripting (XSS), Cross Site Request Forgery (CSRF) and OAuth token theft. Browser-based applications are considered *public* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
 
 - Browser-based applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
-- Browser-based applications MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
 
 ### Native and Hybrid Applications
 *Native applications* are applications installed and executed on the device used by the End-User (i.e. desktop applications, native mobile applications). Native applications can sufficiently protect dynamically issued secrets, but are not capable of maintaining the confidentiality of secrets that are statically included as part of an app distribution. Therefore, Native applications are considered *public* Clients, except when they are provisioned per-instance secrets via mechanisms like Dynamic Client Registration (OAuth 2.0 [[RFC6749]], Section 2.1).
@@ -137,7 +137,6 @@ The following design considerations apply to all Client types:
 
 - Native applications MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC8252]].
 - The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure Client Authentication.
-- Public native applications MUST use PKCE to protect calls to the Token Endpoint. Confidential native applications SHOULD use PKCE.
 - Native applications MUST use an external user-agent or 'in-app browser tab' to make authorization requests; an 'embedded user-agent' or 'web-view' components MUST NOT be used for this purpose. See "OAuth 2.0 for Native apps" [[RFC8252]] for more information on the 'in-app browser tab' feature and support on various platforms.
 
 ## Authorization Endpoint
@@ -176,10 +175,10 @@ Request Parameters:
 > OPTIONAL. This parameter is used to request specific Claims. The value is a JSON object listing the requested Claims, as specified in section 5.5 of [[OpenID.Core]].
 
 `code_challenge`
->  RECOMMENDED. Code challenge as in PKCE [[RFC7636]]. The use of PKCE is REQUIRED in Use Cases where public clients are involved and is RECOMMENDED in Use Cases where confidential clients are involved.
+>  REQUIRED. Code challenge as in PKCE [[RFC7636]].
 
 `code_challenge_method`
-> REQUIRED, in case `code_challenge` is present. MUST use the value of `S256`.
+> REQUIRED. MUST use the value of `S256`.
 
 A sample request may look like:
 ```
@@ -191,6 +190,8 @@ https://idp-p.example.com/authorize?
  &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb
  &state=481e9c0c52e751a120fd90f7f4b5a637
  &acr_values=http%3a%2f%2feidas.europa.eu%2fLoA%2fsubstantial
+ &code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM
+ &code_challenge_method=S256
 ```
 
 ### Request Objects
@@ -296,7 +297,7 @@ Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual labo
 # OpenID Provider profile
 For OpenID Providers the following items are applicable:
 - OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see also [Chapter 3](#flow)).
-- OpenID Providers MUST support "Proof Key for Code Exchange ([[RFC7636]])" using only the "S256" verification method to allow public Clients to protect calls to the Token Endpoint.
+- OpenID Providers MUST support and require the use of "Proof Key for Code Exchange ([[RFC7636]])" using only the "S256" verification method to allow public Clients to protect calls to the Token Endpoint.
 - OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
 - OpenID Providers that support Web Applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
 - OpenID Providers that support Native Applications MUST follow the best practices specified in OAuth 2.0 for Native Apps [[RFC8252]].
