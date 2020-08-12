@@ -239,6 +239,9 @@ The following parameters are specified:
 `client_id`
 > REQUIRED, in case mutually authenticated TLS is used for Client Authentication.
 
+`code_verifier`
+> REQUIRED. Code verifier as in PKCE [[RFC7636]].
+
 ### Token Response Validation
 All Clients MUST validate the following in received Token Responses:
 
