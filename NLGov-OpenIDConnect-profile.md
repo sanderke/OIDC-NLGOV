@@ -117,7 +117,7 @@ OAuth 2.0 defines two Client Types (`confidential` and `public` clients) and thr
 
 This profile includes specific design considerations related to security and platform capabilities for these different Client Types and Profiles.
 
-**Note:** The iGov and NL GOV Assurance profiles for OAuth 2.0 use a slightly different segregation of Client Types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively. This profile follows the OAuth 2.0 specification [[OAuth2.0]] instead, as it allows for better provisioning of specific security considerations specific to the different client types and it aligns better to the Security Best Practices for the different Client profiles.
+**Note:** The iGov and NL GOV Assurance profiles for OAuth 2.0 use a slightly different segregation of Client Types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively. This profile follows the OAuth 2.0 specification [[RFC6749]] instead, as it allows for better provisioning of specific security considerations specific to the different client types and it aligns better to the Security Best Practices for the different Client profiles.
 
 The following design considerations apply to all Clients:
 - Clients MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
@@ -213,7 +213,7 @@ This in line with OpenID Connect Core ([[OpenID.Core]], Section 3.1.2.7), which 
 ## Token Endpoint
 
 ### Client Authentication
-Confidential Clients, as defined in [Section 4.1](#client-types), MUST authenticate to the OpenID Provider using either:
+Confidential Clients, as defined in [Section 4.1](#client-types-and-profiles), MUST authenticate to the OpenID Provider using either:
 - a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the `private_key_jwt` method defined in [[OpenID.Core]]; or
 - mutually authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the `client_id` parameter MUST be included.
 
