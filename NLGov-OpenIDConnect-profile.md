@@ -112,10 +112,12 @@ The flow described by these steps is illustrated as follows:
 
 # OpenID Client profile
 
-## Client types
-This profile supports the following types of Client applications to which specific design considerations related to security and platform capabilities apply.
+## Client Types and Profiles
+OAuth 2.0 defines two Client Types (`confidential` and `public` clients) and three Client Profiles (*Web Applications*, *Browser / User-Agent based Applications*, and *Native Applications*).
 
-**Note:** this profile uses a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[?OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provisioning of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
+This profile includes specific design considerations related to security and platform capabilities for these different Client Types and Profiles.
+
+**Note:** The iGov and NL GOV Assurance profiles for OAuth 2.0 use a slightly different segregation of Client Types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively. This profile follows the OAuth 2.0 specification [[OAuth2.0]] instead, as it allows for better provisioning of specific security considerations specific to the different client types and it aligns better to the Security Best Practices for the different Client profiles.
 
 The following design considerations apply to all Clients:
 - Clients MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
@@ -300,7 +302,7 @@ Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual labo
 # OpenID Provider profile
 For OpenID Providers the following items are applicable:
 - OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see also [Chapter 3](#flow)).
-- OpenID Providers MUST support and require the use of "Proof Key for Code Exchange ([[RFC7636]])" using only the "S256" verification method to allow public Clients to protect calls to the Token Endpoint.
+- OpenID Providers MUST support and require the use of "Proof Key for Code Exchange ([[RFC7636]])" using only the `S256` verification method and a code verifier with at least 43 and at most 128 cryptographically random characters to allow public Clients to protect calls to the Token Endpoint.
 - OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
 - OpenID Providers that support Web Applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
 - OpenID Providers that support Native Applications MUST follow the best practices specified in OAuth 2.0 for Native Apps [[RFC8252]].
