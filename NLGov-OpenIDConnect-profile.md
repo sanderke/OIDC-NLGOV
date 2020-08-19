@@ -565,6 +565,9 @@ This profile imposes the following requirements upon the Discovery document:
 `token_endpoint`
 > REQUIRED. The fully qualified URL of the OpenID Provider's Token Endpoint as defined by [[RFC6749]].
 
+`userinfo_endpoint`
+> RECOMMENDED. The fully qualified URL of the OpenID Provider's Userinfo Endpoint as defined by [[OpenID.Core]].
+
 `registration_endpoint`
 > RECOMMENDED. The fully qualified URL of the OpenID Provider's Dynamic Registration endpoint [[RFC7591]].
 
@@ -580,6 +583,12 @@ This profile imposes the following requirements upon the Discovery document:
 `scopes_supported`
 > REQUIRED. The list of scopes the OpenID Provider supports.
 
+`response_types_supported`
+> REQUIRED. JSON array containing the list of OAuth 2.0 `response_type` values that the OpenID Provider supports. In the context of this profile, the value MUST Be ["code"].
+
+`grant_types_supported`
+> REQUIRED. JSON array containing the list of OAuth 2.0 `grant_type` values that the OpenID Provider supports. In the context of this profile, the value MUST be ["authorization_code"].
+
 `claims_supported`
 > REQUIRED. JSON array containing the list of Claims available in the supported scopes. See [Claims Supported](#claims-supported).
 
@@ -589,8 +598,14 @@ This profile imposes the following requirements upon the Discovery document:
 `acr_values_supported`
 > OPTIONAL. JSON array containing the list of supported Levels of Assurances. See [Authentication Context](#authentication-context).
 
+`subject_types_supported`
+> REQUIRED. JSON array containing the list of Subject Identifier types that this OpenID Provider supports. Valid types include `pairwise` and `public`.
+
 `request_uri_parameter_supported`
 > OPTIONAL. Boolean value which specifies whether the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. As per [[OpenID.Core]], the default value is `true`.
+
+`id_token_signing_alg_values_supported`
+> REQUIRED. JSON array containing the list of JWS signing algorithms (`alg` values) supported by the OpenID Provider for the ID Token to encode the Claims in a JWT. For more information, refer to [Algorithms](#algorithms).
 
 `require_request_uri_registration`
 > REQUIRED and MUST have Boolean value `true` if the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. OPTIONAL otherwise. This parameter indicates that `request_uri` values used by the Client to send Request Objects by reference must always be pre-registered.
