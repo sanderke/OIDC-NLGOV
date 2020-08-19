@@ -117,7 +117,7 @@ This profile supports the following types of Client applications to which specif
 
 **Note:** this profile uses a slightly different segregation of applications than the iGov and NL GOV Assurance profiles for OAuth 2.0 and follows the client profiles specified in [[RFC6749]] and accompanying security best practices ([[?OAuth2.Browser-Based-Apps]] and [[RFC8252]]) instead, as it allows for better provisioning of specific security considerations specific to the different client types. The NL GOV Assurance profile for OAuth 2.0 identifies the following client types types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively.
 
-The following design considerations apply to all Client types:
+The following design considerations apply to all Clients:
 - Clients MUST use "Proof Key for Code Exchange ([[RFC7636]])" to protect calls to the Token Endpoint.
 - Clients SHOULD restrict its Client-Side script (e.g. JavaScript) execution to a set of statically hosted scripts via a "Content Security Policy ([[CSP]])".
 - Clients SHOULD use "Subresource Integrity ([[SRI]])" to verify that any dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
@@ -305,7 +305,9 @@ For OpenID Providers the following items are applicable:
 - OpenID Providers that support Web Applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
 - OpenID Providers that support Native Applications MUST follow the best practices specified in OAuth 2.0 for Native Apps [[RFC8252]].
 
-## Request Objects
+## Authorization Endpoint
+
+### Request Objects
 OpenID Providers MUST accept requests containing a Request Object signed by the Client's private key. OpenID Providers MUST validate the signature on such requests against the Client's registered public key. OpenID Providers MUST accept Request Objects encrypted to the OpenID Provider's public key.
 
 OpenID Providers SHOULD accept Request Objects by reference using the `request_uri` parameter. The Request Object can be either hosted by the Client or pushed to the OpenID Provider prior to the Authentication Request. OpenID Providers MUST verify that the `request_uri` parameter exactly matches one of the `request_uri` values for the Client pre-registered at the OpenID Provider, with the matching performed as described in Section 6.2.1 of [[RFC3986]] (Simple String Comparison).
@@ -314,7 +316,14 @@ Using Request Objects allows for Clients to create a request that is protected f
 
 Note that when a Request Object is used (either passed by value or by reference), the Client MAY send the parameters included in the Request Object duplicated in the query parameters as well for backwards compatibility (so that the request is a valid OAuth 2.0 Authorization Request). However, the OpenID Provider MUST only consider the parameters included in the Request Object and ignore the duplicated query parameters.
 
-## ID Tokens
+## Token Endpoint
+
+### Token Request Validation
+OpenID Providers MUST validate all incoming Token Requests according to [[OpenID.Core]], Section 3.1.3.2.
+
+In addition, OpenID Providers MUST validate the `code_verifier` value against the `code_challenge` and `code_challenge_method` values specified by the Client in the Authorization Request according to [[PKCE]], Section 4.6.
+
+### ID Tokens
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
 ID Tokens MAY be encrypted using the appropriate key of the requesting Client.
 
@@ -473,7 +482,7 @@ Clients MAY send an `vtr` (Vectors of Trust Request) parameter. If both the `vtr
 ### Vectors of Trust
 OpenID Providers MAY provide `vot` (Vectors of Trust) and `vtm` (Vector Trust Mark) values in ID Tokens only if the `acr` Claim is not requested by the Client (either via the `acr_values` or `claims` parameters). More information on Vectors of Trust is provided in [[RFC8485]].
 
-## Access Tokens
+### Access Tokens
 This profile requires an Access Token to be in JWT form. This is in line with the underlying NL GOV Assurance profile for OAuth 2.0 [[OAuth2.NLGov]].
 
 Using a JWT formatted Access Token allows any OpenID Client to consume and verify a token without the need for introspection, thus reducing the dependency on an interaction with an external endpoint. As a result this may reduce load and availability requirements on the OpenID Provider. Furthermore, it provides a more uniform format over Access Token, ID Token, UserInfo response and Introspection response.
@@ -482,7 +491,7 @@ Note that ID Tokens and UserInfo responses are primarily intended for the Client
 The Resource Server is typically not considered as an actor in OpenID Connect, but OpenID Providers will often act as Authorization Servers. In the case of Service Intermediation this is applicable by definition.
 This profile does not directly place any constraints on the placement of Claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
 
-## Refresh Tokens
+### Refresh Tokens
 OpenID Providers MAY issue Refresh Tokens to Clients; when used, Refresh Tokens MUST be one-time-use. Additionally, OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1).
 
 ## UserInfo Endpoint
