@@ -589,8 +589,14 @@ This profile imposes the following requirements upon the Discovery document:
 `grant_types_supported`
 > REQUIRED. JSON array containing the list of OAuth 2.0 `grant_type` values that the OpenID Provider supports. In the context of this profile, the value MUST be ["authorization_code"].
 
+`claims_parameter_supported`
+> OPTIONAL. Boolean value specifying whether the OpenID Provider supports the use of the `claims` parameter.
+
 `claims_supported`
 > REQUIRED. JSON array containing the list of Claims available in the supported scopes. See [Claims Supported](#claims-supported).
+
+`claim_types_supported`
+> OPTIONAL. JSON array containing the list of Claim types that the OpenID Provider supports. REQUIRED when `aggregated` or `distributed` Claims are used. If omitted, the OpenID Provider only supports `normal` Claims.
 
 `sub_id_types_supported`
 > OPTIONAL. JSON array containing the list of supported types of Subject Identifiers in the `sub` Claim of ID Tokens. The values MUST be URIs, the exact URIs to be used are situation specific; as an example encrypted BSNs and Pseudonyms could be specified with `urn:nl-eid-gdi:1.0:id:BSN` or `urn:nl-eid-gdi:1.0:id:Pseudonym` respectively.
@@ -601,11 +607,17 @@ This profile imposes the following requirements upon the Discovery document:
 `subject_types_supported`
 > REQUIRED. JSON array containing the list of Subject Identifier types that this OpenID Provider supports. Valid types include `pairwise` and `public`.
 
-`request_uri_parameter_supported`
-> OPTIONAL. Boolean value which specifies whether the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. As per [[OpenID.Core]], the default value is `true`.
+`token_endpoint_auth_methods_supported`
+> REQUIRED. JSON array containing the list of Client Authentication methods that this OpenID Provider supports. With respect to this profile, the allowed values are `private_key_jwt`, `tls_client_auth`, or both.
 
 `id_token_signing_alg_values_supported`
 > REQUIRED. JSON array containing the list of JWS signing algorithms (`alg` values) supported by the OpenID Provider for the ID Token to encode the Claims in a JWT. For more information, refer to [Algorithms](#algorithms).
+
+`userinfo_signing_alg_values_supported`
+> REQUIRED. JSON array containing the list of JWS signing algorithms (`alg` values) supported by the UserInfo Endpoint to encode the Claims in a JWT. For more information, refer to [Algorithms](#algorithms).
+
+`request_uri_parameter_supported`
+> OPTIONAL. Boolean value which specifies whether the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. As per [[OpenID.Core]], the default value is `true`.
 
 `require_request_uri_registration`
 > REQUIRED and MUST have Boolean value `true` if the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. OPTIONAL otherwise. This parameter indicates that `request_uri` values used by the Client to send Request Objects by reference must always be pre-registered.
