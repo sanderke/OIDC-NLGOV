@@ -321,7 +321,7 @@ Note that when a Request Object is used (either passed by value or by reference)
 ### Token Request Validation
 OpenID Providers MUST validate all incoming Token Requests according to [[OpenID.Core]], Section 3.1.3.2.
 
-In addition, OpenID Providers MUST validate the `code_verifier` value against the `code_challenge` and `code_challenge_method` values specified by the Client in the Authorization Request according to [[PKCE]], Section 4.6.
+In addition, OpenID Providers MUST validate the `code_verifier` value against the `code_challenge` and `code_challenge_method` values specified by the Client in the Authorization Request according to [[RFC7636]], Section 4.6.
 
 ### ID Tokens
 All ID Tokens MUST be signed by the OpenID Provider's private signature key.
