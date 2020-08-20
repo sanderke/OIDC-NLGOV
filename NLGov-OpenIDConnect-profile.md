@@ -284,7 +284,7 @@ Clients SHOULD acquire metadata using either the "OpenID Connect Discovery 1.0" 
 
 Clients SHOULD NOT use OpenID Provider Issuer Discover using WebFinger (as described in [[OpenID.Core]], Section 2) to avoid privacy issues such as leaking information to unknown locations.
 
-Clients SHOULD follow caching directives provided via HTTP headers [[RFC7234]] by the OpenID Provider for the OpenID Provider's Discovery and `jwks` endpoints. This to avoid having to unnecessarily re-retrieve these documents while getting fresh updates of these documents when they have changed.
+Clients SHOULD follow caching directives provided by the OpenID Provider via HTTP headers [[RFC7234]] for the OpenID Provider's Discovery and `jwks` endpoints. This to avoid having to unnecessarily re-retrieve these documents while getting fresh updates of these documents when they have changed.
 
 Clients SHOULD support `signed_metadata` as specified in [[RFC8414]] Section 2.1. In case signed metadata is available, this MUST be used over non-signed metadata and the signature MUST be verified prior to further utilizing any contents.
 
