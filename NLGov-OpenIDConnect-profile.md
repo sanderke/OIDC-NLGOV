@@ -113,7 +113,7 @@ The flow described by these steps is illustrated as follows:
 # OpenID Client profile
 
 ## Client Types
-OAuth 2.0 defines two Client Types (`confidential` and `public` clients) and three Client Profiles (*Web Applications*, *Browser / User-Agent based Applications*, and *Native Applications*).
+OAuth 2.0 defines two Client Types (*confidential* and *public* Clients) and three Client Profiles (*Web Applications*, *Browser / User-Agent based Applications*, and *Native Applications*).
 
 This profile includes specific design considerations related to security and platform capabilities for these different Client Types and Profiles.
 
