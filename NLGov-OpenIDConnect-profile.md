@@ -280,17 +280,14 @@ Clients MUST verify the following in received ID tokens:
 All Clients SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes.
 
 ### Obtaining OpenID Provider metadata
-Clients and Resource Servers SHOULD acquire metadata using either the "OpenID Connect Discovery 1.0" [[OpenID.Discovery]] method using the `/.well-known/openid-configuration` location (section 4), or the "OAuth 2.0 Authorization Server Metadata" [[RFC8414]] method using the `/.well-known/oauth-authorization-server` location (section 3).
+Clients SHOULD acquire metadata using either the "OpenID Connect Discovery 1.0" [[OpenID.Discovery]] method using the `/.well-known/openid-configuration` location (section 4), or the "OAuth 2.0 Authorization Server Metadata" [[RFC8414]] method using the `/.well-known/oauth-authorization-server` location (section 3).
 
 Clients SHOULD NOT use OpenID Provider Issuer Discover using WebFinger (as described in [[OpenID.Core]], Section 2) to avoid privacy issues such as leaking information to unknown locations.
 
-### Caching
-Clients SHOULD cache OpenID Provider metadata and public keys made available from the `jwks` endpoint, by utilizing the cache directives provided via HTTP headers by the OpenID Provider [[RFC7234]].
+Clients SHOULD follow caching directives provided via HTTP headers [[RFC7234]] by the OpenID Provider for the OpenID Provider's Discovery and `jwks` endpoints. This to avoid having to unnecessarily re-retrieve these documents while getting fresh updates of these documents when they have changed.
 
-### Signed metadata
 Clients SHOULD support `signed_metadata` as specified in [[RFC8414]] Section 2.1. In case signed metadata is available, this MUST be used over non-signed metadata and the signature MUST be verified prior to further utilizing any contents.
 
-### Public keys
 Clients MUST use the public keys obtained from the `jwks` endpoint to validate the signature on tokens or to encrypt Request Objects to the OpenID Provider.
 
 ## Registration
