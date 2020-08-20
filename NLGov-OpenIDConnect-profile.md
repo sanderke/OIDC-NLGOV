@@ -279,18 +279,19 @@ Clients MUST verify the following in received ID tokens:
 ## Discovery
 All Clients SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes.
 
-Clients and Resource Servers SHOULD acquire metadata using either the "OpenID Connect Discovery 1.0" [[OpenID.Discovery]] method using the `/.well-known/openid-configuration` location (section 4), or the "OAuth 2.0 Authorization Server Metadata" [[RFC8414]] method using the `/.well-known/oauth-authorization-server` location (section 3). Methods using WebFinger with (partial) personal identifiable information SHOULD NOT be used, to avoid privacy issues such as leaking information to unknown locations.
+### Obtaining OpenID Provider metadata
+Clients and Resource Servers SHOULD acquire metadata using either the "OpenID Connect Discovery 1.0" [[OpenID.Discovery]] method using the `/.well-known/openid-configuration` location (section 4), or the "OAuth 2.0 Authorization Server Metadata" [[RFC8414]] method using the `/.well-known/oauth-authorization-server` location (section 3).
 
-Clients and Resource Servers SHOULD cache OpenID Provider metadata once an OpenID Provider has been discovered and used by the Client. Clients and Resource Servers SHOULD utilize the HTTP headers provided by the OpenID Provider for caching [[RFC7234]].
+Clients SHOULD NOT use OpenID Provider Issuer Discover using WebFinger (as described in [[OpenID.Core]], Section 2) to avoid privacy issues such as leaking information to unknown locations.
 
-Clients SHOULD support `signed_metadata` as specified in [[RFC8414]] Section 2.1.
-In case signed metadata is available, this MUST be used over non-signed metadata and the signature MUST be verified prior to further utilizing any contents.
+### Caching
+Clients SHOULD cache OpenID Provider metadata and public keys made available from the `jwks` endpoint, by utilizing the cache directives provided via HTTP headers by the OpenID Provider [[RFC7234]].
 
-Clients use the public keys made available from the `jwks` endpoint to validate the signature on tokens. OpenID Connect [[OpenID.Core]] recommends using the HTTP `Cache-Control` Header option and the `max-age` directive to inform Clients how long they can cache the public keys for before returning to the `jwks_uri` location to retrieve replacement keys from the OpenID Provider.
+### Signed metadata
+Clients SHOULD support `signed_metadata` as specified in [[RFC8414]] Section 2.1. In case signed metadata is available, this MUST be used over non-signed metadata and the signature MUST be verified prior to further utilizing any contents.
 
-To rotate keys, the decrypting party can publish an updated JWK Set at its `jwks_uri` location with the new keys added and the decommissioned keys removed. The `jwks_uri` SHOULD include a `Cache-Control` header in the response that contains a `max-age` directive, which enables the encrypting party to safely cache the JWK Set and not have to re-retrieve the document for every encryption event. 
-The decrypting party SHOULD remove decommissioned keys from the JWK Set referenced by `jwks_uri` but retain them internally for some reasonable period of time, coordinated with the cache duration, to facilitate a smooth transition between keys by allowing the encrypting party some time to obtain the new keys. The cache duration SHOULD also be coordinated with the issuance of new signing keys.
-Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
+### Public keys
+Clients MUST use the public keys obtained from the `jwks` endpoint to validate the signature on tokens or to encrypt Request Objects to the OpenID Provider.
 
 ## Registration
 All Clients MUST register with the OpenID Provider.
@@ -539,21 +540,19 @@ And receives a document in response like the following:
 OpenID Providers MUST support the generation of JWT encoded responses from the UserInfo Endpoint. Responding with unsigned JSON objects when neither signing nor encryption are requested by the Client as part of the `userinfo_signed_response_alg` and `userinfo_encrypted_response_alg` Client metadata parameters registered as part of Client Registration is OPTIONAL. Signed responses MUST be signed by the OpenID Provider's signing key, and encrypted responses MUST be encrypted with the authorized Client's public key. Please refer to [Algorithms](#algorithms) for more information on cryptographic algorithms and keys.
 
 ## Discovery
-The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programmatic way for Clients to obtain configuration details for communicating with OpenID Providers. Discovery is an important part of building scalable federation ecosystems. Compliant OpenID Providers under this profile MUST publish their server metadata to help minimize configuration errors and support automation for scalable deployments.
+The OpenID Connect Discovery [[OpenID.Discovery]] standard provides a standard, programmatic way for Clients to obtain configuration details for communicating with OpenID Providers. Discovery is an important part of building scalable federation ecosystems. 
 
-Exposing a Discovery endpoint does NOT inherently put the OpenID Provider at risk to attack. Endpoints and parameters specified in the Discovery document SHOULD be considered public information regardless of the existence of the Discovery document.
+OpenID Providers under this profile MUST publish their server metadata to help minimize configuration errors and support automation for scalable deployments.
+- Exposing a Discovery endpoint does NOT inherently put the OpenID Provider at risk to attack. Endpoints and parameters specified in the Discovery document SHOULD be considered public information regardless of the existence of the Discovery document.
+- Access to the Discovery document MAY be protected with existing web authentication methods if required by the OpenID Provider. Credentials for the Discovery document are then managed by the OpenID Provider. Support for these authentication methods is outside the scope of this profile.
+- Endpoints described in the Discovery document MUST be secured in accordance with this profile and MAY have additional controls the Provider wishes to support.
 
-Access to the Discovery document MAY be protected with existing web authentication methods if required by the OpenID Provider. Credentials for the Discovery document are then managed by the OpenID Provider. Support for these authentication methods is outside the scope of this profile.
-
-Endpoints described in the Discovery document MUST be secured in accordance with this profile and MAY have additional controls the Provider wishes to support.
-
-All OpenID Providers are uniquely identified by a URL known as the `issuer`.
-This URL serves as the prefix of a service discovery endpoint as specified in the OpenID Connect Discovery standard and "OAuth 2.0 Authorization Server Metadata" [[RFC8414]]. 
-An OpenID Provider SHOULD publish equivalent JSON metadata on both `/.well-known/openid-configuration` and `/.well-known/oauth-authorization-server`, and MAY publish on other locations.
-The OpenID Provider SHOULD include a `signed_metadata` Claim, as described in [[RFC8414]] Section 2.1.
+### Discovery endpoint
+All OpenID Providers are uniquely identified by a URL known as the `issuer` and MUST make a Discovery document in JSON format available at the path formed by concatenating `/.well-known/openid-configuration` to the `issuer` and SHOULD also make this Discovery document available at the path formed by concatenating `/.well-known/oauth-authorization-server` to the `issuer`. OpenID Providers MAY also publish their Discovery documents on other locations. All paths on which the Discovery document is published MUST use the `https` scheme.
 
 Note that for privacy considerations, only direct requests to the server metadata document SHOULD be used. The WebFinger method to locate the relevant OpenID Provider and its metadata, as described in [[OpenID.Discovery]] section 2, MUST NOT be supported.
 
+### Discovery document
 This profile imposes the following requirements upon the Discovery document:
 
 `issuer`
@@ -578,7 +577,7 @@ This profile imposes the following requirements upon the Discovery document:
 > OPTIONAL. The fully qualified URL of the OpenID Provider's Revocation Endpoint as defined by "OAuth 2.0 Token Revocation" [[RFC7009]].
 
 `jwks_uri`
-> REQUIRED. The fully qualified URL of the server's public keys in JWK Set format. These keys can be used by Clients to verify signatures on tokens and responses from the OpenID Provider and for encrypting requests to the OpenID Provider.
+> REQUIRED. The fully qualified URL of the OpenID Provider's public keys in JWK Set format. These keys can be used by Clients to verify signatures on tokens and responses from the OpenID Provider and for encrypting requests to the OpenID Provider.
 
 `scopes_supported`
 > REQUIRED. The list of scopes the OpenID Provider supports.
@@ -642,6 +641,9 @@ This profile imposes the following requirements upon the Discovery document:
 
 `require_request_uri_registration`
 > REQUIRED and MUST have Boolean value `true` if the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. OPTIONAL otherwise. This parameter indicates that `request_uri` values used by the Client to send Request Objects by reference must always be pre-registered.
+
+`signed_metadata`
+> RECOMMENDED. A JWT, signed using JWS, containing metadata values about the OpenID Provider as claims, as specified in [[RFC8414]], Section 2.1.
 
 The following example shows the JSON document found at a discovery endpoint for an OpenID Provider:
 
@@ -723,11 +725,13 @@ The following example shows the JSON document found at a discovery endpoint for 
       ]
     }
 
-It is RECOMMENDED that OpenID Providers provide cache information through HTTP headers and make the cache valid for at least one week.
+### Caching
+It is RECOMMENDED that OpenID Providers provide caching directives through HTTP headers for the Discovery endpoint and the `jwks_uri` endpoint and make the cache valid for at least one week.
 OpenID Providers SHOULD document their change procedure. In order to support automated transitions to configuration updates, OpenID Providers SHOULD only make non-breaking changes and retain backward compatibility when possible. It is RECOMMENDED that OpenID Providers monitor usage of outdated configuration options used by any OpenID Client and actively work with their administrators to update configurations.
-The above on caching and changes MUST be applied as well to the `jwks_uri` containing the OpenID Provider's key set.
+The above on caching and changes MUST be applied to the `jwks_uri` containing the OpenID Provider's key set as well.
 
-The OpenID Provider MUST provide its public key in JWK Set format, such as the following example JWK Set containing a PKIoverheid certificate chain and its 2048-bit RSA key (example certificates abbreviated):
+### Public keys
+The OpenID Provider MUST provide its public keys in JWK Set format, such as the following example JWK Set containing a PKIoverheid certificate chain and its 2048-bit RSA key (example certificates abbreviated):
 
     {
       "keys": [
@@ -765,7 +769,9 @@ The OpenID Provider MUST provide its public key in JWK Set format, such as the f
       ]
     }
 
-In case PKIoverheid certificates are used, the certificate and entire certificate chain up until the root certificate MUST be included as either an `x5c` or as `x5u` parameter, according to [[RFC7517]] Sections 4.6 and 4.7. Parties SHOULD support the inclusion of the certificate chain as `x5c` parameter, for maximum interoperability. Parties MAY agree to use `x5u`, for instance for communication within specific environments. 
+In case PKIoverheid certificates are used, the certificate and entire certificate chain up until the root certificate MUST be included as either an `x5c` or as `x5u` parameter, according to [[RFC7517]] Sections 4.6 and 4.7. Parties SHOULD support the inclusion of the certificate chain as `x5c` parameter, for maximum interoperability. Parties MAY agree to use `x5u`, for instance for communication within specific environments.
+
+The OpenID Provider SHOULD utilize the approaches described in Sections 10.1.1 (signing keys) and 10.2.1 (encryption keys) to facilitate rotation of public keys.
 
 Please refer to [Algorithms](#algorithms) for more information on eligible cryptographic methods and keys that can be used by OpenID Providers.
 
