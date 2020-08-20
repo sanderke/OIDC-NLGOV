@@ -16,6 +16,7 @@ Representation
     <abbr title="Best Current Practice">BCP</abbr>
     <abbr title="Basis Registratie Personen, the Dutch citizen registry">BRP</abbr>
     <abbr title="Burgerservicenummer, the identification number for citizen in The Netherlands">BSN</abbr>
+    <abbr title="Content Encryption Key">CEK</abbr>
     <abbr title="Cross Site Request Forgery">CSRF</abbr>
     <abbr title="European Union">EU</abbr>
     <abbr title="General Data Protection Regulation">GDPR</abbr>

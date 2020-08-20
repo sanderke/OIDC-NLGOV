@@ -613,8 +613,29 @@ This profile imposes the following requirements upon the Discovery document:
 `id_token_signing_alg_values_supported`
 > REQUIRED. JSON array containing the list of JWS signing algorithms (`alg` values) supported by the OpenID Provider for the ID Token to encode the Claims in a JWT. For more information, refer to [Algorithms](#algorithms).
 
+`id_token_encryption_alg_values_supported` 
+> OPTIONAL. JSON array containing the list of JWE encryption algorithms (`alg` values) supported by the OpenID Provider for the ID Token to encrypt the Content Encryption Key (CEK). REQUIRED when the OpenID Provider supports encryption of ID Tokens. For more information, refer to [Algorithms](#algorithms).
+
+`id_token_encryption_enc_values_supported`
+> OPTIONAL. JSON array containing the list of JWE encryption algorithms (`enc` values) supported by the OpenID Provider for the ID Token to encrypt the Claims in a JWT using the CEK. REQUIRED when the OpenID Provider supports encryption of ID Tokens. For more information, refer to [Algorithms](#algorithms).
+
 `userinfo_signing_alg_values_supported`
 > REQUIRED. JSON array containing the list of JWS signing algorithms (`alg` values) supported by the UserInfo Endpoint to encode the Claims in a JWT. For more information, refer to [Algorithms](#algorithms).
+
+`userinfo_encryption_alg_values_supported` 
+> OPTIONAL. JSON array containing the list of JWE encryption algorithms (`alg` values) supported by the OpenID Provider for the UserInfo Endpoint to encrypt the Content Encryption Key (CEK). REQUIRED when the OpenID Provider supports encryption of UserInfo responses. For more information, refer to [Algorithms](#algorithms).
+
+`userinfo_encryption_enc_values_supported`
+> OPTIONAL. JSON array containing the list of JWE encryption algorithms (`enc` values) supported by the OpenID Provider for the UserInfo Endpoint to encrypt the Claims in a JWT using the CEK. REQUIRED when the OpenID Provider supports encryption of UserInfo responses. For more information, refer to [Algorithms](#algorithms).
+
+`request_object_signing_alg_values_supported`
+> REQUIRED. JSON array containing the list of JWS signing algorithms (`alg` values) supported by the OpenID Provider for Request Objects. These algorithms are applicable for Request Objects passed by value and passed by reference. For more information, refer to [Algorithms](#algorithms).
+
+`request_object_encryption_alg_values_supported`
+> OPTIONAL. JSON array containing the list of JWE encryption algorithms (`alg` values) supported by the OpenID Provider for Request Objects to encrypt the Content Encryption Key (CEK). REQUIRED when the OpenID Provider supports encryption of UserInfo responses. For more information, refer to [Algorithms](#algorithms).
+
+`request_object_encryption_enc_values_supported`
+> OPTIONAL. JSON array containing the list of JWE encryption algorithms (`enc` values) supported by the OpenID Provider for Request Objects to encrypt the Claims in a JWT using the CEK. REQUIRED when the OpenID Provider supports encryption of UserInfo responses. For more information, refer to [Algorithms](#algorithms).
 
 `request_uri_parameter_supported`
 > OPTIONAL. Boolean value which specifies whether the OpenID Provider accepts Request Objects passed by reference using the `request_uri` parameter. As per [[OpenID.Core]], the default value is `true`.
