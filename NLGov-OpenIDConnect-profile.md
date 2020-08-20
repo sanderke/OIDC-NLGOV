@@ -279,8 +279,7 @@ Clients MUST verify the following in received ID tokens:
 ## Discovery
 All Clients SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes.
 
-### Obtaining OpenID Provider metadata
-Clients SHOULD acquire metadata using either the "OpenID Connect Discovery 1.0" [[OpenID.Discovery]] method using the `/.well-known/openid-configuration` location (section 4), or the "OAuth 2.0 Authorization Server Metadata" [[RFC8414]] method using the `/.well-known/oauth-authorization-server` location (section 3).
+Clients SHOULD acquire OpenID Provider metadata using either "OpenID Connect Discovery 1.0" ([[OpenID.Discovery]] Section 4) or "OAuth 2.0 Authorization Server Metadata" ([[RFC8414]] Section 3) via one of the Discovery endpoints provided by the OpenID Provider. See also Section [5.4](#discovery-0).
 
 Clients SHOULD NOT use OpenID Provider Issuer Discover using WebFinger (as described in [[OpenID.Core]], Section 2) to avoid privacy issues such as leaking information to unknown locations.
 
