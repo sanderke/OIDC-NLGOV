@@ -361,7 +361,7 @@ The Token Response includes an Access Token (which can be used to make a UserInf
 > REQUIRED in case Representation is applicable, the `represents` Claim provides information about the effective authorization due to a Representation Relationship for the End-User.
 
 `alt_sub`
-> OPTIONAL. Describes alternative Subject Identifiers for the authenticated End-User in the context of a specific audience. The value of `alt_sub` is an array of objects, each of which MUST contain `sub`, `sub_id_type`, and `aud` Claims to uniquely identify the authenticated End-User and the audience for the alternative Subject Identifier.
+> OPTIONAL. Describes alternative Subject Identifiers for the authenticated End-User in the context of a specific audience. The value of `alt_sub` is an array of objects, each of which MUST contain `sub` and `aud` Claims to uniquely identify the authenticated End-User and the audience for the alternative Subject Identifier and SHOULD contain a `sub_id_type` Claim to explicitly indicate the type of identifier used in the `sub` claim if the OpenID Provider supports multiple types of subject identifiers.
 
 `vot`
 > OPTIONAL. The vector value as specified in Vectors of Trust. MUST NOT be included when `acr` is included. See also [Section 5.2.4](#vectors-of-trust).
@@ -419,7 +419,7 @@ Use of pairwise identifiers does not prevent Clients from correlating data based
 
 OpenID Providers MUST support pairwise identifiers for cases where correlation of End-User's activities across Clients is not appropriate. OpenID Providers MAY support public identifiers for frameworks where public identifiers are required, or for cases where public identifiers are shared as attributes and the framework does not have a requirement for subject anonymity.
 
-Polymorphic Pseudonyms and Polymorphic Identities, which are used as Subject Identifiers as part of the Dutch eIDAS implementation, are examples of Pairwise Subject identifiers. *Burgerservicenummers (BSN)*, *Rechtspersonen en Samenwerkingsverbanden Identificatienummers (RSIN)* and *Kamer van Koophandel (KvK) nummers" are considered public sectoral identifiers and therefore MUST NOT be used as Subject Identifiers in case correlation of End-User's activities across Clients is not appropriate.
+*Burgerservicenummers (BSN)*, *Rechtspersonen en Samenwerkingsverbanden Identificatienummers (RSIN)* and *Kamer van Koophandel (KvK) nummers" are considered public sectoral identifiers and therefore MUST NOT be used as Subject Identifiers in case correlation of End-User's activities across Clients is not appropriate. In such cases, the use of Polymorphic Pseudonyms or Polymorphic Identities is preferred.
 
 Note that BSNs MUST only be used by Relying Parties for Services eligible for using the BSN according to Dutch Law and that the BSN, or token containing it, SHOULD be encrypted.
 
@@ -434,7 +434,7 @@ This profile specifies Representation Relations in ID Tokens as follows:
 - The End-User is always identified by the `sub` Claim;
 - The represented Service Consumer is mentioned in the `represents` Claim.
 - In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
-- Each `represents` Claim MUST contain `sub`, `sub_id_type`, and `iss` Claims to uniquely identify the represented party.
+- Each `represents` Claim MUST contain `sub` and `iss` Claims to uniquely identify the represented party and SHOULD contain a `sub_id_type` Claim to explicitly indicate the type of identifier used in the `sub` claim if the OpenID Provider supports multiple types of subject identifiers.
 - `represents` Claims MAY contain additional Claims (e.g. `email`) to provide additional useful information about the represented party.
 - Claims within the `represents` Claim pertain only to the identity of that party and MUST NOT contain Claims that are not related to the represented party, such as top-level Claims `exp`, `nbf`, and `aud`.
 
