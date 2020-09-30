@@ -62,22 +62,6 @@ This profile supports several Use Cases for Representation Relationships, which 
 
 Example Representation Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
-## Service Intermediation
-Service Intermediation is applicable when the Service Provider does not directly interact with the OpenID Provider for End-User authentication, but delegates this responsibility to a Service Intermediary.
-
-Service Intermediaries either intermediate on individual Services offered by a single Service Provider (also referred to as "Static Service Intermediation") or provide portal services by intermediating on several Services from potentially multiple Service Providers (also referred to as "Dynamic Service Intermediation").
-
-Service Intermediaries are generally not allowed to access the identifiers and attributes intended for the Service Providers, hence the use of identifiers encrypted to specific Service Providers is usually required. Also, in Dynamic Service Intermediation it should be possible to obtain encrypted identifiers for the different intermediated Services via different interactions with the OpenID Provider, with End-User consent but without the need of complete re-authentication.
-
-Examples of scenario's where Service Intermediation is applicable:
-
-- helping a User on submitting information, with additional guidance, information and explanation.
-- automated tax declaration from an accounting application.
-- aggregating multiple Services.
-- providing an interface for accessing a Service in an alternative presentation form.
-
-<mark>TODO FdK</mark>
-
 ## Misc
 The OpenID Connect specification [[OpenID.Core]] supports self-issued OpenID Connect Providers. However, as this profile centers around (semi-)governmental and public domain Use Cases where assurance on identity verification is virtually always required, self-issued OpenID Providers MUST NOT be accepted by OpenID Clients under this profile.
 
@@ -874,15 +858,6 @@ It is up to the Client to assess the level of confidence provided by the OpenID 
 
 In order to provide a source, including integrity and optionally confidentiality, an OpenID Provider SHOULD be able to provide aggregated or support distributed Claims. The signee of such aggregated or distributed Claims implies the source and can support in assessing the level confidence or quality of the Claim.
 
-# Relation with 3rd parties (Resource Servers)
-## Service Intermediation
-
-<mark>Todo: FdK</mark>
-
-* not part of iGov
-* RFC7800 cnf key/cert references
-* requires registration of resource servers, for introspection (move up to OAuth profile?)
-
 # Privacy considerations
 Data minimization is an essential concept in trust frameworks and federations exchanging End-User identity information for government applications.
 The design of this profile takes into consideration mechanisms to protect the End-User's government identity information and activity from unintentional exposure.
@@ -937,6 +912,16 @@ In addition to proper selection and configuration of algorithms, implementations
 # Future updates
 This profile was created using published, finalized specifications and standards as basis. Some relevant new documents are under development at the time of writing. As this profile does not use any draft documents as basis, these cannot be included.
 However, we want to attend readers to these developments and for them to take into account that future updates to this profile may incorporate the resulting standards and specifications. Furthermore we would like encourage readers to follow relevant developments.
+
+## Service Intermediation
+One functionality that is widely used in the (semi)governmental sector but is not included in the initial version of this profile specification is *Service Intermediation*.
+
+Service Intermediation is applicable when the Service Provider does not directly interact with the OpenID Provider for End-User authentication, but delegates this responsibility to a Service Intermediary. Such a Service Intermediary can intermediate a single Service offered by a single ServiceProvider (e.g. an accounting app (service) that has an option to submit a tax declaration) or it can aggregate multiple Services offered by multiple Service Providers using intermediation (e.g. an app that aggregates your health information stored at several health organisations).
+
+It is anticipated that support for Service Intermediation will be added in a later version of this profile; when it will, the following should be considered:
+-	Service Intermediaries should be able to obtain Claims and subject identifiers for different intermediated Services via different interactions with the OpenID Provider, with End-User consent but without the need of complete re-authentication.
+-	Service Intermediaries are generally not allowed to access Claims and subject identifiers. Hence, the use of pairwise and encrypted subject identifiers and Claims is usually required.
+-	Service Providers control which Service Intermediaries they support, specifically when confidential information is involved. Hence, Client Registration with the OpenID Provider must be established such that Service Intermediaries can only intermediate (and request Claims and subject identifiers for) Services that they are authorized for. A possible solution direction could be the use of Proof-of-Possession Key Semantics, as described in [[RFC7800]].
 
 ## Federations
 This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain orgranisations. However, no specific support or requirements for federations are included in this version of this profile.
