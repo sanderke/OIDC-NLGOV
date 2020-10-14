@@ -869,7 +869,7 @@ Similarly, broad attribute requests through the `scope` parameter, such as `prof
 
 All Clients MUST apply the concept of data minimization. As a result, a Client MUST NOT request any more identifiers, attributes or other Claims than strictly necessary.
 Additionally, Clients SHOULD ensure they minimize the scope and audience they request, use and forward. This principle applies to both to usage at the Client as well as forwarded Access Tokens in a Service Intermediation scenario.
-Token Exchange ([[RFC8693]]) SHOULD be used to request Access Tokens with a minimal scope and audience.
+Token Exchange [[RFC8693]] SHOULD be used to request Access Tokens with a minimal scope and audience.
 
 Despite the mechanisms enforced by this profile, the operational circumstances may allow these controls to be relaxed in a specific context.
 For example, if a bilateral agreement between two agencies legally entitles usage of citizen identifiers, then the Pairwise Pseudonymous Identifier requirement may be relaxed. In cases where all Clients are entitled to process Claims associated to a subject at an OpenID Provider, the Claims request requirement may be relaxed.
