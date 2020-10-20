@@ -1,7 +1,7 @@
 # Introduction
 Government regulations for permitting users (citizens and non-citizens) online access to government resources vary greatly from country to country. There is a strong desire to leverage federated authentication and identity services for public access to government resources online to enable the development of safe and innovative applications for e-government services, increase overall account security, reduce cost, and provide reliable identity assurances from established and trusted sources when applicable.
 
-This specification aims to define an OpenID Connect profile that provides Dutch governments with a foundation for securing federated access to public services online.
+OpenID Connect is a protocol enabling such federated identity and authentication protocol. OpenID Connect supports a variety of use cases and offers a range of features and (security) options. This specification aims to define an OpenID Connect profile that provides Dutch governments with a foundation for securing federated access to public services online when applying OpenID Connect.
 
 ## Requirements Notation and Conventions
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[RFC2119]].
@@ -55,7 +55,7 @@ In case a federation or scheme is being used, an Identity Broker may be applicab
 
 The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. This profile is not limited to these contexts, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those other contexts.
 
-The Service Provider or OpenID Client requests either an authenticated identifier, attributes or both from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported.
+The Service Provider or OpenID Client requests either an identifier, attributes or both of an authenticated End-User from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported.
 
 ## Representation
 This profile supports several Use Cases for Representation Relationships, which apply when an End-User intends to consume an online service on behalf of a Natural or Juridical Person (the Service Consumer), where authentication and authorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a Representation Relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of Representation Relationships. The formalization of these relationships is out of scope of this profile.
@@ -879,6 +879,8 @@ The reasons for relaxing the controls that support data minimization are outside
 In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by using aggregated or distributed Claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
 
 # Security considerations
+Before applying this profile or granting any form of access to a service, a risk assessment or security classification MUST be mase for that service. It is highly RECOMMENDED to follow the guide "Assurance level for digital service provision" [[SG.LoA]]. As with the guide, information and services classified as '*staatsgeheim*' (state secret) are out of scope of this specification.
+
 All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as 'good', SHOULD NOT use any settings with a status 'phase out' and MUST NOT use any setting with a status 'insufficient' in these security guidelines or future updates thereof.
 
 Implementations MUST implement HTTP Strict Transport Security, as specified in [[RFC6797]].
