@@ -67,10 +67,10 @@ Example Representation Use Cases include voluntary authorization, representative
 ## Misc
 The OpenID Connect specification [[OpenID.Core]] supports self-issued OpenID Connect Providers. However, as this profile centers around (semi-)governmental and public domain Use Cases where assurance on identity verification is virtually always required, self-issued OpenID Providers MUST NOT be accepted by OpenID Clients under this profile.
 
-Note that future versions of this profile may support use cases where Service Intermediation is applicable.
-
 As the Dutch identity eco-system supports multiple OpenID Providers, Identity Brokers are in common use. Brokers relieve OpenID Clients of managing multiple connections to OpenID Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is the forming of so-called privacy hotspots, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, are encouraged to increase overall end-to-end security.
+
+Note that future versions of this profile may support use cases where Service Intermediation is applicable.
 
 # Flow
 OpenID Connect Core specifies three paths via which authentication can be performed: the *Authorization Code Flow*, the *Implicit Flow* and the *Hybrid Flow*. The flows determine how the ID Token and Access Token are returned to the Client.
