@@ -67,6 +67,8 @@ Example Representation Use Cases include voluntary authorization, representative
 ## Misc
 The OpenID Connect specification [[OpenID.Core]] supports self-issued OpenID Connect Providers. However, as this profile centers around (semi-)governmental and public domain Use Cases where assurance on identity verification is virtually always required, self-issued OpenID Providers MUST NOT be accepted by OpenID Clients under this profile.
 
+Note that future versions of this profile may support use cases where Service Intermediation is applicable.
+
 As the Dutch identity eco-system supports multiple OpenID Providers, Identity Brokers are in common use. Brokers relieve OpenID Clients of managing multiple connections to OpenID Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is the forming of so-called privacy hotspots, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, are encouraged to increase overall end-to-end security.
 
@@ -919,12 +921,14 @@ However, we want to attend readers to these developments and for them to take in
 ## Service Intermediation
 One functionality that is widely used in the (semi)governmental sector but is not included in the initial version of this profile specification is *Service Intermediation*.
 
-Service Intermediation is applicable when the Service Provider does not directly interact with the OpenID Provider for End-User authentication, but delegates this responsibility to a Service Intermediary. Such a Service Intermediary can intermediate a single service offered by a single Service Provider (e.g. an accounting app (service) that has an option to submit a tax declaration) or it can aggregate multiple Services offered by multiple Service Providers using intermediation (e.g. an app that aggregates your health information stored at several health organisations).
+Service Intermediation is applicable when the Service Provider does not directly interact with the End-User, but delegates this responsibility to a Service Intermediary. The Service Intermediary therefor interacts with the OpenID Provider for End-User authentication, with the service offered by the Serivce Provider in scope of the Authentication Request. The Service Provider can now rely on a token from the OpenID Provider received via the Service Intermediary. Note that there is  with OAuth2, the Service Provider acts as Resource Server.
+
+Such a Service Intermediary can intermediate a single service offered by a single Service Provider (e.g. an accounting app (service) that has an option to submit a tax declaration) or it can aggregate multiple Services offered by multiple Service Providers using intermediation (e.g. an app that aggregates your health information stored at several health organisations).
 
 It is anticipated that support for Service Intermediation will be added in a later version of this profile; when it will, the following should be considered:
 -	Service Intermediaries should be able to obtain Claims and subject identifiers for different intermediated Services via different interactions with the OpenID Provider, with End-User consent but without the need of complete re-authentication.
 -	Service Intermediaries are generally not allowed to access Claims and subject identifiers. Hence, the use of pairwise and encrypted subject identifiers and Claims is usually required.
--	Service Providers control which Service Intermediaries they support, specifically when confidential information is involved. Hence, Client Registration with the OpenID Provider must be established such that Service Intermediaries can only intermediate (and request Claims and subject identifiers for) Services that they are authorized for. A possible solution direction could be the use of Proof-of-Possession Key Semantics, as described in [[RFC7800]].
+-	Service Providers control which Service Intermediaries they support, specifically when confidential information is involved. Hence, Client Registration with the OpenID Provider must be established such that Service Intermediaries can only intermediate (and request Claims and subject identifiers for) Services that they are authorized for. A potential solution direction could be the use of Proof-of-Possession Key Semantics, as described in [[RFC7800]].
 
 ## Federations
 This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain orgranisations. However, no specific support or requirements for federations are included in this version of this profile.
