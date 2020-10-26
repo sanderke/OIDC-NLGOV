@@ -875,12 +875,12 @@ All Clients MUST apply the concept of data minimization. As a result, a Client M
 Additionally, Clients SHOULD ensure they minimize the scope and audience they request, use and forward. This principle applies to both to usage at the Client as well as forwarded Access Tokens in a Service Intermediation scenario.
 Token Exchange [[RFC8693]] SHOULD be used to request Access Tokens with a minimal scope and audience.
 
+In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by using aggregated or distributed Claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
+
 Despite the mechanisms enforced by this profile, the operational circumstances may allow these controls to be relaxed in a specific context.
 For example, if a bilateral agreement between two agencies legally entitles usage of citizen identifiers, then the Pairwise Pseudonymous Identifier requirement may be relaxed. In cases where all Clients are entitled to process Claims associated to a subject at an OpenID Provider, the Claims request requirement may be relaxed.
 
 The reasons for relaxing the controls that support data minimization are outside the scope of this profile.
-
-In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by using aggregated or distributed Claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
 
 # Security considerations
 Implementations of this profile or any form of access to a service, MUST make a risk assessment or security classification for that service and the information disclosed. It is strongly RECOMMENDED to follow the guide 'Assurance level for digital service provision' [[SG.LoA]].
@@ -891,6 +891,8 @@ All transactions MUST be protected in transit by TLS as described in BCP195 [[RF
 Implementations MUST implement 'HTTP Strict Transport Security', as specified in [[RFC6797]].
 
 All Clients MUST conform to applicable recommendations found in the 'Security Considerations' sections of [[RFC6749]] and those found in 'OAuth 2.0 Threat Model and Security Considerations' [[RFC6819]]. For all Tokens, the 'JSON Web Token Best Current Practices' [[RFC8725]] SHOULD be applied.
+
+Implementations SHOULD take the guidances specified in the Assurance level for digital service provision guide [[SF-LoA]] into consideration. Particularly when supporting higher assurance levels (e.g. eIDAS high or substantial), requirements specified as SHOULD or RECOMMENDED in this profile become more critical to implement and the use of public Clients should only be considered if the implementations of these Clients guarantee sufficient security with regards to the classifications of the data disclosed in ID and Access Tokens provided to these. In line with the scope of the Assurance level for digital service provision guide, confidential information with state secret classification is out of scope for implementations under this profile.
 
 <!-- [Algorithms](#algorithms) --->
 ## Algorithms
