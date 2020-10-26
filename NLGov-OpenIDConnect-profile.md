@@ -883,13 +883,14 @@ The reasons for relaxing the controls that support data minimization are outside
 In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by using aggregated or distributed Claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
 
 # Security considerations
-Before applying this profile or granting any form of access to a service, a risk assessment or security classification MUST be made for that service. It is highly RECOMMENDED to follow the guide "Assurance level for digital service provision" [[SG.LoA]]. As with the guide, information and services classified as '*staatsgeheim*' (state secret) are out of scope of this specification.
+Implementations of this profile or any form of access to a service, MUST make a risk assessment or security classification for that service and the information disclosed. It is strongly RECOMMENDED to follow the guide "Assurance level for digital service provision" [[SG.LoA]].
+Particularly when implementing for higher levels of assurance (e.g. eIDAS 'high' or 'substantial'), requirements specified as SHOULD (NOT) or (NOT) RECOMMENDED in this profile are more pertintent to implement accordingly. In line with the scope of the "Assurance level for digital service provision" guide, information and services classified as 'state secret' ('*staatsgeheim*') are out of scope for implementations under this profile.
 
 All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as 'good', SHOULD NOT use any settings with a status 'phase out' and MUST NOT use any setting with a status 'insufficient' in these security guidelines or future updates thereof.
 
-Implementations MUST implement HTTP Strict Transport Security, as specified in [[RFC6797]].
+Implementations MUST implement "HTTP Strict Transport Security", as specified in [[RFC6797]].
 
-All Clients MUST conform to applicable recommendations found in the Security Considerations sections of [[RFC6749]] and those found in the OAuth 2.0 Threat Model and Security Considerations document [[RFC6819]]. For all Tokens, the JSON Web Token Best Current Practices [[RFC8725]] SHOULD be applied.
+All Clients MUST conform to applicable recommendations found in the "Security Considerations" sections of [[RFC6749]] and those found in "OAuth 2.0 Threat Model and Security Considerations" [[RFC6819]]. For all Tokens, the "JSON Web Token Best Current Practices" [[RFC8725]] SHOULD be applied.
 
 <!-- [Algorithms](#algorithms) --->
 ## Algorithms
