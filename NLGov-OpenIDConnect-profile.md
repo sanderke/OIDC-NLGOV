@@ -886,12 +886,6 @@ In order to provide end-to-end security and privacy, identifiers and attributes 
 Implementations of this profile or any form of access to a service, MUST make a risk assessment or security classification for that service and the information disclosed. It is strongly RECOMMENDED to follow the guide 'Assurance level for digital service provision' [[SG.LoA]].
 Particularly when implementing for higher levels of assurance (e.g. eIDAS "high" or "substantial"), requirements specified as SHOULD (NOT) or (NOT) RECOMMENDED in this profile are more pertintent to implement accordingly. In line with the scope of the "Assurance level for digital service provision" guide, information and services classified as "state secret" (Dutch: "*staatsgeheim*") are out of scope for implementations under this profile.
 
-TODO fix merge
-
-The use of public Clients should only be considered if the implementations of these Clients guarantee sufficient security with regards to the classifications of the data disclosed in ID and Access Tokens provided to these.
-
-/TODO fix merge
-
 All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as "good", SHOULD NOT use any settings with a status "phase out" and MUST NOT use any setting with a status "insufficient" in these security guidelines or future updates thereof.
 
 Implementations MUST implement 'HTTP Strict Transport Security', as specified in [[RFC6797]].
