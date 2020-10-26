@@ -883,7 +883,7 @@ The reasons for relaxing the controls that support data minimization are outside
 In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by using aggregated or distributed Claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
 
 # Security considerations
-Before applying this profile or granting any form of access to a service, a risk assessment or security classification MUST be mase for that service. It is highly RECOMMENDED to follow the guide "Assurance level for digital service provision" [[SG.LoA]]. As with the guide, information and services classified as '*staatsgeheim*' (state secret) are out of scope of this specification.
+Before applying this profile or granting any form of access to a service, a risk assessment or security classification MUST be made for that service. It is highly RECOMMENDED to follow the guide "Assurance level for digital service provision" [[SG.LoA]]. As with the guide, information and services classified as '*staatsgeheim*' (state secret) are out of scope of this specification.
 
 All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as 'good', SHOULD NOT use any settings with a status 'phase out' and MUST NOT use any setting with a status 'insufficient' in these security guidelines or future updates thereof.
 
@@ -919,9 +919,10 @@ This profile was created using published, finalized specifications and standards
 However, we want to attend readers to these developments and for them to take into account that future updates to this profile may incorporate the resulting standards and specifications. Furthermore we would like encourage readers to follow relevant developments.
 
 ## Service Intermediation
-One functionality that is widely used in the (semi)governmental sector but is not included in the initial version of this profile specification is *Service Intermediation*.
+One functionality that is widely used in the (semi-)governmental sector but is not included in the initial version of this profile specification is *Service Intermediation*. This scenario is sometimes also refered to as identity propagation.
+Examples of Service Intermediation scenario's include portals, API aggregators and clients with enhanched or automated assistence for consuming services.
 
-Service Intermediation is applicable when the Service Provider does not directly interact with the End-User, but delegates this responsibility to a Service Intermediary. The Service Intermediary therefor interacts with the OpenID Provider for End-User authentication, with the service offered by the Serivce Provider in scope of the Authentication Request. The Service Provider can now rely on a token from the OpenID Provider received via the Service Intermediary. Note that there is  with OAuth2, the Service Provider acts as Resource Server.
+Service Intermediation is applicable when the Service Provider does not directly interact with the End-User, but delegates this responsibility to a Service Intermediary. The Service Intermediary therefor interacts with the OpenID Provider for End-User authentication, with the service offered by the Serivce Provider in scope of the Authentication Request. The Service Provider can now rely on a token from the OpenID Provider received via the Service Intermediary. Note that there is interaction with OAuth2, the Service Provider acts as Resource Server.
 
 Such a Service Intermediary can intermediate a single service offered by a single Service Provider (e.g. an accounting app (service) that has an option to submit a tax declaration) or it can aggregate multiple Services offered by multiple Service Providers using intermediation (e.g. an app that aggregates your health information stored at several health organisations).
 
