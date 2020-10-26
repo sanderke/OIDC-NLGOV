@@ -1,7 +1,7 @@
 # Introduction
 Government regulations for permitting users (citizens and non-citizens) online access to government resources vary greatly from country to country. There is a strong desire to leverage federated authentication and identity services for public access to government resources online to enable the development of safe and innovative applications for e-government services, increase overall account security, reduce cost, and provide reliable identity assurances from established and trusted sources when applicable.
 
-This specification aims to define an OpenID Connect profile that provides Dutch governments with a foundation for securing federated access to public services online.
+OpenID Connect is a protocol enabling such federated identity and authentication protocol. OpenID Connect supports a variety of Use Cases and offers a range of features and (security) options. This specification aims to define an OpenID Connect profile that provides Dutch governments with a foundation for securing federated access to public services online when applying OpenID Connect.
 
 ## Requirements Notation and Conventions
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[RFC2119]].
@@ -45,20 +45,22 @@ An NL GOV-compliant OpenID Connect Identity Provider MAY also provide NL GOV-com
 An NL GOV-compliant OpenID Connect Client MUST support all required functionality described in this specification. A general-purpose Client library MAY support additional features for use with non-NL GOV OpenID Connect Identity Providers.
 
 # Use Case & context
-This profile supports several Use Cases. Design choices within this profile have been made with these Use Cases under consideration.
+This profile supports several Use Cases or partial aspects thereof. Design choices within this profile have been made with these Use Cases under consideration.
 
-The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the Service requires authentication, this triggers the authentication process.
+The generic Use Case is an End-User with the intention to consume an online service of a Service Provider. As the service requires authentication, this triggers the authentication process.
 
 Authentication is provided in a federated manner. In other words, a Client system is relying upon another system, the OpenID Provider, for authentication.
 Either a shared central OpenID Provider or a (distributed) network of OpenID Providers, a.k.a. a federation or scheme is being used. The ecosystem supported by the OpenID Provider can either be a single organization (intra-organizational) or multiple organizations (inter-organizational), through either bilateral or multilateral agreements.
 In case a federation or scheme is being used, an Identity Broker may be applicable. Although this profile allows for usage in a federation, no explicit support for federations is _currently_ included.
 
-The service is offered by a (semi)governmental or public Service Provider. The Use Case therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. This profile is not limited to these contexts, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those other contexts.
+The service is offered by a (semi-)governmental or public Service Provider. The Use Cases therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. Note that business-to-government is not strictly limited to businesses, these may be other governmental organisations (inter-organizational) or internal service consumers (intra-organisational). This profile is not limited to these contexts, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those contexts.
 
-The Service Provider or OpenID Client requests either an authenticated identifier, attributes or both from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported.
+The Service Provider or OpenID Client requests either an identifier, attributes or both of an authenticated End-User from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported. Supported Use Cases therefor span both identifiale and attribute-based authentication.
+
+From an architectual standpoint, the Use Case can utilize a Client in the form of a hosted web-application, a mobile/native application or a browser based single-page-application (SPA). See [Section 4.1 Client Types](#client-types) for more details.
 
 ## Representation
-This profile supports several Use Cases for Representation Relationships, which apply when an End-User intends to consume an online service on behalf of a Natural or Juridical Person (the Service Consumer), where authentication and authorization is required. The End-User in these Use Cases is a Natural Person, representing the Service Consumer through a Representation Relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of Representation Relationships. The formalization of these relationships is out of scope of this profile.
+This profile supports several Use Cases for Representation Relationships, which apply when an End-User intends to consume an online service on behalf of a Natural or Juridical Person (the service consumer), where authentication and authorization is required. The End-User in these Use Cases is a Natural Person, representing the service consumer through a Representation Relationship. The relationship has to be formalized and may be either a direct relationship, either voluntarily or on legal grounds, or a chain of Representation Relationships. The formalization of these relationships is out of scope of this profile.
 
 Example Representation Use Cases include voluntary authorization, representative assigned by court order (guardian, administrator), statutory signatory (director, president), limited authorized signatory, etc.
 
@@ -67,6 +69,8 @@ The OpenID Connect specification [[OpenID.Core]] supports self-issued OpenID Con
 
 As the Dutch identity eco-system supports multiple OpenID Providers, Identity Brokers are in common use. Brokers relieve OpenID Clients of managing multiple connections to OpenID Providers, but every additional step introduces security risks and concern with regards to privacy. Among the privacy concerns is the forming of so-called privacy hotspots, points were data collection can be concentrated.
 To mitigate such risks, end-to-end security is considered throughout this profile. Controls such as signing, to assure integrity, and encryption, to strengthen confidentiality, are encouraged to increase overall end-to-end security.
+
+Note that future versions of this profile may support use cases where Service Intermediation is applicable.
 
 # Flow
 OpenID Connect Core specifies three paths via which authentication can be performed: the *Authorization Code Flow*, the *Implicit Flow* and the *Hybrid Flow*. The flows determine how the ID Token and Access Token are returned to the Client.
@@ -104,9 +108,9 @@ This profile includes specific design considerations related to security and pla
 **Note:** The iGov and NL GOV Assurance profiles for OAuth 2.0 use a slightly different segregation of Client Types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively. This profile follows the OAuth 2.0 specification [[RFC6749]] instead, as it allows for better provisioning of specific security considerations specific to the different client types and it aligns better to the Security Best Practices for the different Client profiles.
 
 The following design considerations apply to all Clients:
-- Clients MUST use "Proof Key for Code Exchange [[RFC7636]]" to protect calls to the Token Endpoint.
-- Clients SHOULD restrict its Client-Side script (e.g. JavaScript) execution to a set of statically hosted scripts via a "Content Security Policy [[CSP]]".
-- Clients SHOULD use "Subresource Integrity [[SRI]]" to verify that any dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
+- Clients MUST use 'Proof Key for Code Exchange' [[RFC7636]] to protect calls to the Token Endpoint.
+- Clients SHOULD restrict its Client-Side script (e.g. JavaScript) execution to a set of statically hosted scripts via a 'Content Security Policy' [[CSP]].
+- Clients SHOULD use 'Subresource Integrity' [[SRI]] to verify that any dependencies they include (e.g. via a Content Delivery Network) are not unexpectedly manipulated.
 
 ### Web Applications
 *Web applications* are applications that run on a web server and are consumed through the user-agent ("browser") by the End-User. Web applications are capable of securely authenticating themselves and of maintaining the confidentiality of secrets (e.g. Client credentials and tokens) and are therefore considered *confidential* Clients (OAuth 2.0 [[RFC6749]], Section 2.1).
@@ -123,7 +127,7 @@ The following design considerations apply to all Clients:
 
 - Native applications MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC8252]].
 - The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure Client Authentication.
-- Native applications MUST use an external user-agent or 'in-app browser tab' to make authorization requests; an 'embedded user-agent' or 'web-view' components MUST NOT be used for this purpose. See "OAuth 2.0 for Native apps" [[RFC8252]] for more information on the 'in-app browser tab' feature and support on various platforms.
+- Native applications MUST use an external user-agent or "in-app browser tab" to make authorization requests; an "embedded user-agent" or "web-view" components MUST NOT be used for this purpose. See 'OAuth 2.0 for Native apps' [[RFC8252]] for more information on the "in-app browser tab" feature and support on various platforms.
 
 ## Authorization Endpoint
 
@@ -198,7 +202,7 @@ This in line with OpenID Connect Core ([[OpenID.Core]], Section 3.1.2.7), which 
 
 ### Client Authentication
 Confidential Clients, as defined in [Section 4.1](#client-types), MUST authenticate to the OpenID Provider using either:
-- a JWT assertion as defined by the "JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants" [[RFC7523]] using only the `private_key_jwt` method defined in [[OpenID.Core]]; or
+- a JWT assertion as defined by the 'JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants' [[RFC7523]] using only the `private_key_jwt` method defined in [[OpenID.Core]]; or
 - mutually authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the `client_id` parameter MUST be included.
 
 Public Clients MAY authenticate to the OpenID Provider. However, the OpenID Provider MUST NOT rely on public Client Authentication for the purpose of identifying the client.
@@ -258,12 +262,12 @@ Clients MUST verify the following in received ID tokens:
 > The Level of Assurance received in the `acr` Claim is at least the Level of Assurance requested. See also [Section 5.2.3](#authentication-context). This is in line with [[OpenID.Core]], Section 3.1.3.7.
 
 `represents`
-> The `represents` Claim, if applicable, identifies the represented Service Consumer on behalf of which the End-User intends to authenticate. Any Client MUST be able to process `represents` Claims. As an exception, `represents` Claims MAY be ignored by the Client if, and only if, it is explicitly agreed upon beforehand that no Representation will be provided.
+> The `represents` Claim, if applicable, identifies the represented service consumer on behalf of which the End-User intends to authenticate. Any Client MUST be able to process `represents` Claims. As an exception, `represents` Claims MAY be ignored by the Client if, and only if, it is explicitly agreed upon beforehand that no Representation will be provided.
 
 ## Discovery
 All Clients SHOULD use OpenID Provider discovery to avoid manual configuration and risk of mistakes.
 
-Clients SHOULD acquire OpenID Provider metadata using either "OpenID Connect Discovery 1.0" ([[OpenID.Discovery]] Section 4) or "OAuth 2.0 Authorization Server Metadata" ([[RFC8414]] Section 3) via one of the Discovery endpoints provided by the OpenID Provider. See also Section [5.4](#discovery-0).
+Clients SHOULD acquire OpenID Provider metadata using either 'OpenID Connect Discovery 1.0' ([[OpenID.Discovery]] Section 4) or 'OAuth 2.0 Authorization Server Metadata' ([[RFC8414]] Section 3) via one of the Discovery endpoints provided by the OpenID Provider. See also Section [5.4](#discovery-0).
 
 Clients SHOULD NOT use OpenID Provider Issuer Discover using WebFinger (as described in [[OpenID.Core]], Section 2) to avoid privacy issues such as leaking information to unknown locations.
 
@@ -283,8 +287,8 @@ Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual labo
 # OpenID Provider profile
 For OpenID Providers the following items are applicable:
 - OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see also [Chapter 3](#flow)).
-- OpenID Providers MUST support and require the use of "Proof Key for Code Exchange ([[RFC7636]])" using only the `S256` verification method and a code verifier with at least 43 and at most 128 cryptographically random characters to allow public Clients to protect calls to the Token Endpoint.
-- OpenID Providers MUST apply the necessary "Cross-Origin Resource Sharing ([[CORS]])" headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
+- OpenID Providers MUST support and require the use of 'Proof Key for Code Exchange' ([[RFC7636]]) using only the `S256` verification method and a code verifier with at least 43 and at most 128 cryptographically random characters to allow public Clients to protect calls to the Token Endpoint.
+- OpenID Providers MUST apply the necessary 'Cross-Origin Resource Sharing' ([[CORS]]) headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
 - OpenID Providers that support Web Applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
 - OpenID Providers that support Native Applications MUST follow the best practices specified in OAuth 2.0 for Native Apps [[RFC8252]].
 
@@ -403,7 +407,7 @@ Use of pairwise identifiers does not prevent Clients from correlating data based
 
 OpenID Providers MUST support pairwise identifiers for cases where correlation of End-User's activities across Clients is not appropriate. OpenID Providers MAY support public identifiers for frameworks where public identifiers are required, or for cases where public identifiers are shared as attributes and the framework does not have a requirement for subject anonymity.
 
-*Burgerservicenummers (BSN)*, *Rechtspersonen en Samenwerkingsverbanden Identificatienummers (RSIN)* and *Kamer van Koophandel (KvK) nummers" are considered public sectoral identifiers and therefore MUST NOT be used as Subject Identifiers in case correlation of End-User's activities across Clients is not appropriate. In such cases, the use of Polymorphic Pseudonyms or Polymorphic Identities is preferred.
+*Burgerservicenummers (BSN)*, *Rechtspersonen en Samenwerkingsverbanden Identificatienummers (RSIN)* and *Kamer van Koophandel (KvK) nummers* are considered public sectoral identifiers and therefore MUST NOT be used as Subject Identifiers in case correlation of End-User's activities across Clients is not appropriate. In such cases, the use of Polymorphic Pseudonyms or Polymorphic Identities is preferred.
 
 Note that BSNs MUST only be used by Relying Parties for Services eligible for using the BSN according to Dutch Law and that the BSN, or token containing it, SHOULD be encrypted.
 
@@ -416,8 +420,8 @@ As such, all Clients MUST process `represents` Claims used, in case Representati
 
 This profile specifies Representation Relations in ID Tokens as follows:
 - The End-User is always identified by the `sub` Claim;
-- The represented Service Consumer is mentioned in the `represents` Claim.
-- In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented Service Consumer listed as the deepest nested `represents` Claim.
+- The represented service consumer is mentioned in the `represents` Claim.
+- In case a chain representation is applicable, the representation chain is represented as a series of nested `represents` Claims with the represented service consumer listed as the deepest nested `represents` Claim.
 - Each `represents` Claim MUST contain `sub` and `iss` Claims to uniquely identify the represented party and SHOULD contain a `sub_id_type` Claim to explicitly indicate the type of identifier used in the `sub` claim if the OpenID Provider supports multiple types of subject identifiers.
 - `represents` Claims MAY contain additional Claims (e.g. `email`) to provide additional useful information about the represented party.
 - Claims within the `represents` Claim pertain only to the identity of that party and MUST NOT contain Claims that are not related to the represented party, such as top-level Claims `exp`, `nbf`, and `aud`.
@@ -426,7 +430,7 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
 
       {
         "scope": "openid urn:uuid:a9e17a2e-d358-406d-9d5f-ad6045f712ba",
-        /* End-User - representing the Service Consumer */
+        /* End-User - representing the service consumer */
         "sub": "RKyLpEVr1L",
         "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
         "iss": "urn:uuid:b556992a-e233-4fdc-915a-e2b52d3cc355",
@@ -441,7 +445,7 @@ A sample chain representation for a requested scope `urn:uuid:a9e17a2e-d358-406d
             "iss": "urn:uuid:ebc29845-d35f-4c6a-bbb2-a59fdcb1cc6b"
           }
           "represents": {
-            /* Service Consumer - represented by the End-User */
+            /* service consumer - represented by the End-User */
             "sub": "4Yg8u72NxR",
             "sub_id_type": "urn:nl-eid-gdi:1.0:id:pseudonym",
             "iss": "urn:uuid:55291cc0-fd2a-4eb6-b444-5b2783e62673"
@@ -550,10 +554,10 @@ This profile imposes the following requirements upon the Discovery document:
 > RECOMMENDED. The fully qualified URL of the OpenID Provider's Dynamic Registration endpoint [[RFC7591]].
 
 `introspection_endpoint`
-> OPTIONAL. The fully qualified URL of the OpenID Provider's Introspection Endpoint as defined by "OAuth 2.0 Token Introspection" [[RFC7662]].
+> OPTIONAL. The fully qualified URL of the OpenID Provider's Introspection Endpoint as defined by 'OAuth 2.0 Token Introspection' [[RFC7662]].
 
 `revocation_endpoint`
-> OPTIONAL. The fully qualified URL of the OpenID Provider's Revocation Endpoint as defined by "OAuth 2.0 Token Revocation" [[RFC7009]].
+> OPTIONAL. The fully qualified URL of the OpenID Provider's Revocation Endpoint as defined by 'OAuth 2.0 Token Revocation' [[RFC7009]].
 
 `jwks_uri`
 > REQUIRED. The fully qualified URL of the OpenID Provider's public keys in JWK Set format. These keys can be used by Clients to verify signatures on tokens and responses from the OpenID Provider and for encrypting requests to the OpenID Provider.
@@ -562,10 +566,10 @@ This profile imposes the following requirements upon the Discovery document:
 > REQUIRED. The list of scopes the OpenID Provider supports as defined by [[RFC8414]].
 
 `response_types_supported`
-> REQUIRED. JSON array containing the list of OAuth 2.0 `response_type` values that the OpenID Provider supports. In the context of this profile, the value MUST Be ["code"].
+> REQUIRED. JSON array containing the list of OAuth 2.0 `response_type` values that the OpenID Provider supports. In the context of this profile, the value MUST Be ['code'].
 
 `grant_types_supported`
-> REQUIRED. JSON array containing the list of OAuth 2.0 `grant_type` values that the OpenID Provider supports. In the context of this profile, the value MUST be ["authorization_code"].
+> REQUIRED. JSON array containing the list of OAuth 2.0 `grant_type` values that the OpenID Provider supports. In the context of this profile, the value MUST be ['authorization_code'].
 
 `claims_parameter_supported`
 > OPTIONAL. Boolean value specifying whether the OpenID Provider supports the use of the `claims` parameter, as defined by [[OpenID.Discovery]].
@@ -879,11 +883,14 @@ For example, if a bilateral agreement between two agencies legally entitles usag
 The reasons for relaxing the controls that support data minimization are outside the scope of this profile.
 
 # Security considerations
-All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as 'good', SHOULD NOT use any settings with a status 'phase out' and MUST NOT use any setting with a status 'insufficient' in these security guidelines or future updates thereof.
+Implementations of this profile or any form of access to a service, MUST make a risk assessment or security classification for that service and the information disclosed. It is strongly RECOMMENDED to follow the guide 'Assurance level for digital service provision' [[SG.LoA]].
+Particularly when implementing for higher levels of assurance (e.g. eIDAS "high" or "substantial"), requirements specified as SHOULD (NOT) or (NOT) RECOMMENDED in this profile are more pertintent to implement accordingly. In line with the scope of the "Assurance level for digital service provision" guide, information and services classified as "state secret" (Dutch: "*staatsgeheim*") are out of scope for implementations under this profile.
 
-Implementations MUST implement HTTP Strict Transport Security, as specified in [[RFC6797]].
+All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as "good", SHOULD NOT use any settings with a status "phase out" and MUST NOT use any setting with a status "insufficient" in these security guidelines or future updates thereof.
 
-All Clients MUST conform to applicable recommendations found in the Security Considerations sections of [[RFC6749]] and those found in the OAuth 2.0 Threat Model and Security Considerations document [[RFC6819]]. For all Tokens, the JSON Web Token Best Current Practices [[RFC8725]] SHOULD be applied.
+Implementations MUST implement 'HTTP Strict Transport Security', as specified in [[RFC6797]].
+
+All Clients MUST conform to applicable recommendations found in the 'Security Considerations' sections of [[RFC6749]] and those found in 'OAuth 2.0 Threat Model and Security Considerations' [[RFC6819]]. For all Tokens, the 'JSON Web Token Best Current Practices' [[RFC8725]] SHOULD be applied.
 
 Implementations SHOULD take the guidances specified in the Assurance level for digital service provision guide [[SF-LoA]] into consideration. Particularly when supporting higher assurance levels (e.g. eIDAS high or substantial), requirements specified as SHOULD or RECOMMENDED in this profile become more critical to implement and the use of public Clients should only be considered if the implementations of these Clients guarantee sufficient security with regards to the classifications of the data disclosed in ID and Access Tokens provided to these. In line with the scope of the Assurance level for digital service provision guide, confidential information with state secret classification is out of scope for implementations under this profile.
 
@@ -915,14 +922,17 @@ This profile was created using published, finalized specifications and standards
 However, we want to attend readers to these developments and for them to take into account that future updates to this profile may incorporate the resulting standards and specifications. Furthermore we would like encourage readers to follow relevant developments.
 
 ## Service Intermediation
-One functionality that is widely used in the (semi)governmental sector but is not included in the initial version of this profile specification is *Service Intermediation*.
+One functionality that is widely used in the (semi-)governmental sector but is not included in the initial version of this profile specification is *Service Intermediation*. This scenario is sometimes also refered to as identity propagation.
+Examples of Service Intermediation scenario's include portals, API aggregators and clients with enhanched or automated assistence for consuming services.
 
-Service Intermediation is applicable when the Service Provider does not directly interact with the OpenID Provider for End-User authentication, but delegates this responsibility to a Service Intermediary. Such a Service Intermediary can intermediate a single Service offered by a single ServiceProvider (e.g. an accounting app (service) that has an option to submit a tax declaration) or it can aggregate multiple Services offered by multiple Service Providers using intermediation (e.g. an app that aggregates your health information stored at several health organisations).
+Service Intermediation is applicable when the Service Provider does not directly interact with the End-User, but delegates this responsibility to a Service Intermediary. The Service Intermediary therefor interacts with the OpenID Provider for End-User authentication, with the service offered by the Serivce Provider in scope of the Authentication Request. The Service Provider can now rely on a token from the OpenID Provider received via the Service Intermediary. Note that there is interaction with OAuth2, the Service Provider acts as Resource Server.
+
+Such a Service Intermediary can intermediate a single service offered by a single Service Provider (e.g. an accounting app (service) that has an option to submit a tax declaration) or it can aggregate multiple Services offered by multiple Service Providers using intermediation (e.g. an app that aggregates your health information stored at several health organisations).
 
 It is anticipated that support for Service Intermediation will be added in a later version of this profile; when it will, the following should be considered:
 -	Service Intermediaries should be able to obtain Claims and subject identifiers for different intermediated Services via different interactions with the OpenID Provider, with End-User consent but without the need of complete re-authentication.
 -	Service Intermediaries are generally not allowed to access Claims and subject identifiers. Hence, the use of pairwise and encrypted subject identifiers and Claims is usually required.
--	Service Providers control which Service Intermediaries they support, specifically when confidential information is involved. Hence, Client Registration with the OpenID Provider must be established such that Service Intermediaries can only intermediate (and request Claims and subject identifiers for) Services that they are authorized for. A possible solution direction could be the use of Proof-of-Possession Key Semantics, as described in [[RFC7800]].
+-	Service Providers control which Service Intermediaries they support, specifically when confidential information is involved. Hence, Client Registration with the OpenID Provider must be established such that Service Intermediaries can only intermediate (and request Claims and subject identifiers for) Services that they are authorized for. A potential solution direction could be the use of Proof-of-Possession Key Semantics, as described in [[RFC7800]].
 
 ## Federations
 This profile acknowledges that federations are widely in use, in particular among (semi-)governmental and public domain orgranisations. However, no specific support or requirements for federations are included in this version of this profile.
