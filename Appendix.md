@@ -3,7 +3,10 @@
 The following terms that are specific to this profile or its functional context are used throughout this specification:
 
 Representation
->  The action of one party acting on behalf of another party through delegated authority, which was given voluntary or based on legal grounds. Both parties can either be natural or juridical persons. The fact that one party is authorized on behalf of another party is named a _representation relationship_.
+>  The action of one party acting on behalf of another party through delegated authority, which was given voluntary or based on legal grounds. Both parties can either be natural or juridical persons. The fact that one party is authorized on behalf of another party is named a _Representation Relationship_.
+
+Representation Relationship
+> A relationship between two parties such that one party is authorized on to consume certain digital services behalf of the other party.
 
 
 <abbr title="Electronic Identification, Authentication and Trust Services">eIDAS</abbr>
