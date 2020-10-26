@@ -892,8 +892,6 @@ Implementations MUST implement 'HTTP Strict Transport Security', as specified in
 
 All Clients MUST conform to applicable recommendations found in the 'Security Considerations' sections of [[RFC6749]] and those found in 'OAuth 2.0 Threat Model and Security Considerations' [[RFC6819]]. For all Tokens, the 'JSON Web Token Best Current Practices' [[RFC8725]] SHOULD be applied.
 
-Implementations SHOULD take the guidances specified in the Assurance level for digital service provision guide [[SF-LoA]] into consideration. Particularly when supporting higher assurance levels (e.g. eIDAS high or substantial), requirements specified as SHOULD or RECOMMENDED in this profile become more critical to implement and the use of public Clients should only be considered if the implementations of these Clients guarantee sufficient security with regards to the classifications of the data disclosed in ID and Access Tokens provided to these. In line with the scope of the Assurance level for digital service provision guide, confidential information with state secret classification is out of scope for implementations under this profile.
-
 <!-- [Algorithms](#algorithms) --->
 ## Algorithms
 Security of OpenID Connect and OAuth 2.0 is significantly based on the application of cryptography. Herein the choice of algorithms is important for both security as well as interoperability. This section lists relevant choices of algorithms for all messages and tokens.
