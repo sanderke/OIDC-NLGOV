@@ -485,9 +485,9 @@ OpenID Providers MAY issue Refresh Tokens to Clients; when used, Refresh Tokens 
 
 OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1); other methods to create sender-constrained Refresh Tokens MAY be applied as well.
 
-For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use, i.e. the OpenID Provider issues a new refresh token and invalidates the previous refresh token with every access token refresh response (see also [[?OAuth2.1]], Section 6.1).
+For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use, i.e. the OpenID Provider issues a new refresh token and invalidates the previous refresh token with every Access Token refresh response (see also [[?OAuth2.1]], Section 6.1).
 
-Refresh tokens SHOULD expire if the client has been inactive for some time, i.e., the refresh token has not been used to obtain fresh access tokens for some time. The expiration time is at the discretion of the authorization server, with a maximum of 6 hours, preferably shorter.
+Refresh Tokens SHOULD expire if the client has been inactive for some time, i.e., the Refresh Token has not been used to obtain fresh Access Tokens for some time. The expiration time is at the discretion of the OpenID Provider, with a maximum of 6 hours, preferably shorter.
 
 For public Clients, no cryptographic key or client authentication method for such binding is available. Public Clients therefore MUST use one-time-use Refresh Tokens with a limited validity, if applied.
 
