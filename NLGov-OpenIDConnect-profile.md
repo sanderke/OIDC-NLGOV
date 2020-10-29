@@ -55,7 +55,7 @@ In case a federation or scheme is being used, an Identity Broker may be applicab
 
 The service is offered by a (semi-)governmental or public Service Provider. The Use Cases therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. Note that business-to-government is not strictly limited to businesses, these may be other governmental organisations (inter-organizational) or internal service consumers (intra-organisational). This profile is not limited to these contexts, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those contexts.
 
-The Service Provider or OpenID Client requests either an identifier, attributes or both of an authenticated End-User from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported. Supported Use Cases therefor span both identifiale and attribute-based authentication.
+The Service Provider or OpenID Client requests either an identifier, attributes or both of an authenticated End-User from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported. Supported Use Cases therefore span both identifiale and attribute-based authentication.
 
 From an architectual standpoint, the Use Case can utilize a Client in the form of a hosted web-application, a mobile/native application or a browser based single-page-application (SPA). See [Section 4.1 Client Types](#client-types) for more details.
 
@@ -901,7 +901,7 @@ Particularly when implementing for higher levels of assurance (e.g. eIDAS "high"
 An OpenID Provider MUST use a distinct Client Identifier (`client_id`) and registration for each unique Client. This in particular applies to public Clients, these registrations MUST NOT be shared with confidential Clients, even if they are operated by the same organisation.
 Distinct registrations MAY be applied to different versions of (native and browser-based public) Clients as well. This will allow a form of support for version management, noting that this can not be considered a very reliable method from a security point of view.
 
-Refresh Tokens SHOULD only be applied and enabled when a functional need exists. Support for Refresh Tokens SHOULD therefor be disabled by default.
+Refresh Tokens SHOULD only be applied and enabled when a functional need exists. Support for Refresh Tokens SHOULD therefore be disabled by default.
 Refresh Tokens for confidential Clients MUST be sender-constrained by the issuing OpenID Provider. How the OP accomplishes this is implementation specific, suggestions can be found in [[?OAuth2.1]], Section 6.1.
 Using Refresh Tokens in combination with public Clients SHOULD be avoided when possible. If a specific scenario does call for usage of Refresh Tokens with public Clients, Refresh Tokens MUST be one-time-use and short-lived. Refresh Token rotation (see [[?OAuth2.1]], Section 6.1) MUST be applied if a single short-lived one-time-use Refresh Token is insufficient.
 
@@ -942,7 +942,7 @@ However, we want to attend readers to these developments and for them to take in
 One functionality that is widely used in the (semi-)governmental sector but is not included in the initial version of this profile specification is *Service Intermediation*. This scenario is sometimes also refered to as identity propagation.
 Examples of Service Intermediation scenario's include portals, API aggregators and Clients with enhanched or automated assistence for consuming services.
 
-Service Intermediation is applicable when the Service Provider does not directly interact with the End-User, but delegates this responsibility to a Service Intermediary. The Service Intermediary therefor interacts with the OpenID Provider for End-User authentication, with the service offered by the Serivce Provider in scope of the Authentication Request. The Service Provider can now rely on a token from the OpenID Provider received via the Service Intermediary. Note that there is interaction with OAuth2, the Service Provider acts as Resource Server.
+Service Intermediation is applicable when the Service Provider does not directly interact with the End-User, but delegates this responsibility to a Service Intermediary. The Service Intermediary therefore interacts with the OpenID Provider for End-User authentication, with the service offered by the Serivce Provider in scope of the Authentication Request. The Service Provider can now rely on a token from the OpenID Provider received via the Service Intermediary. Note that there is interaction with OAuth2, the Service Provider acts as Resource Server.
 
 Such a Service Intermediary can intermediate a single service offered by a single Service Provider (e.g. an accounting app (service) that has an option to submit a tax declaration) or it can aggregate multiple Services offered by multiple Service Providers using intermediation (e.g. an app that aggregates your health information stored at several health organisations).
 
