@@ -483,11 +483,13 @@ This profile does not directly place any constraints on the placement of Claims 
 ### Refresh Tokens
 OpenID Providers MAY issue Refresh Tokens to Clients; when used, Refresh Tokens MUST be one-time-use or sender-constrained.
 
-OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1), other methods to create sender-constrained Refresh Tokens MAY be applied as well.
+OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1); other methods to create sender-constrained Refresh Tokens MAY be applied as well.
 
-For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use and SHOULD have a limited valid lifetime, with a maximum of 6 hours, preferably shorter.
+For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use, i.e. the OpenID Provider issues a new refresh token and invalidates the previous refresh token with every access token refresh response.
 
-For public Clients, no cryptographic key or client authentication method for such binding is available. Public Clients therefore MUST use one-time-use Refresh Tokens with a limited validity, if applied. Refresh Token rotation (see also [[?OAuth2.1]], Section 6.1) MUST be applied if a single one-time-use Refresh Token is insufficient, rather than increasing the lifetime of Refresh Tokens.
+Refresh tokens SHOULD expire if the client has been inactive for some time, i.e., the refresh token has not been used to obtain fresh access tokens for some time. The expiration time is at the discretion of the authorization server, with a maximum of 6 hours, preferably shorter.
+
+For public Clients, no cryptographic key or client authentication method for such binding is available. Public Clients therefore MUST use one-time-use Refresh Tokens with a limited validity, if applied.
 
 ## UserInfo Endpoint
 OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the `sub` (subject) Claim. It is expected that the `sub` Claim will remain pseudonymous in Use Cases where obtaining personal information is not needed.
@@ -903,7 +905,7 @@ Distinct registrations MAY be applied to different versions of (native and brows
 
 Refresh Tokens SHOULD only be applied and enabled when a functional need exists. Support for Refresh Tokens SHOULD therefore be disabled by default.
 Refresh Tokens for confidential Clients MUST be sender-constrained by the issuing OpenID Provider. How the OP accomplishes this is implementation specific, suggestions can be found in [[?OAuth2.1]], Section 6.1.
-Using Refresh Tokens in combination with public Clients SHOULD be avoided when possible. If a specific scenario does call for usage of Refresh Tokens with public Clients, Refresh Tokens MUST be one-time-use with a limited validity. Refresh Token rotation (see [[?OAuth2.1]], Section 6.1) MUST be applied if a single one-time-use Refresh Token with limited validity is insufficient.
+Using Refresh Tokens in combination with public Clients SHOULD be avoided when possible. If a specific scenario does call for usage of Refresh Tokens with public Clients, Refresh Tokens MUST be one-time-use with a limited validity.
 
 All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as "good", SHOULD NOT use any settings with a status "phase out" and MUST NOT use any setting with a status "insufficient" in these security guidelines or future updates thereof.
 
