@@ -55,7 +55,7 @@ In case a federation or scheme is being used, an Identity Broker may be applicab
 
 The service is offered by a (semi-)governmental or public Service Provider. The Use Cases therefore explicitly covers Citizen-to-Government as well as Business-to-Government contexts. Note that business-to-government is not strictly limited to businesses, these may be other governmental organisations (inter-organizational) or internal service consumers (intra-organisational). This profile is not limited to these contexts, nor intended to exclude Business-to-Consumer and Business-to-Business contexts, but additional considerations may be applicable in those contexts.
 
-The Service Provider or OpenID Client requests either an identifier, attributes or both of an authenticated End-User from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported. Supported Use Cases therefor span both identifiale and attribute-based authentication.
+The Service Provider or OpenID Client requests either an identifier, attributes or both of an authenticated End-User from the OpenID Provider. As target End-User audiences are diverse, multiple types of identifiers can be supported. Supported Use Cases therefore span both identifiale and attribute-based authentication.
 
 From an architectual standpoint, the Use Case can utilize a Client in the form of a hosted web-application, a mobile/native application or a browser based single-page-application (SPA). See [Section 4.1 Client Types](#client-types) for more details.
 
@@ -77,7 +77,7 @@ OpenID Connect Core specifies three paths via which authentication can be perfor
 
 This profile requires that authentication is performed using the Authorization Code Flow, in where all tokens are returned from the Token Endpoint.
 
-The Implicit Flow and Hybrid Flow allow tokens to be obtained from the Authorization Endpoint, and thereby omitting the Token endpoint. This  makes them vulnerable to token leakage and token replay and makes it impossible to cryptographically bind tokens to a certain client.
+The Implicit Flow and Hybrid Flow allow tokens to be obtained from the Authorization Endpoint, and thereby omitting the Token endpoint. This  makes them vulnerable to token leakage and token replay and makes it impossible to cryptographically bind tokens to a certain Client.
 
 Therefore, the Implicit Flow and Hybrid flow MUST NOT be used. Also, the IETF OAuth Working Group is removing support for the Implicit Flow from the OAuth 2.1 specification [[?OAuth2.1]] for the same reasons.
 
@@ -105,7 +105,7 @@ OAuth 2.0 defines two Client Types (*confidential* and *public* Clients) and thr
 
 This profile includes specific design considerations related to security and platform capabilities for these different Client Types and Profiles.
 
-**Note:** The iGov and NL GOV Assurance profiles for OAuth 2.0 use a slightly different segregation of Client Types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively. This profile follows the OAuth 2.0 specification [[RFC6749]] instead, as it allows for better provisioning of specific security considerations specific to the different client types and it aligns better to the Security Best Practices for the different Client profiles.
+**Note:** The iGov and NL GOV Assurance profiles for OAuth 2.0 use a slightly different segregation of Client Types: *Full Clients* and *Native Clients* act on behalf of a End-User and *Direct Access Clients* act on behalf of themselves (e.g. those Clients that facilitate bulk transfers). *Direct Access Clients* are out of scope for this profile; *Full Clients* and *Native Clients* are treated as *Web applications* and *Native applications* respectively. This profile follows the OAuth 2.0 specification [[RFC6749]] instead, as it allows for better provisioning of specific security considerations specific to the different Client types and it aligns better to the Security Best Practices for the different Client profiles.
 
 The following design considerations apply to all Clients:
 - Clients MUST use 'Proof Key for Code Exchange' [[RFC7636]] to protect calls to the Token Endpoint.
@@ -126,7 +126,7 @@ The following design considerations apply to all Clients:
 *Hybrid applications* are applications implemented using web-based technology but distributed as a native app; these are considered equivalent to native applications for the purpose of this profile.
 
 - Native applications MUST follow the best practices as specified in OAuth 2.0 for Native Apps [[RFC8252]].
-- The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* clients provide better means to perform secure Client Authentication.
+- The use of *confidential* Native applications (which are provisioned per-instance secrets) is RECOMMENDED over *public* Native applications, as *confidential* Clients provide better means to perform secure Client Authentication.
 - Native applications MUST use an external user-agent or "in-app browser tab" to make authorization requests; an "embedded user-agent" or "web-view" components MUST NOT be used for this purpose. See 'OAuth 2.0 for Native apps' [[RFC8252]] for more information on the "in-app browser tab" feature and support on various platforms.
 
 ## Authorization Endpoint
@@ -205,7 +205,7 @@ Confidential Clients, as defined in [Section 4.1](#client-types), MUST authentic
 - a JWT assertion as defined by the 'JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants' [[RFC7523]] using only the `private_key_jwt` method defined in [[OpenID.Core]]; or
 - mutually authenticated TLS, as specified in [[RFC8705]]. In case of a mutual TLS connection (mTLS) between the Client and the server, the JWT assertion SHOULD be omitted and the `client_id` parameter MUST be included.
 
-Public Clients MAY authenticate to the OpenID Provider. However, the OpenID Provider MUST NOT rely on public Client Authentication for the purpose of identifying the client.
+Public Clients MAY authenticate to the OpenID Provider. However, the OpenID Provider MUST NOT rely on public Client Authentication for the purpose of identifying the Client.
 
 Clients MUST NOT use more than one authentication method in each request.
 
@@ -284,10 +284,12 @@ Native Clients MUST either be provisioned a unique per-instance Client identifie
 
 Clients SHOULD use Dynamic Registration as per [[RFC7591]] to reduce manual labor and the risks of configuration errors. Dynamic Client Registration Management Protocol [[RFC7592]] MAY be used by Clients.
 
+In case a native Client is using per-instance registration, the Client MUST use Dynamic Registration.
+
 # OpenID Provider profile
 For OpenID Providers the following items are applicable:
 - OpenID Providers MUST implement all *Mandatory to Implement Features for All OpenID Providers* (Section 15.1) and all *Mandatory to Implement Features for Dynamic OpenID Providers* (Section 15.2) of [[OpenID.Core]]. Note that these Mandatory to Implement features include required support for the Hybrid Flow for authentication (Response Types `id_token` and `id_token token`). This profile deviates from this requirement, as this profile specifically forbids the use of the Hybrid Flow (see also [Chapter 3](#flow)).
-- OpenID Providers MUST support and require the use of 'Proof Key for Code Exchange' ([[RFC7636]]) using only the `S256` verification method and a code verifier with at least 43 and at most 128 cryptographically random characters to allow public Clients to protect calls to the Token Endpoint.
+- OpenID Providers MUST support and require the use of 'Proof Key for Code Exchange' ([[RFC7636]]) using only the `S256` verification method and a code verifier with at least 43 and at most 128 cryptographically random characters to allow Clients to protect calls to the Token Endpoint.
 - OpenID Providers MUST apply the necessary 'Cross-Origin Resource Sharing' ([[CORS]]) headers to allow browsers to protect requests to its endpoints and SHOULD NOT use wildcard origins.
 - OpenID Providers that support Web Applications SHOULD follow the best practices specified in [[?OAuth2.Browser-Based-Apps]].
 - OpenID Providers that support Native Applications MUST follow the best practices specified in OAuth 2.0 for Native Apps [[RFC8252]].
@@ -479,7 +481,15 @@ The Resource Server is typically not considered as an actor in OpenID Connect, b
 This profile does not directly place any constraints on the placement of Claims in various tokens or response messages. Claims may be placed in any of the four tokens/response messages, unless explicitly specified otherwise. This allows for maximum flexibility and interoperability.
 
 ### Refresh Tokens
-OpenID Providers MAY issue Refresh Tokens to Clients; when used, Refresh Tokens MUST be one-time-use. Additionally, OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1).
+OpenID Providers MAY issue Refresh Tokens to Clients; when used, Refresh Tokens MUST be one-time-use or sender-constrained.
+
+OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1); other methods to create sender-constrained Refresh Tokens MAY be applied as well.
+
+For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use, i.e. the OpenID Provider issues a new refresh token and invalidates the previous refresh token with every Access Token refresh response (see also [[?OAuth2.1]], Section 6.1).
+
+Refresh Tokens SHOULD expire if the client has been inactive for some time, i.e., the Refresh Token has not been used to obtain fresh Access Tokens for some time. The expiration time is at the discretion of the OpenID Provider, with a maximum of 6 hours, preferably shorter.
+
+For public Clients, no cryptographic key or client authentication method for such binding is available. Public Clients therefore MUST use one-time-use Refresh Tokens with a limited validity, if applied.
 
 ## UserInfo Endpoint
 OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the `sub` (subject) Claim. It is expected that the `sub` Claim will remain pseudonymous in Use Cases where obtaining personal information is not needed.
@@ -847,7 +857,7 @@ OpenID Core Section 5.5 [[OpenID.Core]] defines a method for a Client to request
 
 Clients requesting the `profile` scope MAY provide a `claims` request parameter.
 If the Claims request is omitted, the OpenID Provider SHOULD provide a default Claims set that it has available for the subject, in accordance with any policies set out by the trust framework the Provider supports.
-**Note:** clients SHOULD NOT request the `profile` scope, as described in the previous section.
+**Note:** Clients SHOULD NOT request the `profile` scope, as described in the previous section.
 
 ## Claims Response
 Response to a UserInfo request MUST match the scope and Claims requested to avoid having a OpenID Provider over-expose an End-User's identity information.
@@ -875,6 +885,10 @@ All Clients MUST apply the concept of data minimization. As a result, a Client M
 Additionally, Clients SHOULD ensure they minimize the scope and audience they request, use and forward. This principle applies to both to usage at the Client as well as forwarded Access Tokens in a Service Intermediation scenario.
 Token Exchange [[RFC8693]] SHOULD be used to request Access Tokens with a minimal scope and audience.
 
+Note that per-instance registration of Native Clients can increase the risk of Client -- and thus End-User -- observability and traceability. This because the `client_id` is unique, can be linked to an individual and may be observed. The `client_id` SHOULD be considered and treated as sensitive data in case per-instance registration is applied.
+Although the `client_id` will be protected by TLS, it may be exposed at the Client itself or the OpenID Provider or elsewhere. As mitigating measure, implementations MAY use encrypted request objects and tokens.
+OpenID Providers SHOULD assign unpredictable Client Identifiers in case of per-instance registration for Native Clients, in order to mitigate guessing and (cross Client and cross audience) linkability of Client Identifiers.
+
 In order to provide end-to-end security and privacy, identifiers and attributes SHOULD be encrypted from the providing source to the ultimate intended recipient. This can be accomplished by either encrypting entire response messages and tokens or by using aggregated or distributed Claims (see Section 5.6.2 of [[OpenID.Core]]). Applying end-to-end encryption is strongly RECOMMENDED for both the BSN (_Burgerservicenummer_, the Dutch citizen ID) and sensitive attributes.
 
 Despite the mechanisms enforced by this profile, the operational circumstances may allow these controls to be relaxed in a specific context.
@@ -885,6 +899,13 @@ The reasons for relaxing the controls that support data minimization are outside
 # Security considerations
 Implementations of this profile or any form of access to a service, MUST make a risk assessment or security classification for that service and the information disclosed. It is strongly RECOMMENDED to follow the guide 'Assurance level for digital service provision' [[SG.LoA]].
 Particularly when implementing for higher levels of assurance (e.g. eIDAS "high" or "substantial"), requirements specified as SHOULD (NOT) or (NOT) RECOMMENDED in this profile are more pertinent to implement accordingly. In line with the scope of the "Assurance level for digital service provision" guide, information and services classified as "state secret" (Dutch: "*staatsgeheim*") are out of scope for implementations under this profile.
+
+An OpenID Provider MUST use a distinct Client Identifier (`client_id`) and registration for each unique Client. This in particular applies to public Clients, these registrations MUST NOT be shared with confidential Clients, even if they are operated by the same organisation.
+Distinct registrations MAY be applied to different versions of (native and browser-based public) Clients as well. This will allow a form of support for version management, noting that this can not be considered a very reliable method from a security point of view.
+
+Refresh Tokens SHOULD only be applied and enabled when a functional need exists. Support for Refresh Tokens SHOULD therefore be disabled by default.
+Refresh Tokens for confidential Clients MUST be sender-constrained by the issuing OpenID Provider. How the OP accomplishes this is implementation specific, suggestions can be found in [[?OAuth2.1]], Section 6.1.
+Using Refresh Tokens in combination with public Clients SHOULD be avoided when possible. If a specific scenario does call for usage of Refresh Tokens with public Clients, Refresh Tokens MUST rotate on each use with a limited valid lifetime.
 
 All transactions MUST be protected in transit by TLS as described in BCP195 [[RFC7525]]. In addition, all compliant implementations MUST apply the IT Security Guidelines for TLS by the Dutch NCSC [[SG.TLS]]. Implementations SHOULD only implement settings and options indicated as "good", SHOULD NOT use any settings with a status "phase out" and MUST NOT use any setting with a status "insufficient" in these security guidelines or future updates thereof.
 
@@ -921,9 +942,9 @@ However, we want to attend readers to these developments and for them to take in
 
 ## Service Intermediation
 One functionality that is widely used in the (semi-)governmental sector but is not included in the initial version of this profile specification is *Service Intermediation*. This scenario is sometimes also refered to as identity propagation.
-Examples of Service Intermediation scenario's include portals, API aggregators and clients with enhanched or automated assistence for consuming services.
+Examples of Service Intermediation scenario's include portals, API aggregators and Clients with enhanched or automated assistence for consuming services.
 
-Service Intermediation is applicable when the Service Provider does not directly interact with the End-User, but delegates this responsibility to a Service Intermediary. The Service Intermediary therefor interacts with the OpenID Provider for End-User authentication, with the service offered by the Serivce Provider in scope of the Authentication Request. The Service Provider can now rely on a token from the OpenID Provider received via the Service Intermediary. Note that there is interaction with OAuth2, the Service Provider acts as Resource Server.
+Service Intermediation is applicable when the Service Provider does not directly interact with the End-User, but delegates this responsibility to a Service Intermediary. The Service Intermediary therefore interacts with the OpenID Provider for End-User authentication, with the service offered by the Serivce Provider in scope of the Authentication Request. The Service Provider can now rely on a token from the OpenID Provider received via the Service Intermediary. Note that there is interaction with OAuth2, the Service Provider acts as Resource Server.
 
 Such a Service Intermediary can intermediate a single service offered by a single Service Provider (e.g. an accounting app (service) that has an option to submit a tax declaration) or it can aggregate multiple Services offered by multiple Service Providers using intermediation (e.g. an app that aggregates your health information stored at several health organisations).
 
