@@ -485,11 +485,11 @@ OpenID Providers MAY issue Refresh Tokens to Clients; when used, Refresh Tokens 
 
 OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1); other methods to create sender-constrained Refresh Tokens MAY be applied as well.
 
-For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use, i.e. the OpenID Provider issues a new refresh token and invalidates the previous refresh token with every Access Token refresh response (see also [[?OAuth2.1]], Section 6.1).
+For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use, i.e. with every Access Token refresh response the OpenID Provider can issue a new Refresh Token and MUST invalidate the previous Refresh Token (see also [[?OAuth2.1]], Section 6.1).
 
-Refresh Tokens SHOULD expire if the client has been inactive for some time, i.e., the Refresh Token has not been used to obtain fresh Access Tokens for some time. The expiration time is at the discretion of the OpenID Provider, with a maximum of 6 hours, preferably shorter.
+Refresh Tokens MUST expire if the Client has been inactive for some time, i.e., the Refresh Token has not been used to obtain fresh Access Tokens for some time. The expiration time is at the discretion of the OpenID Provider, but MUST NOT exceed a maximum of 6 hours, preferably shorter.
 
-For public Clients, no cryptographic key or client authentication method for such binding is available. Public Clients therefore MUST use one-time-use Refresh Tokens with a limited validity, if applied.
+For public Clients, no cryptographic key or Client Authentication method for binding Refresh Tokens to a specific Client is available. Public Clients therefore MUST use one-time-use Refresh Tokens with a limited validity, if applied.
 
 ## UserInfo Endpoint
 OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the `sub` (subject) Claim. It is expected that the `sub` Claim will remain pseudonymous in Use Cases where obtaining personal information is not needed.
