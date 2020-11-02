@@ -913,7 +913,9 @@ Implementations MUST implement 'HTTP Strict Transport Security', as specified in
 
 All Clients MUST conform to applicable recommendations found in the 'Security Considerations' sections of [[RFC6749]] and those found in 'OAuth 2.0 Threat Model and Security Considerations' [[RFC6819]]. For all Tokens, the 'JSON Web Token Best Current Practices' [[RFC8725]] SHOULD be applied.
 
-In case Clients are relying on and communicating with multiple OpenID Providers (and/or OAuth2 Authorization Servers), Clients MUST implement countermeasures to prevent mix-up attacks. Clients SHOULD use distinct redirect URIs for each OpenID Provider / Authorization Server, or alternatively validate the issuer (`iss`) in the response (ID Token) matches the initiating Authentication Request.
+In case Clients are relying on and communicating with multiple OpenID Providers (and/or OAuth2 Authorization Servers), Clients MUST implement countermeasures to prevent mix-up attacks. Clients SHOULD at least use distinct redirect URIs for each OpenID Provider / Authorization Server, or alternatively validate the issuer (`iss`) in the response (ID Token) matches the initiating Authentication Request (see [[RFC8252]], section 8.10 and [[?OAuth2.Security]], section 2.1 and 4.4.2).
+
+
 
 <!-- [Algorithms](#algorithms) --->
 ## Algorithms
