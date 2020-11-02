@@ -764,7 +764,7 @@ The OpenID Provider MUST provide its public keys in JWK Set format, such as the 
 
 In case PKIoverheid certificates are used, the certificate and entire certificate chain up until the root certificate MUST be included as either an `x5c` or as `x5u` parameter, according to [[RFC7517]] Sections 4.6 and 4.7. Parties SHOULD support the inclusion of the certificate chain as `x5c` parameter, for maximum interoperability. Parties MAY agree to use `x5u`, for instance for communication within specific environments.
 
-The OpenID Provider SHOULD utilize the approaches described in Sections 10.1.1 (signing keys) and 10.2.1 (encryption keys) to facilitate rotation of public keys.
+The OpenID Provider SHOULD utilize the approaches described in [[OpenID.Core]], Sections 10.1.1 (signing keys) and 10.2.1 (encryption keys), to facilitate rotation of public keys.
 
 Please refer to [Algorithms](#algorithms) for more information on eligible cryptographic methods and keys that can be used by OpenID Providers.
 
