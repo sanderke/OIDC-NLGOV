@@ -196,7 +196,7 @@ All Clients MUST validate the following in received Authentication Responses:
 `state`
 > The `state` response parameter MUST be present and MUST equal the `state` request parameter sent in the Authentication Request.
 
-This in line with OpenID Connect Core ([[OpenID.Core]], Section 3.1.2.7), which equals to OAuth 2.0 ([[RFC6749]], Section 4.1.2 and 10.12). Verifying the `state` returned in the Authorization Response is part of CSRF mitigation measures and will help prevent attacks with late or stale repsonses, among others.
+This in line with OpenID Connect Core ([[OpenID.Core]], Section 3.1.2.7), which equals to OAuth 2.0 ([[RFC6749]], Section 4.1.2 and 10.12). Verifying the `state` returned in the Authorization Response is part of CSRF mitigation measures and will help prevent attacks with late or stale responses, among others.
 
 ## Token Endpoint
 
@@ -485,11 +485,11 @@ OpenID Providers MAY issue Refresh Tokens to Clients; when used, Refresh Tokens 
 
 OpenID Providers MAY cryptographically bind Refresh Tokens to the specific Client instance (see also [[?OAuth2.1]], Section 6.1); other methods to create sender-constrained Refresh Tokens MAY be applied as well.
 
-For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use, i.e. the OpenID Provider issues a new refresh token and invalidates the previous refresh token with every Access Token refresh response (see also [[?OAuth2.1]], Section 6.1).
+For security reasons, Refresh Tokens that are not sender-constrained MUST be one-time-use, i.e. with every Access Token refresh response the OpenID Provider can issue a new Refresh Token and MUST invalidate the previous Refresh Token (see also [[RFC6819]], Section 5.2.2.3 and [[?OAuth2.1]], Section 6.1).
 
-Refresh Tokens SHOULD expire if the client has been inactive for some time, i.e., the Refresh Token has not been used to obtain fresh Access Tokens for some time. The expiration time is at the discretion of the OpenID Provider, with a maximum of 6 hours, preferably shorter.
+Refresh Tokens MUST expire if the Client has been inactive for some time, i.e., the Refresh Token has not been used to obtain fresh Access Tokens for some time. The expiration time is at the discretion of the OpenID Provider, but MUST NOT exceed a maximum of 6 hours, preferably shorter.
 
-For public Clients, no cryptographic key or client authentication method for such binding is available. Public Clients therefore MUST use one-time-use Refresh Tokens with a limited validity, if applied.
+For public Clients, no cryptographic key or Client Authentication method for binding Refresh Tokens to a specific Client is available. Public Clients therefore MUST use one-time-use Refresh Tokens with a limited validity, if applied.
 
 ## UserInfo Endpoint
 OpenID Providers MUST support the UserInfo Endpoint and, at a minimum, the `sub` (subject) Claim. It is expected that the `sub` Claim will remain pseudonymous in Use Cases where obtaining personal information is not needed.
@@ -781,7 +781,7 @@ This profile imposes the following requirements upon the Client Registration req
 > In cases where the OpenID Provider limits the parties that are allowed to register Clients using Dynamic Registration (i.e. when open registration is not applicable), the use of an initial access token in the form of an OAuth2 Bearer token using the `Authorization` HTTP header [[RFC6750]] is REQUIRED for making Client Registration requests. In cases where open registration is applicable, the use of an initial access token is OPTIONAL.
 
 `redirect_uris`
-> REQUIRED. Array of Redirection URI values used by the Client. MUST be an absolute HTTPS URLs. One of these registered Redirection URI values MUST exactly match the `redirect_uri` parameter value used in each Authorization Request.
+> REQUIRED. Array of Redirection URI values used by the Client. MUST be absolute HTTPS URLs. One of these registered Redirection URI values MUST exactly match the `redirect_uri` parameter value used in each Authorization Request.
 
 > The only exception is when the Client is a Native Application operating on a desktop device and is exclusively registered as such. In such cases:
 > - the `redirect_uri` MAY contain absolute HTTP URLs with the literal loopback IP addresses and port numbers the Client is listening on as hostnames. MUST NOT use `localhost` as hostname for the loopback address, see [[RFC8252]] Sections 7.3 and 8.3; and
